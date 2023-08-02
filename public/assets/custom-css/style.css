@@ -1,0 +1,63 @@
+body.sidebar-collapse .brand-link img {
+    display: none;
+}
+
+.nav-icon {
+    font-size: 18px !important;
+}
+
+.fa-square.nav-icon {
+    font-size: 12px !important;
+}
+
+.code-plat {
+    padding-right: 2px !important;
+    letter-spacing: 3px;
+    font-family: monospace !important;
+}
+
+.code-input {
+    letter-spacing: 12px !important;
+    font-family: monospace !important;
+}
+
+table {
+    width: 100% !important;
+}
+
+.action-group {
+    display: flex;
+    width: max-content;
+    margin: 0 auto;
+    align-items: stretch;
+    gap: 5px;
+}
+
+.action-group .btn {
+    padding: 3px 5px;
+    font-size: 12px;
+}
+
+.paginate_button.active a {
+    border: 1px solid rgb(32, 201, 151) !important;
+    background: rgb(32, 201, 151) !important;
+}
+
+.select2-container--bootstrap4.select2-container--focus .select2-selection {
+    border: 1px solid rgb(225, 225, 225) !important;
+    box-shadow: none !important;
+}
+
+.select2-container--bootstrap4 .select2-results__option--highlighted,
+.select2-container--bootstrap4 .select2-results__option--highlighted.select2-results__option[aria-selected="true"] {
+    background: rgb(245, 245, 245) !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+.schedule-card a {
+    color: rgb(100, 100, 100) !important;
+}
+
+.schedule-card a.active {
+    color: rgb(32, 201, 151) !important;
+}
