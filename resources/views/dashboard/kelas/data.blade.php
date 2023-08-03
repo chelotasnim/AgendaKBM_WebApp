@@ -116,17 +116,17 @@
                 modifiedData.push([exportData.body[i][0], exportData.body[i][1], exportData.body[i][2]]);
             }
 
-            var csvContent = "data:text/csv;charset=utf-8,"
-                + documentTitle.join(",") + "\n"
-                + "Jenjang,Nama Kelas,Status" + "\n"
-                + modifiedData.map(function (row) {
-                    return row.join(",");
-                }).join("\n");
+            var workbook = XLSX.utils.book_new();
+            var worksheet = XLSX.utils.aoa_to_sheet([documentTitle, ["Jenjang", "Nama Kelas", "Status"], ...modifiedData]);
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-            var encodedUri = encodeURI(csvContent);
+            var xlsxData = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+
+            var blob = new Blob([xlsxData], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
             var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "EksporDataKelas.csv");
+            link.href = URL.createObjectURL(blob);
+            link.download = "EksporDataKelas.xlsx";
             document.body.appendChild(link);
             link.click();
         });
