@@ -103,7 +103,16 @@ class Gurus extends Controller
             $old_data = Guru::where('username', request()->input('confirm'))->orWhere('email', request()->input('confirm2'))->first();
 
             if (request()->input('name') == $old_data->name && request()->input('username') == $old_data->username && request()->input('email') == $old_data->email && request()->input('status') ==  $old_data->status) {
-                return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Perubahan Dilakukan</div></div>']]);
+                if (request()->input('password') != '') {
+                    Guru::where('username', request()->input('confirm'))->update(['password' => bcrypt(request()->input('password'))]);
+
+                    return response()->json([
+                        'notification' => ['Data Updated' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Guru Berhasil Dirubah</div></div>']],
+                        'success' => true
+                    ]);
+                } else {
+                    return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Perubahan Dilakukan</div></div>']]);
+                };
             } else {
                 $new_data_check = Guru::where('username', request()->input('username'))->where('id', '!=', $old_data->id)->orWhere('email', request()->input('email'))->where('id', '!=', $old_data->id)->first();
                 if ($new_data_check != null) {
