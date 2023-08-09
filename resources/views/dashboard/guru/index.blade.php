@@ -144,7 +144,7 @@
                             <input type="text" name="confirm" class="form-control" autocomplete="off" placeholder="Ketik Ulang Username Guru">
                             <input type="text" name="param" id="must-be-param" class="d-none form-control" readonly>
                             <small class="text-danger d-flex align-items-center mt-2" style="gap: 5px">
-                              <i class="fa-solid fa-triangle-exclamation"></i>
+                              <i class="fas fa-exclamation-triangle"></i>
                                 Guru akan hilang dari jadwal jika dihapus, selalu perbarui jadwal!
                             </small>
                           </div>
@@ -210,7 +210,7 @@
                               <input type="text" id="main-edit-param" name="confirm" class="d-none">
                               <input type="text" id="second-edit-param" name="confirm2" class="d-none">
                               <small class="text-danger d-flex align-items-center mt-2" style="gap: 5px">
-                                <i class="fa-solid fa-circle-info"></i>
+                                <i class="fas fa-info-circle"></i>
                                 Guru akan hilang dari jadwal jika tidak aktif, selalu perbarui jadwal!
                               </small>
                             </div>

@@ -239,7 +239,7 @@
                               <input type="text" id="main-edit-param" name="confirm" class="d-none">
                               <input type="text" id="second-edit-param" name="confirm2" class="d-none">
                               <small class="text-danger d-flex align-items-center mt-2" style="gap: 5px">
-                                <i class="fa-solid fa-circle-info"></i>
+                                <i class="fas fa-info-circle"></i>
                                 Akun Siswa tidak dapat digunakan jika statusnya tidak aktif
                               </small>
                             </div>

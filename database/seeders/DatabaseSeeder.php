@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@gmail.com',
-            'password' => bcrypt('123456789')
+            'password' => bcrypt('123456789'),
+            'status' => 1,
+            'hidden' => 0
         ]);
 
         Jenjang_Kelas::create([

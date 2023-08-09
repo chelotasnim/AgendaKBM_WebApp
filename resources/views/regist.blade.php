@@ -52,7 +52,7 @@
                     <label for="email">Email Akun Guru</label>
                 </div>
                 <div class="input-group">
-                    <input type="text" name="password" autocomplete="off">
+                    <input type="password" name="password" autocomplete="off">
                     <label for="password">Password</label>
                 </div>
                 <div class="action-group">
@@ -82,7 +82,7 @@
                     <label for="email">Email Akun Siswa</label>
                 </div>
                 <div class="input-group">
-                    <input type="text" name="password" autocomplete="off">
+                    <input type="password" name="password" autocomplete="off">
                     <label for="password">Password</label>
                 </div>
                 <div class="action-group">

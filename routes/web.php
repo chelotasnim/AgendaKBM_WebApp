@@ -113,6 +113,13 @@ Route::middleware('auth')->group(function () {
         return view('dashboard.guru.index', $data);
     });
 
+    Route::get('dashboard/admin', function () {
+        $data = array(
+            'page' => 'admin',
+        );
+        return view('dashboard.admin.index', $data);
+    });
+
     Route::get('dashboard/siswa', function () {
         $data = array(
             'page' => 'siswa',
@@ -143,6 +150,11 @@ Route::middleware('auth')->group(function () {
     Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
     Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
     Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
+
+    Route::get('dashboard/get_admin', [Users::class, 'get_data']);
+    Route::post('dashboard/admin', [Users::class, 'store']);
+    Route::post('dashboard/edit_admin', [Users::class, 'edit']);
+    Route::post('dashboard/delete_admin', [Users::class, 'delete']);
 
     Route::get('dashboard/get_guru', [Gurus::class, 'get_data']);
     Route::post('dashboard/guru', [Gurus::class, 'store']);

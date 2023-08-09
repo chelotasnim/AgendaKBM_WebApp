@@ -211,16 +211,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              {{-- <li class="nav-item">
-                <a href="{{ url('dashboard/jenjang_kelas') }}" class="nav-link @if($page === 'jenjang_kelas'){{ 'active' }} @endif">
-                  @if($page === 'jenjang_kelas')
-                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
-                  @else
-                    <i class="fal fa-grip-lines nav-icon"></i>
-                  @endif
-                  <p>Jenjang Kelas</p>
-                </a>
-              </li> --}}
               <li class="nav-item">
                 <a href="{{ url('dashboard/mapel') }}" class="nav-link @if($page === 'mapel'){{ 'active' }} @endif">
                   @if($page === 'mapel')
@@ -243,8 +233,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item @if($page === 'guru' || $page === 'siswa'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'guru' || $page === 'siswa'){{ 'active' }} @endif">
+          <li class="nav-item @if($page === 'guru' || $page === 'siswa' || $page === 'admin'){{ 'menu-open' }} @endif">
+            <a href="#" class="nav-link @if($page === 'guru' || $page === 'siswa' || $page === 'admin'){{ 'active' }} @endif">
               <i class="nav-icon fal fa-users-cog"></i>
               <p>
                 Master
@@ -253,6 +243,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="{{ url('dashboard/admin') }}" class="nav-link @if($page === 'admin'){{ 'active' }} @endif">
+                  @if($page === 'admin')
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
+                  @else
+                    <i class="fal fa-grip-lines nav-icon"></i>
+                  @endif
+                  <p>Akun Admin</p>
+                </a>
                 <a href="{{ url('dashboard/guru') }}" class="nav-link @if($page === 'guru'){{ 'active' }} @endif">
                   @if($page === 'guru')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
