@@ -52,6 +52,6 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('/assets/mobile/js/script.js') }}"></script>
+    <script src="{{ asset('/assets/mobile/js/auth.js') }}"></script>
 </body>
 </html>
