@@ -35,12 +35,6 @@
                         return meta.row + 1;
                     }
                 },
-                { 
-                    data: 'id',
-                    render: function(data) {
-                        return '<span class="badge code-plat bg-teal">' + data + '</span>';
-                    }
-                },
                 { data: 'name' },
                 { data: 'username' },
                 { data: 'email' },
@@ -57,14 +51,13 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.username + `', '` + data.email + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.username + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button></span>` ;
+                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.username + `', '` + data.email + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.username + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
                     }
                 }
             ],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('text-center');
-                $('td', row).eq(5).addClass('text-center');
+                $('td', row).eq(4).addClass('text-center');
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',

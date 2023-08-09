@@ -38,12 +38,6 @@
                         return meta.row + 1;
                     }
                 },
-                { 
-                    data: 'id',
-                    render: function(data) {
-                        return '<span class="badge code-plat bg-teal">' + data + '</span>';
-                    }
-                },
                 { data: 'nama_mapel' },
                 { 
                     data: 'status',
@@ -58,14 +52,13 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.nama_mapel + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.nama_mapel + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button></span>` ;
+                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.nama_mapel + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.nama_mapel + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
                     }
                 }
             ],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('text-center');
-                $('td', row).eq(3).addClass('text-center');
+                $('td', row).eq(2).addClass('text-center');
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',

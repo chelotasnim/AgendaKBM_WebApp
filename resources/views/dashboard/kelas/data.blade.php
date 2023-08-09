@@ -39,12 +39,6 @@
                     }
                 },
                 { 
-                    data: 'id',
-                    render: function(data) {
-                        return '<span class="badge code-plat bg-teal">' + data + '</span>';
-                    }
-                },
-                { 
                     data: null, 
                     render: function(data) {
                         return data.jenjang.jenjang + ' ' + data.name;
@@ -72,16 +66,15 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><a href="{{ url('dashboard/jadwal/` + data.id + `') }}" class="btn btn-sm btn-info"><i class="fa-regular fa-calendar-days"></i></a><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.jenjang.jenjang + `', '` + data.jenjang_kelas_id + `', '` + data.name + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.id + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button></span>` ;
+                        return `<span class="action-group"><a href="{{ url('dashboard/jadwal/` + data.id + `') }}" class="btn btn-sm btn-info"><i class="fal fa-calendar-alt"></i></a><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.jenjang.jenjang + `', '` + data.jenjang_kelas_id + `', '` + data.name + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.id + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
                     }
                 }
             ],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('text-center');
+                $('td', row).eq(2).addClass('d-none');
                 $('td', row).eq(3).addClass('d-none');
-                $('td', row).eq(4).addClass('d-none');
-                $('td', row).eq(5).addClass('text-center');
+                $('td', row).eq(4).addClass('text-center');
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',

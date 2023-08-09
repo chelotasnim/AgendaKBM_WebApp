@@ -76,11 +76,10 @@
                 <thead>
                   <tr>
                     <th class="text-center">No</th>
-                    <th class="text-center">Kode</th>
                     <th>Nama Mata Pelajaran</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                      <i class="fas fa-ellipsis-v"></i>
                     </th>
                   </tr>
                 </thead>

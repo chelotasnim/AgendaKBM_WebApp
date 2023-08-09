@@ -1,0 +1,389 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../font/Montserrat-VariableFont_wght.ttf') format('truetype');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page {
+    position: relative;
+    min-height: 100vh;
+}
+
+.welcome-cover {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(130deg, rgb(66, 249, 194), rgb(23, 155, 115));
+    animation: swapUp .5s ease-in 1s forwards;
+    z-index: 1000000000;
+}
+
+@keyframes swapUp {
+
+    90% {
+        opacity: 0;
+        transform: none;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+.left-wave {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    height: 100vh;
+    object-fit: cover;
+    opacity: .4;
+}
+
+.welcome-cover .logo {
+    opacity: 0;
+    transform: translateX(-24px);
+    animation: appear 1.2s ease-in forwards;
+}
+
+@keyframes appear {
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.welcome-cover .logo img {
+    width: 180;
+    height: 70px;
+    object-fit: cover;
+}
+
+#alert-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 12px;
+}
+
+.alert-box {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+    max-width: 300px;
+    min-width: 300px;
+    background: rgba(255, 50, 50, .15);
+    border-radius: 5px;
+    transition: .3s;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgb(255, 50, 50);
+}
+
+.alert-box:hover {
+    transform: translateX(-12px);
+}
+
+.alert-icon {
+    padding: 12px 16px;
+    font-size: 24px;
+}
+
+.auth-page {
+    display: flex;
+    padding: 32px;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-header {
+    margin-bottom: 32px;
+}
+
+.form-header img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.form-body {
+    position: relative;
+}
+
+.form-title {
+    margin-bottom: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 16px;
+    color: rgb(150, 150, 150);
+}
+
+.form-title span {
+    margin-top: 5px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 14px;
+    color: rgb(200, 200, 200);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    position: absolute;
+    top: 16px;
+    left: 12px;
+    padding: 0 5px;
+    background: rgb(255, 255, 255);
+    pointer-events: none;
+    transition: .3s;
+    font-size: 16px;
+    color: rgb(125, 125, 125);
+}
+
+.input-group input {
+    padding: 16px 12px;
+    min-width: 275px;
+    border: 1px solid rgb(200, 200, 200);
+    outline: none;
+    border-radius: 3px;
+    transition: .3s;
+    font-size: 16px;
+    color: rgb(100, 100, 100);
+}
+
+.input-group input:focus,
+.input-group input.active {
+    border: 1px solid rgb(29, 175, 131);
+}
+
+.input-group input:focus~label,
+.input-group label.active,
+.input-group input.active~label {
+    top: -8px;
+    left: 5px;
+    font-size: 14px;
+    color: rgb(29, 175, 131);
+}
+
+.input-group label.active {
+    color: rgb(125, 125, 125);
+}
+
+.auth-form button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 16px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+}
+
+.btn.on {
+    background: rgb(29, 175, 131);
+    color: rgb(255, 255, 255);
+}
+
+.btn.on:hover {
+    background: rgb(23, 155, 115);
+}
+
+.btn.revert {
+    background: rgb(255, 255, 255);
+    border: 2px solid rgb(29, 175, 131);
+    color: rgb(29, 175, 131);
+}
+
+.form-footer {
+    margin-top: 16px;
+    font-size: 14px;
+    color: rgb(100, 100, 100);
+}
+
+.regist-link {
+    color: rgb(29, 175, 131);
+}
+
+.option-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.box-option {
+    position: relative;
+    display: flex;
+    width: 300px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 3px;
+}
+
+.box-option:hover {
+    background: rgb(245, 245, 245);
+}
+
+.box-option .value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: rgb(100, 100, 100);
+}
+
+.box-option .icon {
+    font-size: 24px;
+}
+
+.box-option input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.box-option.selected {
+    border: 1px solid rgb(29, 175, 131);
+    background: rgba(29, 175, 131, .07);
+}
+
+.action-group {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    gap: 5px;
+}
+
+.action-group button {
+    width: 100%;
+}
+
+.action-group button.grey {
+    max-width: 50px;
+}
+
+.btn.grey {
+    background: rgb(225, 225, 225);
+    color: rgb(100, 100, 100);
+}
+
+.btn.grey:hover {
+    background: rgb(200, 200, 200);
+}
+
+.select-kelas-modal {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, .8);
+    opacity: 0;
+    transition: .3s;
+}
+
+.select-kelas-modal.active {
+    opacity: 1;
+}
+
+.select-card {
+    position: relative;
+    transform: scale(0);
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 65vh;
+    max-height: 65vh;
+    overflow-y: scroll;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    transition: .3s;
+    transition-delay: .3s;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, .07), 5px 5px 15px rgba(0, 0, 0, .05);
+}
+
+.select-kelas-modal.active .select-card {
+    transform: scale(1);
+}
+
+.select-card::-webkit-scrollbar {
+    width: 0;
+}
+
+.select-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 16px 12.5px;
+    background: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(225, 225, 225);
+    z-index: 100;
+}
+
+.select-val-container {
+    position: relative;
+    padding: 0 12.5px;
+}
+
+.select-val {
+    position: relative;
+    padding-left: 38px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-bottom: 1px solid rgb(225, 225, 225);
+    cursor: pointer;
+    color: rgb(100, 100, 100);
+}
+
+.select-val:hover {
+    color: rgb(150, 150, 150);
+}
+
+.select-val::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 8px;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    border: 1px solid rgb(200, 200, 200);
+}

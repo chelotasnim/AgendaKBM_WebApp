@@ -31,6 +31,17 @@ Route::middleware('guest')->group(function () {
     })->name('login');
 
     Route::post('/', [Users::class, 'login']);
+
+    Route::get('regist', function () {
+        $data = array(
+            'all_kelas' => Kelas::whereHas('jenjang', function ($query) {
+                $query->where('hidden', 0);
+                $query->where('status', 1);
+            })->with('jenjang')->where('hidden', 0)->where('status', 1)->get()
+        );
+
+        return view('regist', $data);
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -112,11 +123,6 @@ Route::middleware('auth')->group(function () {
         );
         return view('dashboard.siswa.index', $data);
     });
-
-    // Route::get('dashboard/get_jenjang_kelas', [Jenjang_Kelases::class, 'get_data']);
-    // Route::post('dashboard/jenjang_kelas', [Jenjang_Kelases::class, 'store']);
-    // Route::post('dashboard/edit_jenjang_kelas', [Jenjang_Kelases::class, 'edit']);
-    // Route::post('dashboard/delete_jenjang_kelas', [Jenjang_Kelases::class, 'delete']);
 
     Route::get('dashboard/get_mapel', [Mapels::class, 'get_data']);
     Route::post('dashboard/mapel', [Mapels::class, 'store']);

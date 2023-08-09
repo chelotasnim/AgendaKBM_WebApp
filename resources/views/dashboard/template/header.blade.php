@@ -8,23 +8,17 @@
 
   <!-- Google Font: Source Sans Pro -->
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-free-6.4.0-web/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-5-pro-master/css/all.css') }}">
   <!-- Ionicons -->
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{ asset('/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- JQVMap -->
-  <link rel="stylesheet" href="{{ asset('/plugins/jqvmap/jqvmap.min.css') }}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css') }}">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
-  <link rel="stylesheet" href="{{ asset('/plugins/summernote/summernote-bs4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
@@ -40,9 +34,9 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('assets/app-images/agenda_logo.png') }}" alt="AdminLTELogo" height="75" width="155">
-  </div>
+  </div> --}}
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-grey navbar-light layout-footer-fixed">
@@ -178,7 +172,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item @if($page === 'dashboard' || $page === 'daily-recapt'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'dashboard' || $page === 'daily-recapt'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-square-poll-vertical"></i>
+              <i class="nav-icon fal fa-analytics"></i>
               <p>
                 Beranda
                 <i class="right fas fa-angle-left"></i>
@@ -188,9 +182,9 @@
               <li class="nav-item">
                 <a href="./index.html" class="nav-link @if($page === 'dashboard'){{ 'active' }} @endif">
                   @if($page === 'dashboard')
-                  <i class="text-teal fas fa-square nav-icon"></i>
+                  <i class="text-teal fal fa-grip-lines nav-icon"></i>
                 @else
-                  <i class="far fa-square nav-icon"></i>
+                  <i class="fal fa-grip-lines nav-icon"></i>
                 @endif
                   <p>Statistik Jurnal</p>
                 </a>
@@ -198,9 +192,9 @@
               <li class="nav-item">
                 <a href="./index2.html" class="nav-link @if($page === 'daily-recapt'){{ 'active' }} @endif">
                   @if($page === 'daily-recapt')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Rekap Jurnal Harian</p>
                 </a>
@@ -210,7 +204,7 @@
           <li class="nav-header">BASIS DATA</li>
           <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-layer-group"></i>
+              <i class="nav-icon fal fa-layer-group"></i>
               <p>
                 Referensi
                 <i class="right fas fa-angle-left"></i>
@@ -220,9 +214,9 @@
               {{-- <li class="nav-item">
                 <a href="{{ url('dashboard/jenjang_kelas') }}" class="nav-link @if($page === 'jenjang_kelas'){{ 'active' }} @endif">
                   @if($page === 'jenjang_kelas')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jenjang Kelas</p>
                 </a>
@@ -230,9 +224,9 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/mapel') }}" class="nav-link @if($page === 'mapel'){{ 'active' }} @endif">
                   @if($page === 'mapel')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Mata Pelajaran</p>
                 </a>
@@ -240,9 +234,9 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/kelas') }}" class="nav-link @if($page === 'kelas'){{ 'active' }} @endif">
                   @if($page === 'kelas')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Kelas</p>
                 </a>
@@ -251,7 +245,7 @@
           </li>
           <li class="nav-item @if($page === 'guru' || $page === 'siswa'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'guru' || $page === 'siswa'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-users-gear"></i>
+              <i class="nav-icon fal fa-users-cog"></i>
               <p>
                 Master
                 <i class="right fas fa-angle-left"></i>
@@ -261,17 +255,17 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/guru') }}" class="nav-link @if($page === 'guru'){{ 'active' }} @endif">
                   @if($page === 'guru')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Akun Guru</p>
                 </a>
                 <a href="{{ url('dashboard/siswa') }}" class="nav-link @if($page === 'siswa'){{ 'active' }} @endif">
                   @if($page === 'siswa')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Akun Siswa</p>
                 </a>
@@ -280,7 +274,7 @@
           </li>
           <li class="nav-item @if($page === 'rekap' || $page === 'laporan'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'rekap' || $page === 'laporan'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-server"></i>
+              <i class="nav-icon fal fa-server"></i>
               <p>
                 Transaksional
                 <i class="right fas fa-angle-left"></i>
@@ -290,17 +284,17 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/rekap') }}" class="nav-link @if($page === 'rekap'){{ 'active' }} @endif">
                   @if($page === 'rekap')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jurnal Harian</p>
                 </a>
                 <a href="{{ url('dashboard/laporan') }}" class="nav-link @if($page === 'laporan'){{ 'active' }} @endif">
                   @if($page === 'laporan')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jurnal Lengkap</p>
                 </a>
@@ -310,7 +304,7 @@
           <li class="nav-header">FITUR PENGGUNA</li>
           <li class="nav-item @if($page === 'jurnal_guru'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'jurnal_guru'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-chalkboard-user"></i>
+              <i class="nav-icon fal fa-user-chart"></i>
               <p>
                 Guru
                 <i class="right fas fa-angle-left"></i>
@@ -320,9 +314,9 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/jurnal_guru') }}" class="nav-link @if($page === 'jurnal_guru'){{ 'active' }} @endif">
                   @if($page === 'jurnal_guru')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jurnal Harian</p>
                 </a>
@@ -331,7 +325,7 @@
           </li>
           <li class="nav-item @if($page === 'jadwal_siswa'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'jadwal_siswa'){{ 'active' }} @endif">
-              <i class="nav-icon fa-solid fa-users-rectangle"></i>
+              <i class="nav-icon fal fa-user-graduate"></i>
               <p>
                 Siswa
                 <i class="right fas fa-angle-left"></i>
@@ -341,9 +335,9 @@
               <li class="nav-item">
                 <a href="{{ url('dashboard/jadwal_siswa') }}" class="nav-link @if($page === 'jadwal_siswa'){{ 'active' }} @endif">
                   @if($page === 'jadwal_siswa')
-                    <i class="text-teal fas fa-square nav-icon"></i>
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
-                    <i class="far fa-square nav-icon"></i>
+                    <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jadwal Pelajaran</p>
                 </a>

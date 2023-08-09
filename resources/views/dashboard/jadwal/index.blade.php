@@ -469,7 +469,7 @@
                                 <th>Deskripsi Jadwal</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    <i class="fas fa-ellipsis-v"></i>
                                 </th>
                             </tr>
                         </thead>

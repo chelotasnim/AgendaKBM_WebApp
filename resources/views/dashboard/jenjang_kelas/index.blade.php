@@ -42,7 +42,6 @@
                 <thead>
                   <tr>
                     <th class="text-center">No</th>
-                    <th class="text-center">Kode</th>
                     <th>Jenjang Kelas</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">

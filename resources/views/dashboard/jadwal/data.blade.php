@@ -64,7 +64,7 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><a type="button" href="{{ url('dashboard/jadwal/column/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-info"><i class="fa-solid fa-calendar-plus"></i></a><a type="button" href="{{ url('dashboard/jadwal/column_remove/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-danger"><i class="fa-solid fa-calendar-minus"></i></a><a type="button" href="{{ url('dashboard/jadwal/edit/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a></span>` ;
+                        return `<span class="action-group"><a type="button" href="{{ url('dashboard/jadwal/column/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-info"><i class="fas fa-calendar-plus"></i></a><a type="button" href="{{ url('dashboard/jadwal/column_remove/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-danger"><i class="fas fa-calendar-minus"></i></a><a type="button" href="{{ url('dashboard/jadwal/edit/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></a></span>` ;
                     }
                 }
             ],
