@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Montserrat';
-    src: url('../font/Montserrat-VariableFont_wght.ttf') format('truetype');
+    src: url('../../libraries/font/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 
 * {
@@ -78,6 +78,7 @@
     top: 0;
     right: 0;
     padding: 12px;
+    padding-top: 16px;
     z-index: 10;
 }
 

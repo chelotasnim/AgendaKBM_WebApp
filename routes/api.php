@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Gurus;
+use App\Http\Controllers\Siswa_Api;
 use App\Http\Controllers\Siswas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('teacher/self_registration', [Gurus::class, 'self_regist']);
 
 Route::post('siswa/self_registration', [Siswas::class, 'self_regist']);
+
+Route::get('student/{id}', [Siswa_Api::class, 'get_main']);

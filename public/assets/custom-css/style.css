@@ -1,12 +1,7 @@
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../font/Montserrat-VariableFont_wght.ttf') format('truetype');
-}
-
 * {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    font-family: 'Montserrat', sans-serif;
+    font-family: sans-serif;
 }
 
 body.sidebar-collapse .brand-link img {

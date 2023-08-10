@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ asset('/plugins/fontawesome-5-pro-master/css/all.css') }}">
     <link rel="shortcut icon" href="{{ asset('/assets/app-images/favicon.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('/assets/mobile/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('auth/css/style.css') }}">
     <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
     <title>Aplikasi Agenda KBM | Masuk</title>
 </head>
@@ -121,7 +121,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('/assets/mobile/js/auth.js') }}"></script>
+    <script src="{{ asset('auth/js/auth.js') }}"></script>
     <script>
         $(document).ready(function() {
             function sendData(uri, form) {

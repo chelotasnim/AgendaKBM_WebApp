@@ -23,13 +23,13 @@ class Users extends Controller
             'password' => request()->input('password')
         );
         if (Auth::guard('student')->attempt($credentials)) {
-            request()->session()->regenerateToken();
-            return redirect()->intended('dashboard/mapel');
+            request()->session()->regenerate();
+            return redirect()->intended('student');
         } else if (Auth::guard('teacher')->attempt($credentials)) {
-            request()->session()->regenerateToken();
-            return redirect()->intended('dashboard/mapel');
+            request()->session()->regenerate();
+            return redirect()->intended('teacher');
         } else if (Auth::guard('web')->attempt($credentials)) {
-            request()->session()->regenerateToken();
+            request()->session()->regenerate();
             return redirect()->intended('dashboard/mapel');
         } else {
             return redirect('/')->with('credential_failed', 'Data Kredensial Salah');
@@ -38,9 +38,27 @@ class Users extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
         request()->session()->invalidate();
-        request()->session()->regenerate();
+        request()->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+    public function student_logout()
+    {
+        Auth::guard('student')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+    public function teacher_logout()
+    {
+        Auth::guard('teacher')->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
 
         return redirect('/');
     }

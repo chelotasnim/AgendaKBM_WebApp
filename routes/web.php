@@ -167,3 +167,15 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/delete_siswa', [Siswas::class, 'delete']);
     Route::post('dashboard/import_siswa', [Siswas::class, 'import']);
 });
+
+Route::middleware('auth:student')->group(function () {
+    Route::get('student_logout', [Users::class, 'student_logout']);
+
+    Route::get('student', function () {
+        $data = array(
+            'page' => 'home'
+        );
+
+        return view('mobile.student.index', $data);
+    });
+});
