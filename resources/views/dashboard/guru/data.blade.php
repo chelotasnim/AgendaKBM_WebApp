@@ -1,6 +1,6 @@
 <script>
     function refreshTable() {
-        $('#guru-table').DataTable().ajax.reload();
+        $('#guru-table').DataTable().ajax.reload(null, false);
     };
 
     $(document).ready(function () {
@@ -67,8 +67,22 @@
 
         setInterval(refreshTable, 1000);
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'guru',
@@ -93,12 +107,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#delete-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'delete_guru',
@@ -123,12 +141,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#edit-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'edit_guru',
@@ -153,6 +175,8 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
@@ -204,6 +228,9 @@
 
         $('#import-guru-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
+
             var fileInput = document.getElementById('guruExcel');
                 var file = fileInput.files[0];
                 var formData = new FormData();
@@ -234,8 +261,11 @@
                             $('.toast').remove();
                         }
                         setTimeout(removeEl, 4000);
+
+                        removeLoading();
                         },
                     error: function(xhr, status, error) {
+                        removeLoading();
                         console.error(xhr.responseText);
                     }
                 });

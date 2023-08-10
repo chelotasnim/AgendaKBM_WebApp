@@ -1,6 +1,6 @@
 <script>
     function refreshTable() {
-        $('#kelas-table').DataTable().ajax.reload();
+        $('#kelas-table').DataTable().ajax.reload(null, false);
     };
 
     $(document).ready(function () {
@@ -126,8 +126,22 @@
 
         setInterval(refreshTable, 1000);
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'kelas',
@@ -152,12 +166,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#delete-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'delete_kelas',
@@ -183,12 +201,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#edit-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'edit_kelas',
@@ -213,12 +235,17 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#import-kelas-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
+
             var fileInput = document.getElementById('kelasExcel');
                 var file = fileInput.files[0];
                 var formData = new FormData();
@@ -248,8 +275,11 @@
                             $('.toast').remove();
                         }
                         setTimeout(removeEl, 4000);
+
+                        removeLoading();
                         },
                     error: function(xhr, status, error) {
+                        removeLoading();
                         console.error(xhr.responseText);
                     }
                 });
@@ -257,6 +287,8 @@
 
         $('#naik-kelas-form').on('submit', function() {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'naik_kelas',
@@ -280,6 +312,8 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });

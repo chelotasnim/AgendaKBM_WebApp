@@ -27,8 +27,22 @@
             };
         });
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         $('#change-form').on('submit', function(event) {
             event.preventDefault(); 
+
+            setLoading();
 
             let schedule_data = [];
             let success = 0;
@@ -97,6 +111,8 @@
                     setTimeout(removeEl, 4000);
                 }
             });
+
+            removeLoading();
         });
     });
 </script>

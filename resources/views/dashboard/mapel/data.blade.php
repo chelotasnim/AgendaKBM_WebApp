@@ -1,6 +1,6 @@
 <script>
     function refreshTable() {
-        $('#mapel-table').DataTable().ajax.reload();
+        $('#mapel-table').DataTable().ajax.reload(null, false);
     };
 
     $(document).ready(function () {
@@ -111,8 +111,22 @@
 
         setInterval(refreshTable, 1000);
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'mapel',
@@ -137,12 +151,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#delete-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'delete_mapel',
@@ -168,12 +186,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#edit-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'edit_mapel',
@@ -198,12 +220,17 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#import-mapel-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
+
             var fileInput = document.getElementById('mapelExcel');
                 var file = fileInput.files[0];
                 var formData = new FormData();
@@ -233,8 +260,12 @@
                             $('.toast').remove();
                         }
                         setTimeout(removeEl, 4000);
+                        removeLoading();
+
                         },
                     error: function(xhr, status, error) {
+                        removeLoading();
+
                         console.error(xhr.responseText);
                     }
                 });

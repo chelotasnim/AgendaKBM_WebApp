@@ -49,9 +49,14 @@ table {
     font-size: 12px;
 }
 
+.paginate_button a {
+    color: rgb(29, 175, 131) !important;
+}
+
 .paginate_button.active a {
     border: 1px solid rgb(32, 201, 151) !important;
     background: rgb(32, 201, 151) !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 .select2-container--bootstrap4.select2-container--focus .select2-selection {
@@ -85,6 +90,7 @@ table {
     background: rgba(255, 255, 255, .8);
     font-size: 48px;
     color: rgb(29, 175, 131);
+    z-index: 1100 !important;
 }
 
 .loading-animation i {

@@ -1,4 +1,8 @@
 <script>
+    function refreshTable() {
+        $('#jadwal-table').DataTable().ajax.reload(null, false);
+    };
+
     $(document).ready(function() {
         $('select').select2({ theme: 'bootstrap4' });
 
@@ -78,6 +82,20 @@
                 emptyTable: 'Belum Ada Data Jadwal'
             }
         });
+
+        setInterval(refreshTable, 1000);
+
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
        
         let cloneCount = 0;
         let removeCount = 0;
@@ -135,6 +153,8 @@
 
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             let schedule_data = [];
             let error = '';
@@ -237,6 +257,8 @@
                                 $('.toast').remove();
                             }
                             setTimeout(removeEl, 4000);
+
+                            removeLoading();
                         }
                     });
                 };
@@ -267,6 +289,8 @@
                     }
                 });
             } else {
+                removeLoading();
+
                 $('#toast-container').html(error);
                 function removeEl() {
                     $('.toast').remove();

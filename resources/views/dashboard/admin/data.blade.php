@@ -1,6 +1,6 @@
 <script>
     function refreshTable() {
-        $('#admin-table').DataTable().ajax.reload();
+        $('#admin-table').DataTable().ajax.reload(null, false);
     };
 
     $(document).ready(function () {
@@ -70,8 +70,22 @@
 
         setInterval(refreshTable, 1000);
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         $('#add-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'admin',
@@ -96,12 +110,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#delete-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'delete_admin',
@@ -127,12 +145,16 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
 
         $('#edit-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: 'edit_admin',
@@ -157,6 +179,8 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });

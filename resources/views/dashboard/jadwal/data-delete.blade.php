@@ -21,9 +21,23 @@
             $(this).parent().parent().prev().remove();
         });
 
+        function setLoading() {
+            $('body').append(`
+                <div class="loading-animation">
+                    <i class="fas fa-spinner-third"></i>
+                </div>
+            `);
+        };
+
+        function removeLoading() {
+            $('.loading-animation').remove();
+        };
+
         parseSchedule = { schedules_id: schedule };
         $('#delete-form').on('submit', function(event) {
             event.preventDefault();
+
+            setLoading();
 
             $.ajax({
                 url: "{{ url('dashboard/jadwal/delete/schedule') }}",
@@ -43,6 +57,8 @@
                         $('.toast').remove();
                     }
                     setTimeout(removeEl, 4000);
+
+                    removeLoading();
                 }
             });
         });
