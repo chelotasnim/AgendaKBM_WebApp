@@ -17,21 +17,24 @@ if (auth_fields[0] != undefined) {
     });
 };
 
-const alert_boxes = document.querySelectorAll('.alert-box');
-if (alert_boxes[0] != undefined) {
-    alert_boxes.forEach(alert => {
-        alert.addEventListener(
-            'click', function () {
-                alert.style.transform = 'translateX(150%)';
+function searchError() {
+    const alert_boxes = document.querySelectorAll('.alert-box');
+    if (alert_boxes[0] != undefined) {
+        alert_boxes.forEach(alert => {
+            alert.addEventListener(
+                'click', function () {
+                    alert.style.transform = 'translateX(150%)';
 
-                function removeAlert() {
-                    alert.remove();
-                };
-                setTimeout(removeAlert, 1000);
-            }
-        );
-    });
+                    function removeAlert() {
+                        alert.remove();
+                    };
+                    setTimeout(removeAlert, 200);
+                }
+            );
+        });
+    };
 };
+setInterval(searchError, 1000);
 
 const box_options = document.querySelectorAll('.box-option');
 if (box_options[0] != undefined) {

@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwals;
-use App\Http\Controllers\Jenjang_Kelases;
 use App\Http\Controllers\Kelases;
 use App\Http\Controllers\Mapels;
 use App\Http\Controllers\Siswas;
@@ -44,7 +43,7 @@ Route::middleware('guest')->group(function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:web')->group(function () {
     Route::get('logout', [Users::class, 'logout']);
     // Route::get('dashboard/jenjang_kelas', function () {
     //     $data = array(

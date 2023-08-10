@@ -22,7 +22,13 @@ class Users extends Controller
             'email' => request()->input('email'),
             'password' => request()->input('password')
         );
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('student')->attempt($credentials)) {
+            request()->session()->regenerateToken();
+            return redirect()->intended('dashboard/mapel');
+        } else if (Auth::guard('teacher')->attempt($credentials)) {
+            request()->session()->regenerateToken();
+            return redirect()->intended('dashboard/mapel');
+        } else if (Auth::guard('web')->attempt($credentials)) {
             request()->session()->regenerateToken();
             return redirect()->intended('dashboard/mapel');
         } else {

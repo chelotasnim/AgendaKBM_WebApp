@@ -39,7 +39,7 @@
                 </div>
                 <div class="input-group">
                     <input type="text" name="email" autocomplete="off">
-                    <label for="email">Email / Nama Pengguna</label>
+                    <label for="email">Email</label>
                 </div>
                 <div class="input-group">
                     <input type="password" name="password">

@@ -11,6 +11,8 @@
 </head>
 <body>
     <div class="page auth-page">
+        <div id="alert-container">
+        </div>
         <div class="auth-form">
             <div class="form-header">
                 <img src="{{ asset('/assets/app-images/small_logo.png') }}" draggable="false"/>
@@ -120,5 +122,79 @@
         </div>
     </div>
     <script src="{{ asset('/assets/mobile/js/auth.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            function sendData(uri, form) {
+                $('.page').append(`
+                    <div class="loading-animation">
+                        <i class="fas fa-spinner-third"></i>
+                    </div>
+                `);                
+
+                $.ajax({
+                    url: uri,
+                    data: $(form).serialize(),
+                    type: 'post',
+                    success: function(result) {
+                        let dumpNotif = '';
+                        for (let key in result.notification) {
+                            if (result.notification.hasOwnProperty(key)) {
+                                if(result.success === true) {
+                                    dumpNotif += `
+                                    <div class="alert-box success">
+                                        <div class="alert-icon">
+                                            <i class="fal fa-user-check"></i>
+                                        </div>
+                                        <div class="alert-content">${result.notification[key]}</div>
+                                    </div>
+                                `;
+                                } else {
+                                    dumpNotif += `
+                                    <div class="alert-box">
+                                        <div class="alert-icon">
+                                            <i class="fal fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-content">${result.notification[key]}</div>
+                                    </div>
+                                `;
+                                };
+                            };
+                        };
+                        $('#alert-container').html(dumpNotif);
+
+                        if(result.success === true) {
+                            $('.form-body').remove();
+                            $('.action-group').remove();
+                            $('.form-footer').remove();
+                            
+                            let content = $('.auth-form').html();
+                            content += `
+                            <div class="success-body">
+                                <i class="fal fa-user-check"></i>
+                            </div>
+                            <div class="action-group">
+                                <a href="{{ url('/') }}" class="btn on">Masuk</a>
+                            </div>
+                            `;
+
+                            $('.auth-form').html(content);
+                        };
+
+                        $('.loading-animation').remove();
+                    }
+                });
+            };
+
+            $('#add-guru').on('submit', function(e) {
+                e.preventDefault();
+                sendData("{{ url('api/teacher/self_registration') }}", '#add-guru');
+            });
+
+            $('#add-siswa').on('submit', function(e) {
+                e.preventDefault();
+                sendData("{{ url('api/siswa/self_registration') }}", '#add-siswa');
+            });
+        });
+    </script>
 </body>
 </html>

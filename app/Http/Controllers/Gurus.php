@@ -178,4 +178,69 @@ class Gurus extends Controller
             return response()->json(['notification' => ['Data Imported' => '<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Akun Guru Berhasil Diimpor</div></div>'], 'success' => true]);
         };
     }
+
+    public function self_regist()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|max:100',
+            'username' => 'required|min:5|max:25',
+            'email' => 'required|max:255|email:dns',
+            'password' => 'required'
+        ], [
+            'name.required' => 'Wajib Memasukkan Nama Asli',
+            'name.max' => 'Nama Maksimal 100 Karakter',
+            'username.required' => 'Wajib Memasukkan Username',
+            'username.min' => 'Username Minimal 5 Karakter',
+            'username.max' => 'Username Maksimal 255 Karakter',
+            'email.required' => 'Wajib Memasukkan Email',
+            'email.email' => 'Format Email Harus Valid',
+            'email.max' => 'Email Maksimal 255 Karakter',
+            'password.required' => 'Wajib Memasukkan Password'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
+
+        if ($validator->passes()) {
+            $check_backup = Guru::where('username', request()->input('username'))->where('hidden', 1)->orWhere('email', request()->input('email'))->where('hidden', 1)->first();
+            if ($check_backup == null) {
+                $validator2 = Validator::make(request()->all(), [
+                    'username' => 'unique:guru,username',
+                    'email' => 'unique:guru,email'
+                ], [
+                    'username.unique' => 'Username Tidak Boleh Sama',
+                    'email.unique' => 'Email Tidak Boleh Sama'
+
+                ]);
+
+                if ($validator2->fails()) {
+                    return response()->json(['notification' => $validator2->errors()]);
+                };
+
+                if ($validator2->passes()) {
+                    $data = array(
+                        'name' => request()->input('name'),
+                        'username' => request()->input('username'),
+                        'email' => request()->input('email'),
+                        'password' => bcrypt(request()->input('password')),
+                        'status' => 1,
+                        'hidden' => 0,
+                        'action_by' => 0
+                    );
+
+                    Guru::create($data);
+
+                    return response()->json(['notification' => ['Data Added' => ['Akun Guru Berhasil Didaftarkan']], 'success' => true]);
+                };
+            } else {
+                Guru::where('id', $check_backup->id)->update([
+                    'status' => 1,
+                    'hidden' => 0,
+                    'action_by' => 0
+                ]);
+                return response()->json(['notification' => ['Data Added' => ['Akun Guru Berhasil Didaftarkan']], 'success' => true]);
+            };
+        };
+    }
 }

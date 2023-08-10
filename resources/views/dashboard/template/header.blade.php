@@ -302,7 +302,7 @@
           <li class="nav-header">FITUR PENGGUNA</li>
           <li class="nav-item @if($page === 'jurnal_guru'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'jurnal_guru'){{ 'active' }} @endif">
-              <i class="nav-icon fal fa-user-chart"></i>
+              <i class="nav-icon fal fa-chalkboard-teacher"></i>
               <p>
                 Guru
                 <i class="right fas fa-angle-left"></i>
