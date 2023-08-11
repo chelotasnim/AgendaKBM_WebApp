@@ -209,8 +209,8 @@ class Gurus extends Controller
                     'username' => 'unique:guru,username',
                     'email' => 'unique:guru,email'
                 ], [
-                    'username.unique' => 'Username Tidak Boleh Sama',
-                    'email.unique' => 'Email Tidak Boleh Sama'
+                    'username.unique' => 'Akun Guru Sudah Terdaftar',
+                    'email.unique' => 'Akun Guru Sudah Terdaftar'
 
                 ]);
 

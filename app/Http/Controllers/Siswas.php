@@ -203,16 +203,16 @@ class Siswas extends Controller
             'password' => 'required',
             'kelas_id' => 'required'
         ], [
-            'name.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Nama Asli</div></div>',
-            'name.max' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Nama Maksimal 100 Karakter</div></div>',
-            'username.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Username</div></div>',
-            'username.min' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Username Minimal 5 Karakter</div></div>',
-            'username.max' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Username Maksimal 255 Karakter</div></div>',
-            'email.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Email</div></div>',
-            'email.email' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Format Email Harus Valid</div></div>',
-            'email.max' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Email Maksimal 255 Karakter</div></div>',
-            'password.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Password</div></div>',
-            'kelas_id.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Kelas Siswa</div></div>'
+            'name.required' => 'Wajib Memasukkan Nama Asli',
+            'name.max' => 'Nama Maksimal 100 Karakter',
+            'username.required' => 'Wajib Memasukkan Username',
+            'username.min' => 'Username Minimal 5 Karakter',
+            'username.max' => 'Username Maksimal 255 Karakter',
+            'email.required' => 'Wajib Memasukkan Email',
+            'email.email' => 'Format Email Harus Valid',
+            'email.max' => 'Email Maksimal 255 Karakter',
+            'password.required' => 'Wajib Memasukkan Password',
+            'kelas_id.required' => 'Wajib Memilih Kelas Sisw>'
         ]);
 
         if ($validator->fails()) {
@@ -226,8 +226,8 @@ class Siswas extends Controller
                     'username' => 'unique:siswa,username',
                     'email' => 'unique:siswa,email'
                 ], [
-                    'username.unique' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Username Tidak Boleh Sama</div></div>',
-                    'email.unique' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Email Tidak Boleh Sama</div></div>'
+                    'username.unique' => 'Akun Siswa Sudah Terdaftar',
+                    'email.unique' => 'Akun Siswa Sudah Terdaftar'
 
                 ]);
 
