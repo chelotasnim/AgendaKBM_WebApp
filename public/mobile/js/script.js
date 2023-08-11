@@ -18,6 +18,19 @@ function getTime() {
 };
 getTime();
 
+const mintues = document.querySelector('.minutes');
+if (mintues != undefined) {
+    function display() {
+        mintues.style.opacity = '1';
+    };
+    setInterval(display, 500);
+
+    function undisplay() {
+        mintues.style.opacity = '0';
+    };
+    setInterval(undisplay, 1000);
+};
+
 const nav_btn = document.querySelectorAll('.nav-icon');
 if (nav_btn[0] != undefined) {
     nav_btn.forEach(btn => {

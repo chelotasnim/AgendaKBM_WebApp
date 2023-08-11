@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guru_Api;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Siswa_Api;
 use App\Http\Controllers\Siswas;
@@ -25,4 +26,6 @@ Route::post('teacher/self_registration', [Gurus::class, 'self_regist']);
 
 Route::post('siswa/self_registration', [Siswas::class, 'self_regist']);
 
-Route::get('student/{id}', [Siswa_Api::class, 'get_main']);
+Route::get('student/{id}/{day}', [Siswa_Api::class, 'get_main']);
+
+Route::get('teacher/{id}', [Guru_Api::class, 'get_main']);

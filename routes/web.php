@@ -172,10 +172,14 @@ Route::middleware('auth:student')->group(function () {
     Route::get('student_logout', [Users::class, 'student_logout']);
 
     Route::get('student', function () {
-        $data = array(
-            'page' => 'home'
-        );
+        return view('mobile.student.index');
+    });
+});
 
-        return view('mobile.student.index', $data);
+Route::middleware('auth:teacher')->group(function () {
+    Route::get('teacher_logout', [Users::class, 'teacher_logout']);
+
+    Route::get('teacher', function () {
+        return view('mobile.teacher.index');
     });
 });

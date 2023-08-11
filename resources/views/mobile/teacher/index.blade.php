@@ -55,10 +55,10 @@
     <script src="{{ asset('mobile/js/script.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const user_id = "{{ Auth::guard('student')->user()->id }}";
+            const user_id = "{{ Auth::guard('teacher')->user()->id }}";
             function setHome() {
                 $.ajax({
-                    url: `{{ url('api/student/${user_id}/today') }}`,
+                    url: `{{ url('api/teacher/${user_id}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -71,49 +71,36 @@
                         };
                         
                         $('#user-name-here').text('Hi! ' + name);
-                        let boxes = '';
-                        $.each(result.main_data.kelas.jadwal[0].details, function(index, schedule) {
-                            let class_for_color = '';
-                            if(schedule.keterangan == 'Telah Berakhir') {
-                                class_for_color = 'grey';
-                            } else if(schedule.keterangan == 'Akan Dimulai') {
-                                class_for_color = 'red';
-                            };
-                            boxes += `
-                                <div class="schedule-box">
-                                    <div class="schedule-header">
-                                        <div class="schedule-name">Jam Ke ${schedule.jam_ke}</div>
-                                        <div class="schedule-status badge on ${class_for_color}">${schedule.keterangan}</div>
-                                    </div>
-                                    <div class="schedule-detail">
-                                        <h3>${schedule.mapel.nama_mapel}</h3>
-                                        <p>~ ${schedule.guru.name}</p>
-                                    </div>
-                                    <div class="schedule-range">
-                                        <div class="schedule-time">${schedule.jam_mulai}</div>
-                                        <span>/</span>
-                                        <div class="schedule-time">${schedule.jam_selesai}</div>
-                                    </div>
-                                </div>
-                            `; 
-                        });
-
                         $('#section-wrapper').html(`
                             <div id="home-wrapper" class="section">
                                 <div class="floating-header">
                                     <div class="icon">
                                         <i class="fal fa-user-clock"></i>
                                     </div>
-                                    <div class="title">Jadwal Kelas Anda Hari Ini</div>
+                                    <div class="title">Jadwal Mengajar Hari Ini</div>
                                 </div>
                                 <div class="schedule-list">
                                     <div class="list-heading">
-                                        <p>${result.main_data.kelas.jenjang.jenjang + ' ' + result.main_data.kelas.name}</p>
-                                        <p>${result.now_date.day_name}</p>
-                                        <p>${result.now_date.date}</p>
+                                        <p>Jadwal</p>
+                                        <p>Kamis</p>
+                                        <p>10 Agt 2023</p>
                                     </div>
                                     <div class="box-container">
-                                        ${boxes}
+                                         <div class="schedule-box">
+                                            <div class="schedule-header">
+                                                <div class="schedule-name">Jam Ke 0</div>
+                                                <div class="schedule-status badge on">Berlangsung</div>
+                                            </div>
+                                            <div class="schedule-detail">
+                                                <h3>Pemrograman Web dan Perangkat Bergerak</h3>
+                                                <p>~ XII RPL 1</p>
+                                            </div>
+                                            <div class="schedule-range">
+                                                <div class="schedule-time">07:00</div>
+                                                <span>/</span>
+                                                <div class="schedule-time">09:00</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,83 +110,10 @@
             };
             setHome();
             $('#home').on('click', setHome);
-
-            function setSchedule(selected_day) {
-                $.ajax({
-                    url: `{{ url('api/student/${user_id}/${selected_day}') }}`,
-                    type: 'get',
-                    success: function(result) {
-                        let split_name = result.main_data.name.split(' ');
-                        let name = '';
-
-                        if(split_name.length > 1) {
-                            name = split_name[0] + ' ' + split_name[1];
-                        } else {
-                            name = split_name[0];
-                        };
-                        
-                        $('#user-name-here').text('Hi! ' + name);
-
-                        let boxes = '';
-                        $.each(result.main_data.kelas.jadwal[0].details, function(index, schedule) {
-                            boxes += `
-                                <div class="schedule-box">
-                                    <div class="schedule-header">
-                                        <div class="schedule-name">Jam Ke ${schedule.jam_ke}</div>
-                                    </div>
-                                    <div class="schedule-detail">
-                                        <h3>${schedule.mapel.nama_mapel}</h3>
-                                        <p>~ ${schedule.guru.name}</p>
-                                    </div>
-                                    <div class="schedule-range">
-                                        <div class="schedule-time">${schedule.jam_mulai}</div>
-                                        <span>/</span>
-                                        <div class="schedule-time">${schedule.jam_selesai}</div>
-                                    </div>
-                                </div>
-                            `; 
-                        });
-                        $('#section-wrapper').html(`
-                            <div id="schedule-wrapper" class="section">
-                                <div class="floating-select as-select">
-                                    <div class="arrow previous">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </div>
-                                    <div class="select-val">${result.now_date.day_name}</div>
-                                    <div class="arrow next">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </div>
-                                </div>
-                                <div class="schedule-list">
-                                    <div class="list-heading">
-                                        <p>${result.main_data.kelas.jenjang.jenjang + ' ' + result.main_data.kelas.name}</p>
-                                        <p>${result.now_date.day_name}</p>
-                                        <p>${result.main_data.kelas.jadwal[0].details.length} Jam</p>
-                                    </div>
-                                    <div class="box-container">
-                                        ${boxes}
-                                    </div>
-                                </div>
-                            </div>
-                        `);
-
-                        $('.arrow.previous').on('click', function() {
-                            setSchedule(`${result.yesterday}`);
-                        });
-
-                        $('.arrow.next').on('click', function() {
-                            setSchedule(`${result.tomorrow}`);
-                        });
-                    }
-                });
-            };
-            $('#schedule').on('click', function() {
-                setSchedule('today');
-            });
     
             function setProfile() {
                 $.ajax({
-                    url: `{{ url('api/student/${user_id}/today') }}`,
+                    url: `{{ url('api/teacher/${user_id}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -222,7 +136,7 @@
                                 </div>
                                 <div class="list-heading">
                                     <p>Status Akun :</p>
-                                    <p>Akun Siswa</p>
+                                    <p>Akun Guru</p>
                                 </div>
                                 <div class="profile-container">
                                     <div class="profile-box">
