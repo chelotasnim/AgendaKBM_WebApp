@@ -66,7 +66,7 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><a href="{{ url('dashboard/jadwal/` + data.id + `') }}" class="btn btn-sm btn-info"><i class="fal fa-calendar-alt"></i></a><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.jenjang.jenjang + `', '` + data.jenjang_kelas_id + `', '` + data.name + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.id + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                        return `<span class="action-group"><a href="{{ url('dashboard/jadwal/` + data.id + `') }}" class="btn btn-sm btn-info"><i class="far fa-calendar-alt"></i></a><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.jenjang.jenjang + `', '` + data.jenjang_kelas_id + `', '` + data.name + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.id + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
                     }
                 }
             ],
