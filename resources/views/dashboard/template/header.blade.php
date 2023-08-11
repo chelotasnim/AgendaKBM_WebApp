@@ -234,27 +234,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item @if($page === 'jadwal_siswa'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'jadwal_siswa'){{ 'active' }} @endif">
-              <i class="nav-icon fal fa-user-graduate"></i>
-              <p>
-                Siswa
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('dashboard/jadwal_siswa') }}" class="nav-link @if($page === 'jadwal_siswa'){{ 'active' }} @endif">
-                  @if($page === 'jadwal_siswa')
-                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
-                  @else
-                    <i class="fal fa-grip-lines nav-icon"></i>
-                  @endif
-                  <p>Jadwal Pelajaran</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-header">LAINNYA</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -266,12 +245,6 @@
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-circle text-warning"></i>
               <p>Info Penggunaan</p>
-            </a>
-          </li>
-          <li class="nav-item mb-3">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Dukungan Lanjutan</p>
             </a>
           </li>
         </ul>
