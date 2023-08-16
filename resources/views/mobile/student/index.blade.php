@@ -10,46 +10,50 @@
     <title>Aplikasi Agenda KBM | Masuk</title>
 </head>
 <body>
-    <div class="welcome-cover">
-        <img class="left-wave" src="{{ asset('auth/images/wave.png') }}" draggable="false"/>
-        <div class="logo">
-            <img src="{{ asset('/assets/app-images/agenda_logo_white.png') }}" draggable="false"/>
-        </div>
-    </div>
-    <nav>
-        <div id="home" class="nav-icon active">
-            <i class="fal fa-th-list"></i>
-        </div>
-        <div id="schedule" class="nav-icon">
-            <i class="fal fa-calendar-alt"></i>
-        </div>
-        <div id="profile" class="nav-icon">
-            <i class="fal fa-address-card"></i>
-        </div>
-    </nav>
-    <div class="page">
-        <header>
-            <div class="main-header">
-                <img src="{{ asset('mobile/assets/wave.png') }}" draggable="false"/>
-                <div class="app-label">
-                    <p id="user-name-here"></p>
-                    <h1>
-                        <span>Agenda</span>
-                        <br>
-                        KBM
-                    </h1>
-                </div>
-                <div class="timer">
-                    <span class="hours"></span>
-                    <br>
-                    <span class="minutes"></span>
+    <div class="entire">
+        <div class="frame">
+            <div class="welcome-cover">
+                <img class="left-wave" src="{{ asset('auth/images/wave.png') }}" draggable="false"/>
+                <div class="logo">
+                    <img src="{{ asset('/assets/app-images/agenda_logo_white.png') }}" draggable="false"/>
                 </div>
             </div>
-            <div class="wave-illusion">
-                <div class="cover"></div>
+            <nav>
+                <div id="home" class="nav-icon active">
+                    <i class="fal fa-th-list"></i>
+                </div>
+                <div id="schedule" class="nav-icon">
+                    <i class="fal fa-calendar-alt"></i>
+                </div>
+                <div id="profile" class="nav-icon">
+                    <i class="fal fa-address-card"></i>
+                </div>
+            </nav>
+            <div class="page">
+                <header>
+                    <div class="main-header">
+                        <img src="{{ asset('mobile/assets/wave.png') }}" draggable="false"/>
+                        <div class="app-label">
+                            <p id="user-name-here"></p>
+                            <h1>
+                                <span>Agenda</span>
+                                <br>
+                                KBM
+                            </h1>
+                        </div>
+                        <div class="timer">
+                            <span class="hours"></span>
+                            <br>
+                            <span class="minutes"></span>
+                        </div>
+                    </div>
+                    <div class="wave-illusion">
+                        <div class="cover"></div>
+                    </div>
+                </header>
+                <div id="section-wrapper">
+                </div>
             </div>
-        </header>
-        <div id="section-wrapper">
         </div>
     </div>
     <script src="{{ asset('mobile/js/script.js') }}"></script>
@@ -97,6 +101,15 @@
                                 </div>
                             `; 
                         });
+
+                        if(boxes == '') {
+                            boxes += `
+                                <div class="schedule-box free-day">
+                                    <i class="fal fa-books"></i>
+                                    <p>Tidak Ada Jadwal Kelas</p>
+                                </div>
+                            `;
+                        };
 
                         $('#section-wrapper').html(`
                             <div id="home-wrapper" class="section">
@@ -159,6 +172,16 @@
                                 </div>
                             `; 
                         });
+
+                        if(boxes == '') {
+                            boxes += `
+                                <div class="schedule-box free-day">
+                                    <i class="fal fa-books"></i>
+                                    <p>Tidak Ada Jadwal Kelas</p>
+                                </div>
+                            `;
+                        };
+
                         $('#section-wrapper').html(`
                             <div id="schedule-wrapper" class="section">
                                 <div class="floating-select as-select">

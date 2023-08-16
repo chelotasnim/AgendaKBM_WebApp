@@ -11,6 +11,7 @@ use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
