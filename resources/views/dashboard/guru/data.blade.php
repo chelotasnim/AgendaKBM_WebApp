@@ -35,6 +35,12 @@
                         return meta.row + 1;
                     }
                 },
+                { 
+                    data: 'id',
+                    render: function(data) {
+                        return '<span class="badge bg-teal">' + data + '</span>';
+                    }
+                },
                 { data: 'name' },
                 { data: 'username' },
                 { data: 'email' },
@@ -57,7 +63,8 @@
             ],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(4).addClass('text-center');
+                $('td', row).eq(1).addClass('text-center');
+                $('td', row).eq(5).addClass('text-center');
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',

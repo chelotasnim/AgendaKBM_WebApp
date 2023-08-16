@@ -111,6 +111,7 @@
                 <thead>
                   <tr>
                     <th class="text-center">No</th>
+                    <th class="text-center">Kode</th>
                     <th>Nama</th>
                     <th>Username</th>
                     <th>Email</th>

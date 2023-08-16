@@ -480,6 +480,36 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-import" style="display: none; padding-right: 17px;" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="import-jam-form" enctype="multipart/form-data" method="post">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Impor Jam KBM</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="custom-file">
+                          <input type="file" name="jam_excel" class="custom-file-input" accept=".xls, .xlsx" id="jamExcel">
+                          <label class="custom-file-label" for="jamExcel">Impor Template Excel</label>
+                        </div>
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                    <div class="d-flex justify-content-start">
+                      <a href="{{ asset('templates/ImporJam.xlsx') }}" class="btn text-teal" download>Unduh Template Excel</a>
+                    </div>
+                    <div class="d-flex justify-content-end" style="gap: 5px">
+                      <button type="button" class="btn border-success border-2 text-teal" data-dismiss="modal">Tutup</button>
+                      <button id="impor-btn" type="submit" class="btn bg-teal">Impor</button>
+                    </div>
+                  </div>
+            </form>
+          </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
