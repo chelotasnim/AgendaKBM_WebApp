@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\KelasImport;
+use App\Models\Jadwal;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -49,6 +50,17 @@ class Kelases extends Controller
                     );
 
                     Kelas::create($data);
+
+                    $get_kelas = Kelas::with('jenjang')->where('jenjang_kelas_id', request()->input('jenjang_kelas_id'))->where('name', request()->input('name'))->first();
+
+                    Jadwal::create([
+                        'kelas_id' => $get_kelas->id,
+                        'nama_jadwal' => $get_kelas->jenjang->jenjang . ' ' . $get_kelas->name,
+                        'deskripsi_jadwal' => 'Jadwal Normal Kelas ' . $get_kelas->jenjang->jenjang . ' ' . $get_kelas->name,
+                        'status' => 1,
+                        'hidden' => 0,
+                        'action_by' => Auth::user()->id
+                    ]);
 
                     return response()->json(['notification' => ['Data Added' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Kelas Baru Ditambahkan</div></div>']], 'success' => true]);
                 } else {
