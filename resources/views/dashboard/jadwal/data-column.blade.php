@@ -36,7 +36,12 @@
 
         const days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
         $.each(days, function(index, day) {
-            let totalHours = (Number($('#' + day + ' .total-' + day + ':last').val()) + 1);
+            let start = -1;
+            if($('#' + day + ' .total-' + day + ':last').length > 0) {
+                start += $('#' + day + ' .total-' + day + ':last').val();
+            };
+
+            let totalHours = (Number(start) + 1);
             jamAwal[day] = totalHours;
             jumlahJam[day] = totalHours;
             $('#' + day + '-container-n').attr('id', day + '-container-' + totalHours);
