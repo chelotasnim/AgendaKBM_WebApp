@@ -19,25 +19,25 @@ class Siswa_Api extends Controller
 
         $main = Siswa::with([
             'kelas' => function ($query) use ($selected_day) {
-                $query->where('status', 1)
-                    ->whereHas('jadwal', function ($subQuery) {
-                        $subQuery->select('id', 'status');
-                        $subQuery->where('status', 1);
-                    })
-                    ->with(['jadwal' => function ($subSubQuery) use ($selected_day) {
-                        $subSubQuery->with(['details' => function ($subSubSubQuery) use ($selected_day) {
-                            $subSubSubQuery->where('hari', $selected_day);
-                            $subSubSubQuery->with(['mapel' => function ($subSubSubSubQuery) {
-                                $subSubSubSubQuery->select('id', 'nama_mapel');
+                $query->select('id', 'jenjang_kelas_id', 'name')
+                    ->where('status', 1)
+                    ->with(['jadwal' => function ($subQuery) use ($selected_day) {
+                        $subQuery->select('id', 'kelas_id', 'status')
+                            ->where('status', 1)
+                            ->where('hidden', 0)
+                            ->with(['details' => function ($subSubQuery) use ($selected_day) {
+                                $subSubQuery->where('hari', $selected_day);
+                                $subSubQuery->with(['mapel' => function ($subSubSubQuery) {
+                                    $subSubSubQuery->select('id', 'nama_mapel');
+                                }]);
+                                $subSubQuery->with(['guru' => function ($subSubSubQuery) {
+                                    $subSubSubQuery->select('id', 'name');
+                                }]);
                             }]);
-                            $subSubSubQuery->with(['guru' => function ($subSubSubSubQuery) {
-                                $subSubSubSubQuery->select('id', 'name');
-                            }]);
-                        }]);
+                    }])
+                    ->with(['jenjang' => function ($subQuery) {
+                        $subQuery->select('id', 'jenjang');
                     }]);
-            },
-            'kelas.jenjang' => function ($query) {
-                $query->select('id', 'jenjang');
             },
         ])->where('id', $id_siswa)->first();
 

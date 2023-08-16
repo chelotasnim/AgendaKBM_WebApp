@@ -40,9 +40,9 @@
                     </h1>
                 </div>
                 <div class="timer">
-                    <span class="hours">16</span>
+                    <span class="hours"></span>
                     <br>
-                    <span class="minutes">00</span>
+                    <span class="minutes"></span>
                 </div>
             </div>
             <div class="wave-illusion">

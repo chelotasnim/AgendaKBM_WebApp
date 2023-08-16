@@ -21,4 +21,9 @@ class Detail_Jadwal extends Model
     {
         return $this->belongsTo(Mapel::class, 'mapel_id');
     }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'jadwal_id');
+    }
 }

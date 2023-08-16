@@ -29,3 +29,5 @@ Route::post('siswa/self_registration', [Siswas::class, 'self_regist']);
 Route::get('student/{id}/{day}', [Siswa_Api::class, 'get_main']);
 
 Route::get('teacher/{id}', [Guru_Api::class, 'get_main']);
+
+Route::post('send_jurnal', [Guru_Api::class, 'send_jurnal']);

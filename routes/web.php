@@ -182,4 +182,8 @@ Route::middleware('auth:teacher')->group(function () {
     Route::get('teacher', function () {
         return view('mobile.teacher.index');
     });
+
+    Route::get('teacher/jurnal/{id}', function () {
+        return view('mobile.teacher.jurnal');
+    });
 });

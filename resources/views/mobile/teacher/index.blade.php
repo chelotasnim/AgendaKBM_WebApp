@@ -18,10 +18,10 @@
     </div>
     <nav>
         <div id="home" class="nav-icon active">
-            <i class="fal fa-th-list"></i>
+            <i class="fal fa-calendar-alt"></i>
         </div>
         <div id="schedule" class="nav-icon">
-            <i class="fal fa-calendar-alt"></i>
+            <i class="fal fa-history"></i>
         </div>
         <div id="profile" class="nav-icon">
             <i class="fal fa-address-card"></i>
@@ -40,9 +40,9 @@
                     </h1>
                 </div>
                 <div class="timer">
-                    <span class="hours">16</span>
+                    <span class="hours"></span>
                     <br>
-                    <span class="minutes">00</span>
+                    <span class="minutes"></span>
                 </div>
             </div>
             <div class="wave-illusion">
@@ -69,6 +69,44 @@
                         } else {
                             name = split_name[0];
                         };
+
+                        let boxes = '';
+
+                        $.each(result.main_data.jam_mengajar, function(index, schedule) {
+                            let class_for_color = '';
+                            let btn = '';
+                            if(schedule.keterangan == 'Telah Berakhir') {
+                                class_for_color = 'grey';
+                            } else if(schedule.keterangan == 'Akan Dimulai') {
+                                class_for_color = 'red';
+                            };
+
+                            if(schedule.next_access != undefined) {
+                                btn = `<a href="${schedule.next_access}" class="small-btn btn on">Isi Jurnal</a>`;
+                            } else {
+                                btn = '<a class="small-btn btn badge on grey" style="pointer-events: none">Isi Jurnal</a>';
+                            };
+
+                            boxes += `
+                                <div class="schedule-box">
+                                    <div class="schedule-header">
+                                        <div class="schedule-name">Jam Ke ${schedule.jam_ke}</div>
+                                        <div class="schedule-status badge on ${class_for_color}">${schedule.keterangan}</div>
+                                    </div>
+                                    <div class="schedule-detail">
+                                        <h3>${schedule.mapel.nama_mapel}</h3>
+                                        <p>~ ${schedule.jadwal.kelas.jenjang.jenjang + ' ' + schedule.jadwal.kelas.name}</p>
+                                        <br>
+                                        ${btn}
+                                    </div>
+                                    <div class="schedule-range">
+                                        <div class="schedule-time">${schedule.jam_mulai}</div>
+                                        <span>/</span>
+                                        <div class="schedule-time">${schedule.jam_selesai}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
                         
                         $('#user-name-here').text('Hi! ' + name);
                         $('#section-wrapper').html(`
@@ -82,25 +120,11 @@
                                 <div class="schedule-list">
                                     <div class="list-heading">
                                         <p>Jadwal</p>
-                                        <p>Kamis</p>
-                                        <p>10 Agt 2023</p>
+                                        <p>${result.now_date.day_name}</p>
+                                        <p>${result.now_date.date}</p>
                                     </div>
                                     <div class="box-container">
-                                         <div class="schedule-box">
-                                            <div class="schedule-header">
-                                                <div class="schedule-name">Jam Ke 0</div>
-                                                <div class="schedule-status badge on">Berlangsung</div>
-                                            </div>
-                                            <div class="schedule-detail">
-                                                <h3>Pemrograman Web dan Perangkat Bergerak</h3>
-                                                <p>~ XII RPL 1</p>
-                                            </div>
-                                            <div class="schedule-range">
-                                                <div class="schedule-time">07:00</div>
-                                                <span>/</span>
-                                                <div class="schedule-time">09:00</div>
-                                            </div>
-                                        </div>
+                                        ${boxes}
                                     </div>
                                 </div>
                             </div>

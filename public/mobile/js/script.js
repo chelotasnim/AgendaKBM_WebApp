@@ -43,3 +43,22 @@ if (nav_btn[0] != undefined) {
         );
     });
 };
+
+function searchError() {
+    const alert_boxes = document.querySelectorAll('.alert-box');
+    if (alert_boxes[0] != undefined) {
+        alert_boxes.forEach(alert => {
+            alert.addEventListener(
+                'click', function () {
+                    alert.style.transform = 'translateX(150%)';
+
+                    function removeAlert() {
+                        alert.remove();
+                    };
+                    setTimeout(removeAlert, 200);
+                }
+            );
+        });
+    };
+};
+setInterval(searchError, 1000);
