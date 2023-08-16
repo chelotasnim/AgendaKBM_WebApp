@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('jurnal_kelas', function (Blueprint $table) {
             $table->id();
+            $table->string('kelas', 11);
             $table->foreignId('guru_id')
                 ->references('id')
                 ->on('guru')

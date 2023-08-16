@@ -131,6 +131,16 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.siswa.index', $data);
     });
 
+    Route::get('dashboard/add_jurnal', function () {
+        $data = array(
+            'page' => 'add_jurnal',
+            'guru' => Guru::where('status', 1)->where('hidden', 0)->get(),
+            'kelas' => Kelas::where('status', 1)->where('hidden', 0)->get(),
+            'mapel' => Mapel::where('status', 1)->where('hidden', 0)->get()
+        );
+        return view('dashboard.jurnal.add', $data);
+    });
+
     Route::get('dashboard/get_mapel', [Mapels::class, 'get_data']);
     Route::post('dashboard/mapel', [Mapels::class, 'store']);
     Route::post('dashboard/edit_mapel', [Mapels::class, 'edit']);
@@ -161,6 +171,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/edit_guru', [Gurus::class, 'edit']);
     Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);
     Route::post('dashboard/import_guru', [Gurus::class, 'import']);
+    Route::post('dashboard/add_jurnal', [Gurus::class, 'jurnal']);
 
     Route::get('dashboard/get_siswa', [Siswas::class, 'get_data']);
     Route::post('dashboard/siswa', [Siswas::class, 'store']);

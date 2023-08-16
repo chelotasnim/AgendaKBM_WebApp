@@ -182,28 +182,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('dashboard/rekap') }}" class="nav-link @if($page === 'rekap'){{ 'active' }} @endif">
-                  @if($page === 'rekap')
-                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
-                  @else
-                    <i class="fal fa-grip-lines nav-icon"></i>
-                  @endif
-                  <p>Jurnal Harian</p>
-                </a>
                 <a href="{{ url('dashboard/laporan') }}" class="nav-link @if($page === 'laporan'){{ 'active' }} @endif">
                   @if($page === 'laporan')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
-                  <p>Jurnal Lengkap</p>
+                  <p>Jurnal Mengajar</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-header">FITUR PENGGUNA</li>
-          <li class="nav-item @if($page === 'jurnal_guru'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'jurnal_guru'){{ 'active' }} @endif">
+          <li class="nav-item @if($page === 'add_jurnal'){{ 'menu-open' }} @endif">
+            <a href="#" class="nav-link @if($page === 'add_jurnal'){{ 'active' }} @endif">
               <i class="nav-icon fal fa-chalkboard-teacher"></i>
               <p>
                 Guru
@@ -212,8 +204,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('dashboard/jurnal_guru') }}" class="nav-link @if($page === 'jurnal_guru'){{ 'active' }} @endif">
-                  @if($page === 'jurnal_guru')
+                <a href="{{ url('dashboard/add_jurnal') }}" class="nav-link @if($page === 'add_jurnal'){{ 'active' }} @endif">
+                  @if($page === 'add_jurnal')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>

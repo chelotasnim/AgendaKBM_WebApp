@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\GuruImport;
 use App\Models\Guru;
+use App\Models\Jurnal_Kelas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -241,6 +242,54 @@ class Gurus extends Controller
                 ]);
                 return response()->json(['notification' => ['Data Added' => ['Akun Guru Berhasil Didaftarkan']], 'success' => true]);
             };
+        };
+    }
+
+    public function jurnal()
+    {
+        $validator = Validator::make(request()->all(), [
+            'guru_id' => 'required',
+            'mapel_id' => 'required',
+            'kelas' => 'required',
+            'tanggal' => 'required',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
+            'total_siswa' => 'required',
+            'tidak_hadir' => 'required',
+            'materi' => 'required',
+        ], [
+            'guru_id.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Guru Pengajar</div></div>',
+            'mapel_id.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Mata Pelajaran</div></div>',
+            'kelas.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Kelas</div></div>',
+            'tanggal.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Tanggal</div></div>',
+            'jam_mulai.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Jam Mulai</div></div>',
+            'jam_selesai.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Jam Selesai</div></div>',
+            'total_siswa.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Total Siswa</div></div>',
+            'tidak_hadir.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Total Siswa Tidak Hadir</div></div>',
+            'materi.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Materi KBM</div></div>',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
+
+        if ($validator->passes()) {
+            $data = array(
+                'kelas' => request()->input('kelas'),
+                'guru_id' => request()->input('guru_id'),
+                'mapel_id' => request()->input('mapel_id'),
+                'tanggal' => request()->input('tanggal'),
+                'jam_mulai' => request()->input('jam_mulai'),
+                'jam_selesai' => request()->input('jam_selesai'),
+                'total_siswa' => request()->input('total_siswa'),
+                'tidak_hadir' => request()->input('tidak_hadir'),
+                'materi' => request()->input('materi'),
+                'action_by' => Auth::guard('web')->user()->id
+            );
+
+            Jurnal_Kelas::create($data);
+
+            return response()->json(['notification' => ['Data Added' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Jurnal Kelas Ditambahkan</div></div>']], 'success' => true]);
         };
     }
 }
