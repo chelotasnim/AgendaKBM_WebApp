@@ -51,8 +51,8 @@ class JadwalImport implements ToModel, WithStartRow
                 'guru_id' => $row[1],
                 'hari' => $row[2],
                 'jam_ke' => $row[3],
-                'jam_mulai' => Carbon::parse($row[4])->format('H:i'),
-                'jam_selesai' => Carbon::parse($row[5])->format('H:i'),
+                'jam_mulai' => str_replace(']', '', str_replace('[', '', $row[4])),
+                'jam_selesai' => str_replace(']', '', str_replace('[', '', $row[5])),
                 'action_by' => Auth::guard('web')->user()->id
             );
 
