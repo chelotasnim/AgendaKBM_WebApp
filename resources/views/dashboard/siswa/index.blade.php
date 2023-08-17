@@ -117,7 +117,7 @@
         <div class="col-xl">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Daftar Akun Siswa</h3>
+              <h3 class="card-title mt-2">Daftar Akun Siswa</h3>
               <div class="card-tools">
                 <button id="export-btn" class="btn bg-teal">Ekspor Data</button>
               </div>

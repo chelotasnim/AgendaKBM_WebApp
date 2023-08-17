@@ -147,6 +147,76 @@
             };
             setHome();
             $('#home').on('click', setHome);
+
+            function setSchedule(range) {
+                $.ajax({
+                    url: `{{ url('api/get_jurnal/${user_id}/${range}') }}`,
+                    type: 'get',
+                    success: function(result) {
+                        let split_name = result.main_data.name.split(' ');
+                        let name = '';
+
+                        if(split_name.length > 1) {
+                            name = split_name[0] + ' ' + split_name[1];
+                        } else {
+                            name = split_name[0];
+                        };
+
+                        let boxes = '';
+
+                        $.each(result.main_data.jurnal, function(index, jurnal) {
+                            boxes += `
+                                <div class="schedule-box">
+                                    <div class="schedule-detail">
+                                        <h3>${jurnal.mapel.nama_mapel}</h3>
+                                        <p>~ ${jurnal.kelas}</p>
+                                        <br>
+                                    </div>
+                                    <div class="schedule-range">
+                                        <div class="schedule-time">${jurnal.jam_mulai}</div>
+                                        <span>/</span>
+                                        <div class="schedule-time">${jurnal.jam_selesai}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        if(boxes == '') {
+                            boxes += `
+                                <div class="schedule-box free-day">
+                                    <i class="fal fa-mug-hot"></i>
+                                    <p>Tidak Ada Jadwal Mengajar</p>
+                                </div>
+                            `;
+                        };
+                        
+                        $('#user-name-here').text('Hi! ' + name);
+                        $('#section-wrapper').html(`
+                            <div id="home-wrapper" class="section">
+                                <div class="floating-header">
+                                    <div class="icon">
+                                        <i class="fal fa-user-clock"></i>
+                                    </div>
+                                    <div class="title">Jadwal Mengajar Hari Ini</div>
+                                </div>
+                                <div class="schedule-list">
+                                    <div class="list-heading">
+                                        <p>Jadwal</p>
+                                        <p>${result.now_date.day_name}</p>
+                                        <p>${result.now_date.date}</p>
+                                    </div>
+                                    <div class="box-container">
+                                        ${boxes}
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                });
+            };
+            $('#schedule').on('click', function() {
+                setSchedule('today');
+            });
     
             function setProfile() {
                 $.ajax({
@@ -196,7 +266,7 @@
                                     </div>
                                 </div>
                                 <div class="button-group">
-                                    <a href="{{ url('student_logout') }}" class="btn on">Keluar</a>
+                                    <a href="{{ url('teacher_logout') }}" class="btn on">Keluar</a>
                                 </div>
                             </div>
                         `);

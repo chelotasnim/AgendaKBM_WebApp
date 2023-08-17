@@ -66,6 +66,35 @@ class Guru_Api extends Controller
         return response()->json($data);
     }
 
+    public function get_jurnal($id_guru, $range)
+    {
+        $fixed_range = Carbon::now()->format('Y-m-d') . 'split' . Carbon::tomorrow()->format('Y-m-d');
+        if ($range != 'today') {
+            $fixed_range = $range;
+        };
+
+        $split_date = explode('split', $fixed_range);
+        $from = $split_date[0];
+        $to = $split_date[1];
+        $main = Guru::with([
+            'jurnal' => function ($query) use ($from, $to) {
+                $query->whereDate('tanggal', '>=', Carbon::parse($from)->format('Y-m-d'))
+                    ->whereDate('tanggal', '<=', Carbon::parse($to)->format('Y-m-d'))
+                    ->with('mapel');
+            }
+        ])->where('id', $id_guru)->first();
+
+        $data = array(
+            'main_data' => $main,
+            'now_date' => array(
+                'day_name' => Carbon::now()->isoFormat('dddd'),
+                'date' => Carbon::now()->isoFormat('D MMM YYYY')
+            )
+        );
+
+        return response()->json($data);
+    }
+
     public function send_jurnal()
     {
         $validator = Validator::make(request()->all(), [

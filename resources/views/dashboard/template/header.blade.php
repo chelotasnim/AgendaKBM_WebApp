@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ asset('/plugins/toastr/toastr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}">
   <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
@@ -182,7 +183,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('dashboard/laporan') }}" class="nav-link @if($page === 'laporan'){{ 'active' }} @endif">
+                <a href="{{ url('dashboard/jurnal') }}" class="nav-link @if($page === 'laporan'){{ 'active' }} @endif">
                   @if($page === 'laporan')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
                   @else
@@ -210,7 +211,7 @@
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
-                  <p>Jurnal Harian</p>
+                  <p>Jurnal Mengajar</p>
                 </a>
               </li>
             </ul>

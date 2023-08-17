@@ -15,6 +15,8 @@
 </div>
 <!-- ./wrapper -->
 
+<script src="{{ asset('/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('/libraries/xlsx/xlsx.full.min.js') }}"></script>
 <script src="{{ asset('/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

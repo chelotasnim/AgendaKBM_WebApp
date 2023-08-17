@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\GuruImport;
 use App\Models\Guru;
 use App\Models\Jurnal_Kelas;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -291,5 +292,29 @@ class Gurus extends Controller
 
             return response()->json(['notification' => ['Data Added' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Jurnal Kelas Ditambahkan</div></div>']], 'success' => true]);
         };
+    }
+
+    public function get_jurnal()
+    {
+        $validator = Validator::make(request()->all(), [
+            'dari_sampai' => 'required',
+            'kelas' => 'required'
+        ], [
+            'dari_sampai.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Rentang Tanggal Wajib Ditentukan</div></div>',
+            'kelas.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Kelas Wajib Diisi</div></div>'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        }
+
+        if ($validator->passes()) {
+            $split_date = explode('-', request()->input('dari_sampai'));
+            $from = $split_date[0];
+            $to = $split_date[1];
+            $get_jurnal = Jurnal_Kelas::with('guru', 'mapel')->where('kelas', request()->input('kelas'))->whereDate('tanggal', '>=', Carbon::parse($from)->format('Y-m-d'))->whereDate('tanggal', '<=', Carbon::parse($to)->format('Y-m-d'))->get();
+
+            return response()->json(['main_data' => $get_jurnal, 'success' => true]);
+        }
     }
 }

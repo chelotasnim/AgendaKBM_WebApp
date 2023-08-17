@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guru_Api;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwals;
 use App\Http\Controllers\Kelases;
@@ -131,6 +132,14 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.siswa.index', $data);
     });
 
+    Route::get('dashboard/jurnal', function () {
+        $data = array(
+            'page' => 'laporan',
+            'kelas' => Kelas::with('jenjang')->get()
+        );
+        return view('dashboard.jurnal.index', $data);
+    });
+
     Route::get('dashboard/add_jurnal', function () {
         $data = array(
             'page' => 'add_jurnal',
@@ -172,6 +181,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);
     Route::post('dashboard/import_guru', [Gurus::class, 'import']);
     Route::post('dashboard/add_jurnal', [Gurus::class, 'jurnal']);
+    Route::post('dashboard/get_jurnal', [Gurus::class, 'get_jurnal']);
 
     Route::get('dashboard/get_siswa', [Siswas::class, 'get_data']);
     Route::post('dashboard/siswa', [Siswas::class, 'store']);
