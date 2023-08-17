@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\JadwalImport;
 use App\Models\Detail_Jadwal;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Jadwals extends Controller
 {
@@ -163,6 +165,23 @@ class Jadwals extends Controller
             return response()->json(['notification' => ['Data Deleted' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Pengurangan Jam KBM Berhasil</div></div>']], 'success' => true]);
         } else {
             return response()->json(['notification' => ['Delete Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Pengurangan Jam KBM</div></div>']]);
+        };
+    }
+
+    public function import()
+    {
+        $validator = Validator::make(request()->all(), [
+            'jam_excel' => 'required|mimes:xlsx,xls'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => ['Import Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Harap Menyertakan Template Excel Yang Valid</div></div>']]);
+        };
+
+        if ($validator->passes()) {
+            Excel::import(new JadwalImport(request()->input('jadwal_id')), request()->file('jam_excel'));
+
+            return response()->json(['notification' => ['Data Imported' => '<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Jam KBM Berhasil Diimpor</div></div>'], 'success' => true]);
         };
     }
 }

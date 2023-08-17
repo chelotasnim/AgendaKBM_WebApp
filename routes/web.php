@@ -169,6 +169,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
     Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
     Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
+    Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
 
     Route::get('dashboard/get_admin', [Users::class, 'get_data']);
     Route::post('dashboard/admin', [Users::class, 'store']);

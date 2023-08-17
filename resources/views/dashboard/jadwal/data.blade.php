@@ -68,7 +68,7 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-import" class="modal-import-btn btn btn-sm btn-success"><i class="fas fa-file-import"></i></button><a type="button" href="{{ url('dashboard/jadwal/column/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-info"><i class="fas fa-calendar-plus"></i></a><a type="button" href="{{ url('dashboard/jadwal/column_remove/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-danger"><i class="fas fa-calendar-minus"></i></a><a type="button" href="{{ url('dashboard/jadwal/edit/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></a></span>` ;
+                        return `<span class="action-group"><button type="button" onclick="importModal(` + data.id + `)" data-toggle="modal" data-target="#modal-import" class="modal-import-btn btn btn-sm btn-success"><i class="fas fa-file-import"></i></button><a type="button" href="{{ url('dashboard/jadwal/column/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-info"><i class="fas fa-calendar-plus"></i></a><a type="button" href="{{ url('dashboard/jadwal/column_remove/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-danger"><i class="fas fa-calendar-minus"></i></a><a type="button" href="{{ url('dashboard/jadwal/edit/` + data.id + `') }}" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></a></span>` ;
                     }
                 }
             ],
@@ -298,5 +298,53 @@
                 setTimeout(removeEl, 4000);
             }
         });
+
+        $('#import-jam-form').on('submit', function(event) {
+            event.preventDefault();
+
+            setLoading();
+
+            var fileInput = document.getElementById('jamExcel');
+                var file = fileInput.files[0];
+                var formData = new FormData(this);
+                formData.append('jam_excel', file);
+
+                $.ajax({
+                    url: `{{ url('dashboard/import_jam') }}`,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(result) {
+                        let dumpErr = '';
+                        for (let key in result.notification) {
+                            if (result.notification.hasOwnProperty(key)) {
+                                dumpErr += result.notification[key];
+                            };
+                        };
+                        $('#toast-container').html(dumpErr);
+
+                        if(result.success === true) {
+                            $('#import-jam-form')[0].reset();
+                            $('#modal-import').modal('toggle');
+                        };
+
+                        function removeEl() {
+                            $('.toast').remove();
+                        }
+                        setTimeout(removeEl, 4000);
+
+                        removeLoading();
+                        },
+                    error: function(xhr, status, error) {
+                        removeLoading();
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
     });
+
+    function importModal(id) {
+        $('#jadwal-param').val(id);
+    };
 </script>

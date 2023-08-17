@@ -494,6 +494,7 @@
                   <div class="modal-body">
                       <div class="custom-file">
                           <input type="file" name="jam_excel" class="custom-file-input" accept=".xls, .xlsx" id="jamExcel">
+                          <input id="jadwal-param" type="text" class="d-none" name="jadwal_id" readonly>
                           <label class="custom-file-label" for="jamExcel">Impor Template Excel</label>
                         </div>
                   </div>
