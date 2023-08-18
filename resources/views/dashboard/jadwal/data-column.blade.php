@@ -38,7 +38,7 @@
         $.each(days, function(index, day) {
             let start = -1;
             if($('#' + day + ' .total-' + day + ':last').length > 0) {
-                start += $('#' + day + ' .total-' + day + ':last').val();
+                start = Number($('#' + day + ' .total-' + day + ':last').val());
             };
 
             let totalHours = (Number(start) + 1);
