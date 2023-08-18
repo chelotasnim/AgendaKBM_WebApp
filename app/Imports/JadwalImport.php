@@ -49,7 +49,7 @@ class JadwalImport implements ToModel, WithStartRow
                 'jadwal_id' => $this->jadwal_id,
                 'mapel_id' => $row[0],
                 'guru_id' => $row[1],
-                'hari' => $row[2],
+                'hari' => strtolower($row[2]),
                 'jam_ke' => $row[3],
                 'jam_mulai' => str_replace(']', '', str_replace('[', '', $row[4])),
                 'jam_selesai' => str_replace(']', '', str_replace('[', '', $row[5])),
