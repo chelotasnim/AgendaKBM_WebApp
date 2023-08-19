@@ -66,23 +66,29 @@ class Guru_Api extends Controller
         return response()->json($data);
     }
 
-    public function get_jurnal($id_guru, $range)
+    public function get_jurnal($id_jadwal)
     {
-        $fixed_range = Carbon::now()->format('Y-m-d') . 'split' . Carbon::tomorrow()->format('Y-m-d');
-        if ($range != 'today') {
-            $fixed_range = $range;
-        };
-
-        $split_date = explode('split', $fixed_range);
-        $from = $split_date[0];
-        $to = $split_date[1];
-        $main = Guru::with([
-            'jurnal' => function ($query) use ($from, $to) {
-                $query->whereDate('tanggal', '>=', Carbon::parse($from)->format('Y-m-d'))
-                    ->whereDate('tanggal', '<=', Carbon::parse($to)->format('Y-m-d'))
-                    ->with('mapel');
+        $main = Detail_Jadwal::with([
+            'guru' => function ($query) {
+                $query->select('id', 'name');
+            },
+            'mapel' => function ($query) {
+                $query->select('id', 'nama_mapel');
+            },
+            'jadwal' => function ($query) {
+                $query->select('id', 'kelas_id')
+                    ->with([
+                        'kelas' =>  function ($subQuery) {
+                            $subQuery->select('id', 'jenjang_kelas_id', 'name')
+                                ->with([
+                                    'jenjang' => function ($subSubQuery) {
+                                        $subSubQuery->select('id', 'jenjang');
+                                    }
+                                ]);
+                        }
+                    ]);
             }
-        ])->where('id', $id_guru)->first();
+        ])->where('id', $id_jadwal)->first();
 
         $data = array(
             'main_data' => $main,
@@ -111,8 +117,23 @@ class Guru_Api extends Controller
         if ($validator->fails()) {
             return response()->json(['notification' => $validator->errors()]);
         } else {
-            $jadwal = Detail_Jadwal::where('id', request()->input('jadwal_id'))->first();
+            $jadwal = Detail_Jadwal::with([
+                'jadwal' => function ($main_query) {
+                    $main_query->select('id', 'kelas_id')
+                        ->with([
+                            'kelas' => function ($query) {
+                                $query->select('id', 'jenjang_kelas_id', 'name')
+                                    ->with([
+                                        'jenjang' => function ($subQuery) {
+                                            $subQuery->select('id', 'jenjang');
+                                        }
+                                    ]);
+                            }
+                        ]);
+                }
+            ])->where('id', request()->input('jadwal_id'))->first();
             $data = array(
+                'kelas' => $jadwal->jadwal->kelas->jenjang->jenjang . ' ' . $jadwal->jadwal->kelas->name,
                 'guru_id' => $jadwal->guru_id,
                 'mapel_id' => $jadwal->mapel_id,
                 'tanggal' => Carbon::now()->format('Y-m-d'),
@@ -128,5 +149,28 @@ class Guru_Api extends Controller
 
             return response()->json(['success' => true]);
         };
+    }
+
+    public function get_all_jurnal($id)
+    {
+        $main = Guru::with([
+            'jurnal' => function ($query) {
+                $query->select('id', 'guru_id', 'mapel_id', 'kelas')
+                    ->whereYear('tanggal', Carbon::now()->format('Y'))
+                    ->whereMonth('tanggal', Carbon::now()->format('m'))
+                    ->with([
+                        'mapel' => function ($subQuery) {
+                            $subQuery->select('id', 'nama_mapel');
+                        }
+                    ]);
+            }
+        ])->where('id', $id)->first();
+
+        $data = array(
+            'main_data' => $main,
+            'month' => Carbon::now()->isoFormat('MMMM YYYY')
+        );
+
+        return response()->json($data);
     }
 }

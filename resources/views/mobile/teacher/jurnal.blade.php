@@ -10,74 +10,78 @@
     <title>Aplikasi Agenda KBM | Masuk</title>
 </head>
 <body>
-    <div class="welcome-cover">
-        <img class="left-wave" src="{{ asset('auth/images/wave.png') }}" draggable="false"/>
-        <div class="logo">
-            <img src="{{ asset('/assets/app-images/agenda_logo_white.png') }}" draggable="false"/>
-        </div>
-    </div>
-    <div class="page">
-        <div id="alert-container">
-        </div>
-        <header>
-            <div class="main-header">
-                <img src="{{ asset('mobile/assets/wave.png') }}" draggable="false"/>
-                <div class="app-label">
-                    <p id="user-name-here"></p>
-                    <h1>
-                        <span>Agenda</span>
-                        <br>
-                        KBM
-                    </h1>
-                </div>
-                <div class="timer">
-                    <span class="hours"></span>
-                    <br>
-                    <span class="minutes"></span>
+    <div class="entire">
+        <div class="frame">
+            <div class="welcome-cover">
+                <img class="left-wave" src="{{ asset('auth/images/wave.png') }}" draggable="false"/>
+                <div class="logo">
+                    <img src="{{ asset('/assets/app-images/agenda_logo_white.png') }}" draggable="false"/>
                 </div>
             </div>
-            <div class="wave-illusion">
-                <div class="cover"></div>
-            </div>
-        </header>
-        <div id="section-wrapper">
-            <div id="home-wrapper" class="section">
-                <div class="floating-header">
-                    <div class="icon" style="padding-left: 25px">
-                        <i class="fal fa-clipboard-list-check"></i>
-                    </div>
-                    <div class="title">Isi Jurnal Saat Ini</div>
+            <div class="page">
+                <div id="alert-container">
                 </div>
-                <div class="schedule-list">
-                    <div class="list-heading">
-                        <p>07:00</p>
-                        <p>XII RPL 1</p>
-                        <p>10:00</p>
+                <header>
+                    <div class="main-header">
+                        <img src="{{ asset('mobile/assets/wave.png') }}" draggable="false"/>
+                        <div class="app-label">
+                            <p id="user-name-here"></p>
+                            <h1>
+                                <span>Agenda</span>
+                                <br>
+                                KBM
+                            </h1>
+                        </div>
+                        <div class="timer">
+                            <span class="hours"></span>
+                            <br>
+                            <span class="minutes"></span>
+                        </div>
                     </div>
-                    <div class="jurnal-detail">
-                        <h1>PAI dan Budi Karakter</h1>
-                        <p>Ahmad Salehudin</p>
-                        <form id="jurnal-form" method="post" class="jurnal-form">
-                            <input type="text" name="jadwal_id" style="display: none" readonly>
-                            <div class="row">
-                                <div class="input-group">
-                                    <label>Total Siswa</label>
-                                    <input type="number" name="total_siswa" placeholder="--;--">
-                                </div>
-                                <div class="input-group">
-                                    <label>Siswa Tidak Hadir</label>
-                                    <input type="number" name="tidak_hadir" placeholder="--;--">
-                                </div>
+                    <div class="wave-illusion">
+                        <div class="cover"></div>
+                    </div>
+                </header>
+                <div id="section-wrapper">
+                    <div id="home-wrapper" class="section">
+                        <div class="floating-header">
+                            <div class="icon" style="padding-left: 25px">
+                                <i class="fal fa-clipboard-list-check"></i>
                             </div>
-                            <div class="row">
-                                <div class="input-group wide">
-                                    <label>Materi Pembelajaran</label>
-                                    <textarea name="materi" placeholder="Isi sedikit tentang materi disini"></textarea>
-                                </div>
+                            <div class="title">Isi Jurnal Saat Ini</div>
+                        </div>
+                        <div class="schedule-list">
+                            <div class="list-heading">
+                                <p id="start-time"></p>
+                                <p id="kelas-name-tag"></p>
+                                <p id="end-time"></p>
                             </div>
-                            <button type="submit" class="btn on">Isi Jurnal</button>
-                            <a href="{{ url('teacher') }}" class="btn badge on grey">Kembali</a>
-                        </form>
+                            <div class="jurnal-detail">
+                                <h1 id="subject-name"></h1>
+                                <p id="teacher-name"></p>
+                                <form id="jurnal-form" method="post" class="jurnal-form">
+                                    <input type="text" name="jadwal_id" style="display: none" readonly>
+                                    <div class="row">
+                                        <div class="input-group">
+                                            <label>Total Siswa</label>
+                                            <input type="number" name="total_siswa" placeholder="--;--">
+                                        </div>
+                                        <div class="input-group">
+                                            <label>Siswa Tidak Hadir</label>
+                                            <input type="number" name="tidak_hadir" placeholder="--;--">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group wide">
+                                            <label>Materi Pembelajaran</label>
+                                            <textarea name="materi" placeholder="Isi sedikit tentang materi disini"></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn on">Isi Jurnal</button>
+                                    <a href="{{ url('teacher') }}" class="btn badge on grey">Kembali</a>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,6 +92,29 @@
         $(document).ready(function() {
             const user_id = "{{ Auth::guard('teacher')->user()->id }}";
             let this_schedule = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+
+            $.ajax({
+                url: `{{ url('api/get_jurnal/${this_schedule}') }}`,
+                type: 'get',
+                success: function(result) {
+                    let split_name = result.main_data.guru.name.split(' ');
+                    let name = '';
+
+                    if(split_name.length > 1) {
+                        name = split_name[0] + ' ' + split_name[1];
+                    } else {
+                        name = split_name[0];
+                    };
+
+                    $('#user-name-here').text('Hi! ' + name);
+                    $('[name="jadwal_id"]').val(this_schedule);
+                    $('#start-time').html(result.main_data.jam_mulai);
+                    $('#kelas-name-tag').html(result.main_data.jadwal.kelas.jenjang.jenjang + ' ' + result.main_data.jadwal.kelas.name);
+                    $('#end-time').html(result.main_data.jam_selesai);
+                    $('#teacher-name').html(result.main_data.guru.name);
+                    $('#subject-name').html(result.main_data.mapel.nama_mapel);
+                }
+            });
 
             $('[name="jadwal_id"]').val(this_schedule);
             $('#jurnal-form').on('submit', function(event) {

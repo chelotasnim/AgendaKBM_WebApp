@@ -30,6 +30,8 @@ Route::get('student/{id}/{day}', [Siswa_Api::class, 'get_main']);
 
 Route::get('teacher/{id}', [Guru_Api::class, 'get_main']);
 
-Route::get('get_jurnal/{id}/{range}', [Guru_Api::class, 'get_jurnal']);
+Route::get('get_jurnal/{id}', [Guru_Api::class, 'get_jurnal']);
+
+Route::get('get_all_jurnal/{id}', [Guru_Api::class, 'get_all_jurnal']);
 
 Route::post('send_jurnal', [Guru_Api::class, 'send_jurnal']);

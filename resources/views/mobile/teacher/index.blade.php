@@ -148,9 +148,9 @@
             setHome();
             $('#home').on('click', setHome);
 
-            function setSchedule(range) {
+            function setHistory() {
                 $.ajax({
-                    url: `{{ url('api/get_jurnal/${user_id}/${range}') }}`,
+                    url: `{{ url('api/get_all_jurnal/${user_id}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -162,62 +162,41 @@
                             name = split_name[0];
                         };
 
-                        let boxes = '';
-
+                        let history_row = '';
                         $.each(result.main_data.jurnal, function(index, jurnal) {
-                            boxes += `
-                                <div class="schedule-box">
-                                    <div class="schedule-detail">
-                                        <h3>${jurnal.mapel.nama_mapel}</h3>
-                                        <p>~ ${jurnal.kelas}</p>
-                                        <br>
+                            history_row += `
+                                <div class="profile-box">
+                                    <div class="icon" style="font-size: 12px">
+                                        ${jurnal.kelas}
                                     </div>
-                                    <div class="schedule-range">
-                                        <div class="schedule-time">${jurnal.jam_mulai}</div>
-                                        <span>/</span>
-                                        <div class="schedule-time">${jurnal.jam_selesai}</div>
-                                    </div>
+                                    <div class="content">${jurnal.mapel.nama_mapel}</div>
                                 </div>
                             `;
                         });
-
-                        if(boxes == '') {
-                            boxes += `
-                                <div class="schedule-box free-day">
-                                    <i class="fal fa-mug-hot"></i>
-                                    <p>Tidak Ada Jadwal Mengajar</p>
-                                </div>
-                            `;
-                        };
                         
                         $('#user-name-here').text('Hi! ' + name);
                         $('#section-wrapper').html(`
-                            <div id="home-wrapper" class="section">
+                            <div id="profile-wrapper" class="section">
                                 <div class="floating-header">
-                                    <div class="icon">
-                                        <i class="fal fa-user-clock"></i>
+                                    <div class="icon" style="padding-left: 24px">
+                                        <i class="fal fa-history"></i>
                                     </div>
-                                    <div class="title">Jadwal Mengajar Hari Ini</div>
+                                    <div class="title">Riwayat Mengajar Bulan Ini</div>
                                 </div>
-                                <div class="schedule-list">
-                                    <div class="list-heading">
-                                        <p>Jadwal</p>
-                                        <p>${result.now_date.day_name}</p>
-                                        <p>${result.now_date.date}</p>
-                                    </div>
-                                    <div class="box-container">
-                                        ${boxes}
-                                    </div>
+                                <div class="list-heading">
+                                    <p>Riwayat Mengajar</p>
+                                    <p>${result.month}</p>
+                                </div>
+                                <div class="profile-container">
+                                    ${history_row}
                                 </div>
                             </div>
                         `);
                     }
                 });
             };
-            $('#schedule').on('click', function() {
-                setSchedule('today');
-            });
-    
+            $('#schedule').on('click', setHistory);
+            
             function setProfile() {
                 $.ajax({
                     url: `{{ url('api/teacher/${user_id}') }}`,

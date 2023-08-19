@@ -449,6 +449,10 @@ nav {
     text-align: left;
 }
 
+.input-group {
+    width: 100%;
+}
+
 .input-group.wide {
     width: 100%;
     margin-top: 8px;
