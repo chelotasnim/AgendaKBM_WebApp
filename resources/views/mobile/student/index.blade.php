@@ -122,7 +122,7 @@
                                 <div class="schedule-list">
                                     <div class="list-heading">
                                         <p>${result.main_data.kelas.jenjang.jenjang + ' ' + result.main_data.kelas.name}</p>
-                                        <p>${result.now_date.day_name}</p>
+                                        <p class="day-name">${result.now_date.day_name}</p>
                                         <p>${result.now_date.date}</p>
                                     </div>
                                     <div class="box-container">
@@ -188,7 +188,7 @@
                                     <div class="arrow previous">
                                         <i class="fas fa-chevron-left"></i>
                                     </div>
-                                    <div class="select-val">${result.now_date.day_name}</div>
+                                    <div class="select-val day-name">${result.now_date.day_name}</div>
                                     <div class="arrow next">
                                         <i class="fas fa-chevron-right"></i>
                                     </div>
@@ -196,7 +196,7 @@
                                 <div class="schedule-list">
                                     <div class="list-heading">
                                         <p>${result.main_data.kelas.jenjang.jenjang + ' ' + result.main_data.kelas.name}</p>
-                                        <p>${result.now_date.day_name}</p>
+                                        <p class="day-name">${result.now_date.day_name}</p>
                                         <p>${result.main_data.kelas.jadwal[0].details.length} Jam</p>
                                     </div>
                                     <div class="box-container">

@@ -537,6 +537,10 @@ nav {
     font-size: 100px;
 }
 
+.day-name {
+    text-transform: capitalize;
+}
+
 @media(max-width: 1000px) {
     .frame {
         max-width: 650px;

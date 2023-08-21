@@ -133,7 +133,7 @@
                                 <div class="schedule-list">
                                     <div class="list-heading">
                                         <p>Jadwal</p>
-                                        <p>${result.now_date.day_name}</p>
+                                        <p class="day-name">${result.now_date.day_name}</p>
                                         <p>${result.now_date.date}</p>
                                     </div>
                                     <div class="box-container">
