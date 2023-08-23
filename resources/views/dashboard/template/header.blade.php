@@ -216,19 +216,6 @@
               </li>
             </ul>
           </li>
-          <li class="nav-header">LAINNYA</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Aksi Darurat</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
-              <p>Info Penggunaan</p>
-            </a>
-          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
