@@ -22,8 +22,8 @@ class Gurus extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns',
+            'username' => 'required|min:5|max:25|unique:siswa,username',
+            'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email',
             'password' => 'required'
         ], [
             'name.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Nama Asli</div></div>',
@@ -87,8 +87,8 @@ class Gurus extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns'
+            'username' => 'required|min:5|max:25|unique:siswa,username',
+            'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email'
         ], [
             'name.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Nama Asli</div></div>',
             'name.max' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Nama Maksimal 100 Karakter</div></div>',
@@ -185,8 +185,8 @@ class Gurus extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns',
+            'username' => 'required|min:5|max:25|unique:siswa,username',
+            'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email',
             'password' => 'required'
         ], [
             'name.required' => 'Wajib Memasukkan Nama Asli',

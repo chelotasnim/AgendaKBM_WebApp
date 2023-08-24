@@ -23,8 +23,8 @@ class GuruImport implements ToModel, WithStartRow
     {
         $validator = Validator::make($row, [
             0 => 'required|max:100',
-            1 => 'required|min:5|max:25|unique:guru,username',
-            2 => 'required|max:255|email:dns|unique:guru,email',
+            1 => 'required|min:5|max:25|unique:guru,username|unique:siswa,username',
+            2 => 'required|max:255|email:dns|unique:guru,email|unique:siswa,email|unique:users,email',
             3 => 'required',
             4 => 'required|max:1'
         ]);

@@ -25,8 +25,8 @@ class SiswaImport implements ToModel, WithStartRow
         $validator = Validator::make($row, [
             0 => 'required|min:3|max:12',
             1 => 'required|max:100',
-            2 => 'required|min:5|max:25|unique:siswa,username',
-            3 => 'required|max:255|email:dns|unique:siswa,email',
+            2 => 'required|min:5|max:25|unique:siswa,username|unique:guru,username',
+            3 => 'required|max:255|email:dns|unique:siswa,email|unique:guru,email|unique:users,email',
             4 => 'required',
             5 => 'required|max:1'
         ]);

@@ -28,8 +28,8 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns',
+            'username' => 'required|min:5|max:25|unique:guru,username',
+            'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'password' => 'required',
             'kelas_id' => 'required'
         ], [
@@ -96,8 +96,8 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns',
+            'username' => 'required|min:5|max:25|unique:guru,username',
+            'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'kelas_id' => 'required'
         ], [
             'name.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Nama Asli</div></div>',
@@ -198,8 +198,8 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25',
-            'email' => 'required|max:255|email:dns',
+            'username' => 'required|min:5|max:25|unique:guru,username',
+            'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'password' => 'required',
             'kelas_id' => 'required'
         ], [
