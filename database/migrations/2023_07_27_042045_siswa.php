@@ -19,7 +19,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('kelas')
                 ->onDelete('cascade');
-            $table->string('name', 100)->unique();
+            $table->string('name', 100);
             $table->string('username', 25)->unique();
             $table->string('email')->unique();
             $table->string('password');

@@ -86,6 +86,7 @@ table {
     font-size: 48px;
     color: rgb(29, 175, 131);
     z-index: 1100 !important;
+    cursor: wait;
 }
 
 .loading-animation i {

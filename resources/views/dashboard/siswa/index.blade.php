@@ -22,15 +22,15 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="inputName" class="text-secondary font-weight-normal">Nama Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
-                  <input type="text" id="inputName" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
-                </div>
+                  <label for="inputUsername" class="text-secondary font-weight-normal">NIS Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
+                  <input type="text" id="inputUsername" name="username" class="form-control" autocomplete="off" placeholder="Contoh : 15882/221">
+              </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="inputUsername" class="text-secondary font-weight-normal">Username Akun Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
-                  <input type="text" id="inputUsername" name="username" class="form-control" autocomplete="off" placeholder="Contoh : mjohndoe123">
-              </div>
+                  <label for="inputName" class="text-secondary font-weight-normal">Nama Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
+                  <input type="text" id="inputName" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
+                </div>
               </div>
             </div>
             <div class="row">
@@ -128,8 +128,8 @@
                   <tr>
                     <th class="text-center">No</th>
                     <th class="text-center">Kelas</th>
+                    <th class="text-center">NIS</th>
                     <th>Nama</th>
-                    <th>Username</th>
                     <th>Email</th>
                     <th class="text-center">Status</th>
                     <th class="text-center">

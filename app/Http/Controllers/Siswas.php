@@ -28,7 +28,7 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25|unique:guru,username',
+            'username' => 'required|min:9|max:10|unique:guru,username',
             'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'password' => 'required',
             'kelas_id' => 'required'
@@ -96,7 +96,7 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25|unique:guru,username',
+            'username' => 'required|min:9|max:10|unique:guru,username',
             'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'kelas_id' => 'required'
         ], [
@@ -179,6 +179,8 @@ class Siswas extends Controller
 
     public function import()
     {
+        set_time_limit(300);
+
         $validator = Validator::make(request()->all(), [
             'siswa_excel' => 'required|mimes:xlsx,xls'
         ]);
@@ -198,7 +200,7 @@ class Siswas extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25|unique:guru,username',
+            'username' => 'required|min:9|max:10|unique:guru,username',
             'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email',
             'password' => 'required',
             'kelas_id' => 'required'

@@ -44,8 +44,8 @@
                         return data.kelas.jenjang.jenjang + ' ' + data.kelas.name;
                     }
                 },
-                { data: 'name' },
                 { data: 'username' },
+                { data: 'name' },
                 { data: 'email' },
                 { 
                     data: 'status',
@@ -66,15 +66,15 @@
             ],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(4).addClass('text-center');
+                $('td', row).eq(1).addClass('text-center');
+                $('td', row).eq(2).addClass('text-center');
+                $('td', row).eq(5).addClass('text-center');
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',
                 emptyTable: 'Belum Ada Data Akun Siswa'
             }
         });
-
-        setInterval(refreshTable, 1000);
 
         function setLoading() {
             $('body').append(`
@@ -119,6 +119,8 @@
                     setTimeout(removeEl, 4000);
 
                     removeLoading();
+
+                    refreshTable();
                 }
             });
         });
@@ -153,6 +155,8 @@
                     setTimeout(removeEl, 4000);
 
                     removeLoading();
+
+                    refreshTable();
                 },
             });
         });
@@ -187,6 +191,8 @@
                     setTimeout(removeEl, 4000);
 
                     removeLoading();
+
+                    refreshTable();
                 }
             });
         });
@@ -221,7 +227,7 @@
             }
 
             var workbook = XLSX.utils.book_new();
-            var worksheet = XLSX.utils.aoa_to_sheet([documentTitle, ["Kelas", "Nama Siswa", "Username Akun", "Email", "Password", "Status"], ...modifiedData]);
+            var worksheet = XLSX.utils.aoa_to_sheet([documentTitle, ["Kelas", "NIS", "Nama Siswa", "Email", "Password", "Status"], ...modifiedData]);
 
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -273,10 +279,11 @@
                         setTimeout(removeEl, 4000);
 
                         removeLoading();
+                        refreshTable();
                         },
                     error: function(xhr, status, error) {
                         removeLoading();
-                        console.error(xhr.responseText);
+                        refreshTable();
                     }
                 });
             });

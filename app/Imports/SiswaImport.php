@@ -24,21 +24,21 @@ class SiswaImport implements ToModel, WithStartRow
     {
         $validator = Validator::make($row, [
             0 => 'required|min:3|max:12',
-            1 => 'required|max:100',
-            2 => 'required|min:5|max:25|unique:siswa,username|unique:guru,username',
+            1 => 'required|min:9|max:10|unique:siswa,username|unique:guru,username',
+            2 => 'required|max:100',
             3 => 'required|max:255|email:dns|unique:siswa,email|unique:guru,email|unique:users,email',
             4 => 'required',
             5 => 'required|max:1'
         ]);
 
         $data = [
-            'name' => $row[1],
-            'username' => $row[2],
+            'name' => $row[2],
+            'username' => $row[1],
             'email' => $row[3],
             'password' => bcrypt($row[4]),
             'status' => $row[5],
             'hidden' => 0,
-            'action_by' => Auth::user()->id
+            'action_by' => Auth::guard('web')->user()->id
         ];
 
         $split_kelas = explode(' ', $row[0]);
@@ -55,7 +55,7 @@ class SiswaImport implements ToModel, WithStartRow
             $data['kelas_id'] = $data_kelas->id;
         } else {
             return null;
-        }
+        };
 
         if ($validator->fails()) {
             $existingSiswa = Siswa::where('username', $data['username'])->where('hidden', 1)->orWhere('email', $data['email'])->where('hidden', 1)->first();
