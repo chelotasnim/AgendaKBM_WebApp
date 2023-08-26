@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiAuthentication;
 use App\Http\Controllers\Guru_Api;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Siswa_Api;
@@ -18,20 +19,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
+//Registrasi Akun Pengguna
 Route::post('teacher/self_registration', [Gurus::class, 'self_regist']);
-
 Route::post('siswa/self_registration', [Siswas::class, 'self_regist']);
 
-Route::get('student/{id}/{day}', [Siswa_Api::class, 'get_main']);
+//API Login
+Route::post('login', [ApiAuthentication::class, 'login']);
 
-Route::get('teacher/{id}', [Guru_Api::class, 'get_main']);
+//API Terautentikasi
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('student/{day}', [Siswa_Api::class, 'get_main']);
 
-Route::get('get_jurnal/{id}', [Guru_Api::class, 'get_jurnal']);
+    Route::get('teacher', [Guru_Api::class, 'get_main']);
 
-Route::get('get_all_jurnal/{id}', [Guru_Api::class, 'get_all_jurnal']);
+    Route::get('get_jurnal/{id}', [Guru_Api::class, 'get_jurnal']);
 
-Route::post('send_jurnal', [Guru_Api::class, 'send_jurnal']);
+    Route::get('get_all_jurnal', [Guru_Api::class, 'get_all_jurnal']);
+
+    Route::post('send_jurnal', [Guru_Api::class, 'send_jurnal']);
+
+    Route::get('logout', [ApiAuthentication::class, 'logout']);
+});

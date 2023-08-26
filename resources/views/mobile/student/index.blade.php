@@ -59,7 +59,7 @@
     <script src="{{ asset('mobile/js/script.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const user_id = "{{ Auth::guard('student')->user()->id }}";
+            const user_id = "{{ 'Bearer ' . $token->token }}";
             function setHome() {
                 $.ajax({
                     url: `{{ url('api/student/${user_id}/today') }}`,

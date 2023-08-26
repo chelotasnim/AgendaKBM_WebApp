@@ -7,12 +7,11 @@ use App\Models\Guru;
 use App\Models\Jurnal_Kelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class Guru_Api extends Controller
+class Guru_Feature extends Controller
 {
-    public function get_main()
+    public function get_main($id_guru)
     {
         $main = Guru::with([
             'jam_mengajar' => function ($query) {
@@ -32,7 +31,7 @@ class Guru_Api extends Controller
                             }]);
                     }]);
             }
-        ])->where('id', Auth::user()->id)->first();
+        ])->where('id', $id_guru)->first();
 
         $data = array(
             'main_data' => $main,
@@ -42,7 +41,7 @@ class Guru_Api extends Controller
             )
         );
 
-        $jurnal_today = Jurnal_Kelas::where('guru_id', Auth::user()->id)->whereDate('tanggal', Carbon::now()->format('Y-m-d'))->get();
+        $jurnal_today = Jurnal_Kelas::where('guru_id', $id_guru)->whereDate('tanggal', Carbon::now()->format('Y-m-d'))->get();
 
         foreach ($main->jam_mengajar as $jadwal) {
             if (Carbon::now()->format('H:i') < Carbon::parse($jadwal->jam_mulai)->format('H:i')) {
@@ -152,7 +151,7 @@ class Guru_Api extends Controller
         };
     }
 
-    public function get_all_jurnal()
+    public function get_all_jurnal($id)
     {
         $main = Guru::with([
             'jurnal' => function ($query) {
@@ -165,7 +164,7 @@ class Guru_Api extends Controller
                         }
                     ]);
             }
-        ])->where('id', Auth::user()->id)->first();
+        ])->where('id', $id)->first();
 
         $data = array(
             'main_data' => $main,
