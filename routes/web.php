@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Guru_Api;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwals;
 use App\Http\Controllers\Kelases;
@@ -12,7 +11,6 @@ use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use App\Models\Mapel;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,13 +24,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Pengguna Tidak Terautentikasi
 Route::middleware('guest')->group(function () {
+    //Login
     Route::get('/', function () {
         return view('login');
     })->name('login');
 
+    //Aksi
     Route::post('/', [Users::class, 'login']);
 
+
+
+    //Registrasi
     Route::get('regist', function () {
         $data = array(
             'all_kelas' => Kelas::whereHas('jenjang', function ($query) {
@@ -45,15 +49,14 @@ Route::middleware('guest')->group(function () {
     });
 });
 
+//Autentikasi Super Admin
 Route::middleware('auth:web')->group(function () {
+    //Logout
     Route::get('logout', [Users::class, 'logout']);
-    // Route::get('dashboard/jenjang_kelas', function () {
-    //     $data = array(
-    //         'page' => 'jenjang_kelas'
-    //     );
-    //     return view('dashboard.jenjang_kelas.index', $data);
-    // });
 
+
+
+    //Mata Pelajaran
     Route::get('dashboard/mapel', function () {
         $data = array(
             'page' => 'mapel'
@@ -61,6 +64,16 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.mapel.index', $data);
     });
 
+    //Aksi
+    Route::get('dashboard/get_mapel', [Mapels::class, 'get_data']);
+    Route::post('dashboard/mapel', [Mapels::class, 'store']);
+    Route::post('dashboard/edit_mapel', [Mapels::class, 'edit']);
+    Route::post('dashboard/delete_mapel', [Mapels::class, 'delete']);
+    Route::post('dashboard/import_mapel', [Mapels::class, 'import']);
+
+
+
+    //Kelas
     Route::get('dashboard/kelas', function () {
         $data = array(
             'page' => 'kelas',
@@ -69,6 +82,17 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.kelas.index', $data);
     });
 
+    //Aksi
+    Route::get('dashboard/get_kelas', [Kelases::class, 'get_data']);
+    Route::post('dashboard/kelas', [Kelases::class, 'store']);
+    Route::post('dashboard/edit_kelas', [Kelases::class, 'edit']);
+    Route::post('dashboard/delete_kelas', [Kelases::class, 'delete']);
+    Route::post('dashboard/import_kelas', [Kelases::class, 'import']);
+    Route::post('dashboard/naik_kelas', [Kelases::class, 'up']);
+
+
+
+    //Jadwal
     Route::get('dashboard/jadwal/{id}', function ($id) {
         $data = array(
             'page' => 'kelas',
@@ -107,6 +131,18 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.jadwal.delete',  $data);
     });
 
+    //Aksi
+    Route::get('dashboard/jadwal/get_jadwal/{id}', [Jadwals::class, 'get_jadwal']);
+    Route::post('dashboard/jadwal/store/main', [Jadwals::class, 'store']);
+    Route::post('dashboard/jadwal/store/schedule', [Jadwals::class, 'store_schedule']);
+    Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
+    Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
+    Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
+    Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
+
+
+
+    //Guru
     Route::get('dashboard/guru', function () {
         $data = array(
             'page' => 'guru',
@@ -114,6 +150,18 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.guru.index', $data);
     });
 
+    //Aksi
+    Route::get('dashboard/get_guru', [Gurus::class, 'get_data']);
+    Route::post('dashboard/guru', [Gurus::class, 'store']);
+    Route::post('dashboard/edit_guru', [Gurus::class, 'edit']);
+    Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);
+    Route::post('dashboard/import_guru', [Gurus::class, 'import']);
+    Route::post('dashboard/add_jurnal', [Gurus::class, 'jurnal']);
+    Route::post('dashboard/get_jurnal', [Gurus::class, 'get_jurnal']);
+
+
+
+    //Admin
     Route::get('dashboard/admin', function () {
         $data = array(
             'page' => 'admin',
@@ -121,6 +169,15 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.admin.index', $data);
     });
 
+    //Aksi
+    Route::get('dashboard/get_admin', [Users::class, 'get_data']);
+    Route::post('dashboard/admin', [Users::class, 'store']);
+    Route::post('dashboard/edit_admin', [Users::class, 'edit']);
+    Route::post('dashboard/delete_admin', [Users::class, 'delete']);
+
+
+
+    //Siswa
     Route::get('dashboard/siswa', function () {
         $data = array(
             'page' => 'siswa',
@@ -132,6 +189,16 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.siswa.index', $data);
     });
 
+    //Aksi
+    Route::get('dashboard/get_siswa', [Siswas::class, 'get_data']);
+    Route::post('dashboard/siswa', [Siswas::class, 'store']);
+    Route::post('dashboard/edit_siswa', [Siswas::class, 'edit']);
+    Route::post('dashboard/delete_siswa', [Siswas::class, 'delete']);
+    Route::post('dashboard/import_siswa', [Siswas::class, 'import']);
+
+
+
+    //Jurnal
     Route::get('dashboard/jurnal', function () {
         $data = array(
             'page' => 'laporan',
@@ -140,6 +207,7 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.jurnal.index', $data);
     });
 
+    //Aksi
     Route::get('dashboard/add_jurnal', function () {
         $data = array(
             'page' => 'add_jurnal',
@@ -149,63 +217,30 @@ Route::middleware('auth:web')->group(function () {
         );
         return view('dashboard.jurnal.add', $data);
     });
-
-    Route::get('dashboard/get_mapel', [Mapels::class, 'get_data']);
-    Route::post('dashboard/mapel', [Mapels::class, 'store']);
-    Route::post('dashboard/edit_mapel', [Mapels::class, 'edit']);
-    Route::post('dashboard/delete_mapel', [Mapels::class, 'delete']);
-    Route::post('dashboard/import_mapel', [Mapels::class, 'import']);
-
-    Route::get('dashboard/get_kelas', [Kelases::class, 'get_data']);
-    Route::post('dashboard/kelas', [Kelases::class, 'store']);
-    Route::post('dashboard/edit_kelas', [Kelases::class, 'edit']);
-    Route::post('dashboard/delete_kelas', [Kelases::class, 'delete']);
-    Route::post('dashboard/import_kelas', [Kelases::class, 'import']);
-    Route::post('dashboard/naik_kelas', [Kelases::class, 'up']);
-
-    Route::get('dashboard/jadwal/get_jadwal/{id}', [Jadwals::class, 'get_jadwal']);
-    Route::post('dashboard/jadwal/store/main', [Jadwals::class, 'store']);
-    Route::post('dashboard/jadwal/store/schedule', [Jadwals::class, 'store_schedule']);
-    Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
-    Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
-    Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
-    Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
-
-    Route::get('dashboard/get_admin', [Users::class, 'get_data']);
-    Route::post('dashboard/admin', [Users::class, 'store']);
-    Route::post('dashboard/edit_admin', [Users::class, 'edit']);
-    Route::post('dashboard/delete_admin', [Users::class, 'delete']);
-
-    Route::get('dashboard/get_guru', [Gurus::class, 'get_data']);
-    Route::post('dashboard/guru', [Gurus::class, 'store']);
-    Route::post('dashboard/edit_guru', [Gurus::class, 'edit']);
-    Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);
-    Route::post('dashboard/import_guru', [Gurus::class, 'import']);
-    Route::post('dashboard/add_jurnal', [Gurus::class, 'jurnal']);
-    Route::post('dashboard/get_jurnal', [Gurus::class, 'get_jurnal']);
-
-    Route::get('dashboard/get_siswa', [Siswas::class, 'get_data']);
-    Route::post('dashboard/siswa', [Siswas::class, 'store']);
-    Route::post('dashboard/edit_siswa', [Siswas::class, 'edit']);
-    Route::post('dashboard/delete_siswa', [Siswas::class, 'delete']);
-    Route::post('dashboard/import_siswa', [Siswas::class, 'import']);
 });
 
+//Autentikasi Siswa
 Route::middleware('auth:student')->group(function () {
+    //Log Out
     Route::get('student_logout', [Users::class, 'student_logout']);
 
+    //Laman Utama
     Route::get('student', function () {
         return view('mobile.student.index');
     });
 });
 
+//Autentikasi Guru
 Route::middleware('auth:teacher')->group(function () {
+    //Log Out
     Route::get('teacher_logout', [Users::class, 'teacher_logout']);
 
+    //Laman Utama
     Route::get('teacher', function () {
         return view('mobile.teacher.index');
     });
 
+    //Laman Jurnal
     Route::get('teacher/jurnal/{id}', function () {
         return view('mobile.teacher.jurnal');
     });
