@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //API Autorisasi Siswa
     Route::get('student/{day}', [Siswa_Api::class, 'get_main']);
 
+    //API Autorisasi Guru
     Route::get('teacher', [Guru_Api::class, 'get_main']);
 
     Route::get('get_jurnal/{id}', [Guru_Api::class, 'get_jurnal']);
