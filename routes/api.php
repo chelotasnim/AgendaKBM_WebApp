@@ -45,5 +45,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('send_jurnal', [Guru_Api::class, 'send_jurnal']);
 
+    //API Logout
     Route::get('logout', [ApiAuthentication::class, 'logout']);
 });
