@@ -32,6 +32,8 @@ Route::post('login', [ApiAuthentication::class, 'login']);
 
 //API Terautentikasi
 Route::middleware('auth:sanctum')->group(function () {
+
+    //API Autorisasi Siswa
     Route::get('student/{day}', [Siswa_Api::class, 'get_main']);
 
     Route::get('teacher', [Guru_Api::class, 'get_main']);
