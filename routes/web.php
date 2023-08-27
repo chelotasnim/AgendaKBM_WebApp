@@ -253,7 +253,7 @@ Route::middleware('auth:teacher')->group(function () {
         return view('mobile.teacher.jurnal');
     });
 
-    //Web Based Feature
+    //Fitur Website Guru
     Route::get('teacher/{id}', [Guru_Feature::class, 'get_main']);
 
     Route::get('get_jurnal/{id}', [Guru_Feature::class, 'get_jurnal']);
