@@ -157,7 +157,7 @@
                           <div class="form-group">
                             <label for="must-be-param" class="mb-0 font-weight-normal">Konfirmasi Penghapusan Siswa <span style="font-size: 20px;" class="text-danger">*</span></label>
                             <br>
-                            <small class="text-info">Username : <span id="param-delete"></span></small>
+                            <small class="text-info">NIS : <span id="param-delete"></span></small>
                             <input type="text" name="confirm" class="form-control" autocomplete="off" placeholder="Ketik Ulang Username Siswa">
                             <input type="text" name="param" id="must-be-param" class="d-none form-control" readonly>
                           </div>
@@ -185,15 +185,15 @@
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="must-be-param-1" class="text-secondary font-weight-normal">Nama Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
-                              <input type="text" id="must-be-param-1" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
-                            </div>
+                              <label for="must-be-param-2" class="text-secondary font-weight-normal">NIS Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
+                              <input type="text" id="must-be-param-2" name="username" class="form-control" autocomplete="off" placeholder="Contoh : mjohndoe123">
+                          </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="must-be-param-2" class="text-secondary font-weight-normal">Username Akun Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
-                              <input type="text" id="must-be-param-2" name="username" class="form-control" autocomplete="off" placeholder="Contoh : mjohndoe123">
-                          </div>
+                              <label for="must-be-param-1" class="text-secondary font-weight-normal">Nama Siswa <span style="font-size: 20px" class="text-danger">*</span></label>
+                              <input type="text" id="must-be-param-1" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
+                            </div>
                           </div>
                         </div>
                         <div class="row">
