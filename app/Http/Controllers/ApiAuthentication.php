@@ -6,13 +6,14 @@ use App\Models\Guru;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class ApiAuthentication extends Controller
 {
     public function login()
     {
-        $credentials = request()->validate([
+        $credentials = Validator::make(request()->all(), [
             'email' => 'required|max:255|email:dns',
             'password' => 'required'
         ]);
@@ -22,11 +23,13 @@ class ApiAuthentication extends Controller
 
         if ($student != null) {
             if (Hash::check($credentials['password'], $student->password)) {
-                return $student->createToken('Student')->plainTextToken;
+                $token = array('token' => $student->createToken('Student')->plainTextToken);
+                return $token;
             };
         } else if ($teacher != null) {
             if (Hash::check($credentials['password'], $teacher->password)) {
-                return $teacher->createToken('Teacher')->plainTextToken;
+                $token = array('token' => $teacher->createToken('Teacher')->plainTextToken);
+                return $token;
             };
         };
 

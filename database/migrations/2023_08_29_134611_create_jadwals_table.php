@@ -13,18 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal', function (Blueprint $table) {
+        Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kelas_id')
                 ->references('id')
                 ->on('kelas')
                 ->onDelete('cascade');
-            $table->string('nama_jadwal', 100)->unique();
-            $table->string('deskripsi_jadwal')->nullable();
-            $table->boolean('status')->nullable();
-            $table->boolean('hidden')->nullable();
+            $table->string('hari', 6);
+            $table->foreignId('jam_id')
+                ->references('id')
+                ->on('jams')
+                ->onDelete('cascade');
+            $table->foreignId('guru_mapel_id')
+                ->references('id')
+                ->on('guru_mapels')
+                ->onDelete('cascade');
             $table->timestamps();
-            $table->integer('action_by');
         });
     }
 
@@ -35,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal');
+        Schema::dropIfExists('jadwals');
     }
 };

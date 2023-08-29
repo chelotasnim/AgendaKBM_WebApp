@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
@@ -42,18 +41,6 @@ class KelasImport implements ToModel
                 $check_kelas = Kelas::where('jenjang_kelas_id', $get_jenjang->id)->where('name', $row[1])->first();
                 if ($check_kelas == null) {
                     Kelas::create($data);
-
-                    $get_kelas = Kelas::with('jenjang')->where('jenjang_kelas_id', $get_jenjang->id)->where('name', $row[1])->first();
-
-                    Jadwal::create([
-                        'kelas_id' => $get_kelas->id,
-                        'nama_jadwal' => $get_kelas->jenjang->jenjang . ' ' . $get_kelas->name,
-                        'deskripsi_jadwal' => 'Jadwal Normal Kelas ' . $get_kelas->jenjang->jenjang . ' ' . $get_kelas->name,
-                        'status' => 1,
-                        'hidden' => 0,
-                        'action_by' => Auth::user()->id
-                    ]);
-
 
                     return null;
                 } else {

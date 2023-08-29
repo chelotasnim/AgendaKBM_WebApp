@@ -3,6 +3,7 @@
 use App\Http\Controllers\Guru_Feature;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwals;
+use App\Http\Controllers\Jams;
 use App\Http\Controllers\Kelases;
 use App\Http\Controllers\Mapels;
 use App\Http\Controllers\Siswa_Feature;
@@ -59,6 +60,20 @@ Route::middleware('auth:web')->group(function () {
     //Logout
     Route::get('logout', [Users::class, 'logout']);
 
+    //Pengaturan Jam
+    Route::get('dashboard/jam', function () {
+        $data = array(
+            'page' => 'jam'
+        );
+
+        return view('dashboard.jam.index', $data);
+    });
+
+    //Aksi
+    Route::get('dashboard/get_jam', [Jams::class, 'get_jam']);
+    Route::post('dashboard/jam', [Jams::class, 'add_jam']);
+    Route::post('dashboard/edit_jam', [Jams::class, 'edit_jam']);
+
 
 
     //Mata Pelajaran
@@ -98,52 +113,52 @@ Route::middleware('auth:web')->group(function () {
 
 
     //Jadwal
-    Route::get('dashboard/jadwal/{id}', function ($id) {
-        $data = array(
-            'page' => 'kelas',
-            'kelas' => Kelas::with('jenjang')->where('id', $id)->first(),
-            'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-            'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-        );
-        return view('dashboard.jadwal.index', $data);
-    });
+    // Route::get('dashboard/jadwal/{id}', function ($id) {
+    //     $data = array(
+    //         'page' => 'kelas',
+    //         'kelas' => Kelas::with('jenjang')->where('id', $id)->first(),
+    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
+    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
+    //     );
+    //     return view('dashboard.jadwal.index', $data);
+    // });
 
-    Route::get('dashboard/jadwal/edit/{id}', function ($id) {
-        $data = array(
-            'page' => 'kelas',
-            'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
-            'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-            'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-        );
-        return view('dashboard.jadwal.edit', $data);
-    });
+    // Route::get('dashboard/jadwal/edit/{id}', function ($id) {
+    //     $data = array(
+    //         'page' => 'kelas',
+    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
+    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
+    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
+    //     );
+    //     return view('dashboard.jadwal.edit', $data);
+    // });
 
-    Route::get('dashboard/jadwal/column/{id}', function ($id) {
-        $data = array(
-            'page' => 'kelas',
-            'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
-            'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-            'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-        );
-        return view('dashboard.jadwal.column',  $data);
-    });
+    // Route::get('dashboard/jadwal/column/{id}', function ($id) {
+    //     $data = array(
+    //         'page' => 'kelas',
+    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
+    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
+    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
+    //     );
+    //     return view('dashboard.jadwal.column',  $data);
+    // });
 
-    Route::get('dashboard/jadwal/column_remove/{id}', function ($id) {
-        $data = array(
-            'page' => 'kelas',
-            'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first()
-        );
-        return view('dashboard.jadwal.delete',  $data);
-    });
+    // Route::get('dashboard/jadwal/column_remove/{id}', function ($id) {
+    //     $data = array(
+    //         'page' => 'kelas',
+    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first()
+    //     );
+    //     return view('dashboard.jadwal.delete',  $data);
+    // });
 
     //Aksi
-    Route::get('dashboard/jadwal/get_jadwal/{id}', [Jadwals::class, 'get_jadwal']);
-    Route::post('dashboard/jadwal/store/main', [Jadwals::class, 'store']);
-    Route::post('dashboard/jadwal/store/schedule', [Jadwals::class, 'store_schedule']);
-    Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
-    Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
-    Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
-    Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
+    // Route::get('dashboard/jadwal/get_jadwal/{id}', [Jadwals::class, 'get_jadwal']);
+    // Route::post('dashboard/jadwal/store/main', [Jadwals::class, 'store']);
+    // Route::post('dashboard/jadwal/store/schedule', [Jadwals::class, 'store_schedule']);
+    // Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
+    // Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
+    // Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
+    // Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
 
 
 

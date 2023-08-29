@@ -115,6 +115,16 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="{{ url('dashboard/jam') }}" class="nav-link @if($page === 'jam'){{ 'active' }} @endif">
+                  @if($page === 'jam')
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
+                  @else
+                    <i class="fal fa-grip-lines nav-icon"></i>
+                  @endif
+                  <p>Pengaturan Jam</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ url('dashboard/mapel') }}" class="nav-link @if($page === 'mapel'){{ 'active' }} @endif">
                   @if($page === 'mapel')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
@@ -125,6 +135,16 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ url('dashboard/guru_mapel') }}" class="nav-link @if($page === 'guru_mapel'){{ 'active' }} @endif">
+                  @if($page === 'guru_mapel')
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
+                  @else
+                    <i class="fal fa-grip-lines nav-icon"></i>
+                  @endif
+                  <p>Guru Mapel</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ url('dashboard/kelas') }}" class="nav-link @if($page === 'kelas'){{ 'active' }} @endif">
                   @if($page === 'kelas')
                     <i class="text-teal fal fa-grip-lines nav-icon"></i>
@@ -132,6 +152,16 @@
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Kelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('dashboard/jadwal') }}" class="nav-link @if($page === 'jadwal'){{ 'active' }} @endif">
+                  @if($page === 'jadwal')
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
+                  @else
+                    <i class="fal fa-grip-lines nav-icon"></i>
+                  @endif
+                  <p>Jadwal KBM</p>
                 </a>
               </li>
             </ul>

@@ -132,7 +132,7 @@ class Gurus extends Controller
                         'action_by' => Auth::user()->id
                     );
                     if (request()->input('password') != null) {
-                        $new_data['password'] = request()->input('password');
+                        $new_data['password'] = bcrypt(request()->input('password'));
                     };
 
                     Guru::where('username', request()->input('confirm'))->orWhere('email', request()->input('confirm2'))->update($new_data);
