@@ -82,7 +82,7 @@
                   <tr>
                     <th class="text-center">Kode Guru</th>
                     <th>Nama Guru</th>
-                    <th class="text-center">Kode</th>
+                    <th class="text-center">Kode Mapel</th>
                     <th>Mata Pelajaran</th>
                     <th class="text-center">
                       <i class="fas fa-ellipsis-v"></i>
