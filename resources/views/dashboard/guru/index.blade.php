@@ -22,35 +22,41 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
+                  <label for="inputKode" class="text-secondary font-weight-normal">Kode Guru <span style="font-size: 20px" class="text-danger">*</span></label>
+                  <input type="number" id="inputKode" name="kode" class="form-control" autocomplete="off" placeholder="Contoh : 92">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
                   <label for="inputName" class="text-secondary font-weight-normal">Nama Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                   <input type="text" id="inputName" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
                 </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="inputUsername" class="text-secondary font-weight-normal">Username Akun Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                   <input type="text" id="inputUsername" name="username" class="form-control" autocomplete="off" placeholder="Contoh : mjohndoe123">
               </div>
               </div>
-            </div>
-            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="inputEmail" class="text-secondary font-weight-normal">Email Akun Guru <span style="font-size: 20px" class="text-danger">*</span></label>
-                  <input type="text" id="inputEmail" name="email" class="form-control" autocomplete="off" placeholder="Contoh : john123@gmail.com">
+                  <input type="text" id="inputEmail" name="email" class="form-control" autocomplete="off" placeholder="Contoh : guru92@gmail.com">
               </div>
               </div>
+            </div>
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="inputPass" class="text-secondary font-weight-normal">Password Akun Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                   <input type="password" id="inputPass" name="password" class="form-control" autocomplete="off" placeholder="Masukkan Password Yang Kuat">
               </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label for="inputStatus" class="text-secondary font-weight-normal">Status Akun Guru</label>
+                  <label for="inputStatus" class="text-secondary font-weight-normal">Status Akun Guru <span style="font-size: 20px" class="text-danger"></span></label>
                   <select class="form-control select2bs4 select2-hidden-accessible" name="status" id="inputStatus" style="width: 100%;" tabindex="-1" aria-hidden="true">
                     <option selected hidden disabled>Pilih Status Akun</option>
                       <option value="1" selected>Aktif</option>
@@ -173,24 +179,32 @@
                         <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
+                              <label for="must-be-param-0" class="text-secondary font-weight-normal">Kode Guru <span style="font-size: 20px" class="text-danger">*</span></label>
+                              <input type="number" id="must-be-param-0" name="kode" class="form-control" autocomplete="off" placeholder="Contoh : 92">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
                               <label for="must-be-param-1" class="text-secondary font-weight-normal">Nama Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                               <input type="text" id="must-be-param-1" name="name" class="form-control" autocomplete="off" placeholder="Contoh : Ahmad John Doe">
                             </div>
                           </div>
+                        </div>
+                        <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="must-be-param-2" class="text-secondary font-weight-normal">Username Akun Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                               <input type="text" id="must-be-param-2" name="username" class="form-control" autocomplete="off" placeholder="Contoh : mjohndoe123">
                           </div>
                           </div>
-                        </div>
-                        <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="must-be-param-3" class="text-secondary font-weight-normal">Username Akun Guru <span style="font-size: 20px" class="text-danger">*</span></label>
                               <input type="text" id="must-be-param-3" name="email" class="form-control" autocomplete="off" placeholder="Contoh : john123@gmail.com">
                           </div>
                           </div>
+                        </div>
+                        <div class="row">
                           <div class="col-md-6">
                             <div class="form-group" style="margin-top: 6px">
                               <label for="inputPassEdit" class="text-secondary font-weight-normal">Password Baru</label>
@@ -198,9 +212,7 @@
                               <small class="text-info">*Kosongkan Jika Tidak Ingin Merubah Password</small>
                           </div>
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
                             <div class="form-group">
                               <label for="must-be-param-4" class="text-secondary font-weight-normal">Status Akun Guru</label>
                               <select class="form-control select2bs4 select2-hidden-accessible" name="status" id="must-be-param-4" style="width: 100%;" tabindex="-1" aria-hidden="true">
@@ -208,6 +220,7 @@
                                   <option value="1">Aktif</option>
                                   <option value="0">Tidak Aktif</option>
                               </select>
+                              <input type="text" id="main-edit-kode" name="confirm-main" class="d-none">
                               <input type="text" id="main-edit-param" name="confirm" class="d-none">
                               <input type="text" id="second-edit-param" name="confirm2" class="d-none">
                               <small class="text-danger d-flex align-items-center mt-2" style="gap: 5px">

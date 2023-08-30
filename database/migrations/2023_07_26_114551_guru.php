@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->id();
+            $table->integer('kode')->unique();
             $table->string('name', 100);
             $table->string('username', 25)->unique();
             $table->string('email')->unique();

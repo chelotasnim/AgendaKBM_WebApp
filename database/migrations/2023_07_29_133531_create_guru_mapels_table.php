@@ -23,7 +23,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('mapel')
                 ->onDelete('cascade');
-            $table->string('guru_mapel', 4)->unique();
+            $table->integer('guru_mapel');
             $table->timestamps();
         });
     }

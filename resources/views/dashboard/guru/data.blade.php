@@ -36,7 +36,7 @@
                     }
                 },
                 { 
-                    data: 'id',
+                    data: 'kode',
                     render: function(data) {
                         return '<span class="badge bg-teal">' + data + '</span>';
                     }
@@ -57,7 +57,7 @@
                 {
                     data: null,
                     render: function(data) {
-                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.username + `', '` + data.email + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.username + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                        return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.kode + `', '` + data.name + `', '` + data.username + `', '` + data.email + `', '` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.username + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
                     }
                 }
             ],
@@ -196,7 +196,7 @@
             });
 
             var exportData = table.buttons.exportData({
-                columns: [2, 3, 4, 5],
+                columns: [1, 2, 3, 4, 5],
                 header: false,
                 format: {
                     header: function (data, columnIdx) {
@@ -207,18 +207,18 @@
 
             var modifiedData = [];
             for (var i = 0; i < exportData.body.length; i++) {
-                if (exportData.body[i][3] === 'Aktif') {
-                    exportData.body[i][3] = '1';
-                } else if (exportData.body[i][3] === 'Tidak Aktif') {
-                    exportData.body[i][3] = '0';
+                if (exportData.body[i][4] === 'Aktif') {
+                    exportData.body[i][4] = '1';
+                } else if (exportData.body[i][4] === 'Tidak Aktif') {
+                    exportData.body[i][4] = '0';
                 }
 
                 exportData.body[i][4] = 'Demi Keamanan Password Tidak Diimpor';
-                modifiedData.push([exportData.body[i][0], exportData.body[i][1], exportData.body[i][2], exportData.body[i][4], exportData.body[i][3]]);
+                modifiedData.push([exportData.body[i][0], exportData.body[i][1], exportData.body[i][2], exportData.body[i][3], exportData.body[i][4], exportData.body[i][4]]);
             }
 
             var workbook = XLSX.utils.book_new();
-            var worksheet = XLSX.utils.aoa_to_sheet([documentTitle, ["Nama Guru", "Username Akun", "Email", "Password", "Status"], ...modifiedData]);
+            var worksheet = XLSX.utils.aoa_to_sheet([documentTitle, ["Kode Guru", "Nama Guru", "Username Akun", "Email", "Password", "Status"], ...modifiedData]);
 
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -284,9 +284,11 @@
         $('#param-delete', $('#modal-delete')).text(username);
     };
 
-    function modalEdit(name, username, email, status) {
+    function modalEdit(kode, name, username, email, status) {
+        $('#main-edit-kode', $('#modal-edit')).val(kode);
         $('#main-edit-param', $('#modal-edit')).val(username);
         $('#second-edit-param', $('#modal-edit')).val(email);
+        $('#must-be-param-0', $('#modal-edit')).val(kode);
         $('#must-be-param-1', $('#modal-edit')).val(name);
         $('#must-be-param-2', $('#modal-edit')).val(username);
         $('#must-be-param-3', $('#modal-edit')).val(email);

@@ -43,16 +43,16 @@ Route::middleware('guest')->group(function () {
 
 
     //Registrasi
-    Route::get('regist', function () {
-        $data = array(
-            'all_kelas' => Kelas::whereHas('jenjang', function ($query) {
-                $query->where('hidden', 0);
-                $query->where('status', 1);
-            })->with('jenjang')->where('hidden', 0)->where('status', 1)->get()
-        );
+    // Route::get('regist', function () {
+    //     $data = array(
+    //         'all_kelas' => Kelas::whereHas('jenjang', function ($query) {
+    //             $query->where('hidden', 0);
+    //             $query->where('status', 1);
+    //         })->with('jenjang')->where('hidden', 0)->where('status', 1)->get()
+    //     );
 
-        return view('regist', $data);
-    });
+    //     return view('regist', $data);
+    // });
 });
 
 //Autentikasi Super Admin
@@ -109,6 +109,18 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/delete_kelas', [Kelases::class, 'delete']);
     Route::post('dashboard/import_kelas', [Kelases::class, 'import']);
     Route::post('dashboard/naik_kelas', [Kelases::class, 'up']);
+
+
+
+    //Guru Mapel
+    Route::get('dashboard/guru_mapel', function () {
+        $data = array(
+            'page' => 'guru_mapel',
+            'guru' => Guru::where('hidden', 0)->where('status', 1)->get(),
+            'mapel' => Mapel::where('hidden', 0)->where('status', 1)->get()
+        );
+        return view('dashboard.guru_mapel.index', $data);
+    });
 
 
 

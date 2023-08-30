@@ -105,8 +105,8 @@
             </ul>
           </li>
           <li class="nav-header">BASIS DATA</li>
-          <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas'){{ 'active' }} @endif">
+          <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam'){{ 'menu-open' }} @endif">
+            <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam'){{ 'active' }} @endif">
               <i class="nav-icon fal fa-layer-group"></i>
               <p>
                 Referensi
@@ -182,7 +182,7 @@
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
-                  <p>Akun Admin</p>
+                  <p>Admin</p>
                 </a>
                 <a href="{{ url('dashboard/guru') }}" class="nav-link @if($page === 'guru'){{ 'active' }} @endif">
                   @if($page === 'guru')
@@ -190,7 +190,7 @@
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
-                  <p>Akun Guru</p>
+                  <p>Guru</p>
                 </a>
                 <a href="{{ url('dashboard/siswa') }}" class="nav-link @if($page === 'siswa'){{ 'active' }} @endif">
                   @if($page === 'siswa')
@@ -198,7 +198,7 @@
                   @else
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
-                  <p>Akun Siswa</p>
+                  <p>Siswa</p>
                 </a>
               </li>
             </ul>
