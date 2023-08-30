@@ -49,17 +49,5 @@
             
             rows--;
         });
-
-        $('add-form').on('submit', function(event) {
-            event.preventDefault();
-
-            setLoading();
-
-            let schedules = [];
-
-            const total_guru = $('select[name="input-guru[]"]');
-            let count_total_guru = 0;
-            total_guru
-        });
     });
 </script>
