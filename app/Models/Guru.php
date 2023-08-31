@@ -22,4 +22,9 @@ class Guru extends Model
     {
         return $this->hasMany(Jurnal_Kelas::class, 'guru_id');
     }
+
+    public function guru_mapel()
+    {
+        return $this->hasMany(GuruMapel::class, 'guru_id');
+    }
 }

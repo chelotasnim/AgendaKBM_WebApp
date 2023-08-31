@@ -23,7 +23,7 @@ class Gurus extends Controller
         $validator = Validator::make(request()->all(), [
             'kode' => 'required',
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25|unique:siswa,username',
+            'username' => 'required|min:3|max:25|unique:siswa,username',
             'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email',
             'password' => 'required'
         ], [
@@ -92,7 +92,7 @@ class Gurus extends Controller
         $validator = Validator::make(request()->all(), [
             'kode' => 'required',
             'name' => 'required|max:100',
-            'username' => 'required|min:5|max:25|unique:siswa,username',
+            'username' => 'required|min:3|max:25|unique:siswa,username',
             'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email'
         ], [
             'kode.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memasukkan Kode Guru</div></div>',

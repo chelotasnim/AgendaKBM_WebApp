@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Guru_Feature;
+use App\Http\Controllers\GuruMapel;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwals;
 use App\Http\Controllers\Jams;
@@ -122,7 +123,7 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.guru_mapel.index', $data);
     });
 
-
+    Route::post('dashboard/guru_mapel', [GuruMapel::class, 'add_guru_mapel']);
 
     //Jadwal
     // Route::get('dashboard/jadwal/{id}', function ($id) {
