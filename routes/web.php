@@ -3,7 +3,6 @@
 use App\Http\Controllers\Guru_Feature;
 use App\Http\Controllers\GuruMapel;
 use App\Http\Controllers\Gurus;
-use App\Http\Controllers\Jadwals;
 use App\Http\Controllers\Jams;
 use App\Http\Controllers\Kelases;
 use App\Http\Controllers\Mapels;
@@ -11,7 +10,6 @@ use App\Http\Controllers\Siswa_Feature;
 use App\Http\Controllers\Siswas;
 use App\Http\Controllers\Users;
 use App\Models\Guru;
-use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -123,6 +121,7 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.guru_mapel.index', $data);
     });
 
+    Route::get('dashboard/get_guru_mapel', [GuruMapel::class, 'get_guru_mapel']);
     Route::post('dashboard/guru_mapel', [GuruMapel::class, 'add_guru_mapel']);
 
     //Jadwal

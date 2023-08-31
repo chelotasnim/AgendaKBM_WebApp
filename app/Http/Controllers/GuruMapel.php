@@ -19,27 +19,25 @@ class GuruMapel extends Controller
         $data = $get_data['guru_mapels'];
 
         foreach ($data as $guru) {
-            $guru_mapel = ModelsGuruMapel::where('guru_id', $guru[0])->orderBy('guru_mapel', 'desc')->first();
+            $guru_mapel = ModelsGuruMapel::where('guru_id', $guru[0])->count();
 
-            if (isset($guru_mapel)) {
-                if ($guru_mapel->guru_mapel == null) {
-                    ModelsGuruMapel::where('id', $guru_mapel->id)->update(['guru_mapel' => 1]);
-                    ModelsGuruMapel::create([
-                        'guru_id' => $guru[0],
-                        'mapel_id' => $guru[1],
-                        'guru_mapel' => 2
-                    ]);
-                } else {
-                    ModelsGuruMapel::create([
-                        'guru_id' => $guru[0],
-                        'mapel_id' => $guru[1],
-                        'guru_mapel' => $guru_mapel->guru_mapel++
-                    ]);
-                };
-            } else {
+            if ($guru_mapel === 0) {
                 ModelsGuruMapel::create([
                     'guru_id' => $guru[0],
                     'mapel_id' => $guru[1]
+                ]);
+            } else if ($guru_mapel === 1) {
+                ModelsGuruMapel::where('guru_id', $guru[0])->update(['guru_mapel' => 1]);
+                ModelsGuruMapel::create([
+                    'guru_id' => $guru[0],
+                    'mapel_id' => $guru[1],
+                    'guru_mapel' => $guru_mapel + 1
+                ]);
+            } else {
+                ModelsGuruMapel::create([
+                    'guru_id' => $guru[0],
+                    'mapel_id' => $guru[1],
+                    'guru_mapel' => $guru_mapel + 1
                 ]);
             };
         };
