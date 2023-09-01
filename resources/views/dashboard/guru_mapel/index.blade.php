@@ -96,6 +96,61 @@
           </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-edit" style="display: none; padding-right: 17px;" aria-hidden="true" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <form id="edit-form" method="post">
+            @csrf
+                <div class="modal-header">
+                  <h4 class="modal-title">Ubah Mapel Guru</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="must-be-param-1" class="text-secondary font-weight-normal">Mapel Yang Diajar</label>
+                            @if (isset($mapel[0]))
+                              <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="mapel_id" id="must-be-param-1" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                <option selected hidden disabled>Pilih Mata Pelajaran</option>
+                                @foreach ($mapel as $item)
+                                  <option value="{{ $item->id }}">{{ $item->nama_mapel }}</option>
+                                @endforeach
+                              </select>
+                            @else
+                              <input type="text" class="form-control" placeholder="Belum Ada Data Guru" disabled>
+                              <small><a href="{{ url('dashboard/mapel') }}" class="text-primary">Belum Ada Mapel, Tambahkan Disini.</a></small>
+                            @endif
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="must-be-param-2" class="text-secondary font-weight-normal">Status</label>
+                        <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="status" id="must-be-param-2" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                          <option value="1">Aktif</option>
+                          <option value="0">Tidak Aktif</option>
+                        </select>
+                        <small class="text-danger d-flex align-items-center mt-2" style="gap: 5px">
+                          <i class="fas fa-info-circle"></i>
+                          Mapel Guru akan hilang dari jadwal jika tidak aktif, selalu perbarui jadwal!
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" id="main-edit-param" name="confirm" class="d-none" readonly>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn border-secondary border-2 text-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn bg-teal">Ubah</button>
+                </div>
+          </form>
+        </div>
+      </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

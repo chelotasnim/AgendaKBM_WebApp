@@ -76,7 +76,7 @@
                     {
                         data: null,
                         render: function(data) {
-                            return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.id + `','` + data.guru_id + `','` + data.mapel_id + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>` ;
+                            return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.id + `','` + data.mapel_id + `','` + data.mapel.nama_mapel + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>` ;
                         }
                     }
                 ],
@@ -257,4 +257,16 @@
             };
         });
     });
+
+    function modalEdit(id, mapel_id, mapel, status) {
+        $('#main-edit-param', $('#modal-edit')).val(id);
+        $('#must-be-param-1', $('#modal-edit')).val(mapel_id);
+        $('#select2-must-be-param-1-container', $('#modal-edit')).text(mapel);
+        $('#must-be-param-2', $('#modal-edit')).val(status);
+        if(status == 1) {
+            $('#select2-must-be-param-2-container', $('#modal-edit')).text('Aktif');
+        } else {
+            $('#select2-must-be-param-2-container', $('#modal-edit')).text('Tidak Aktif');
+        };
+    };
 </script>
