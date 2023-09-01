@@ -24,6 +24,7 @@ return new class extends Migration
                 ->on('mapel')
                 ->onDelete('cascade');
             $table->integer('guru_mapel')->nullable();
+            $table->boolean('status');
             $table->timestamps();
         });
     }

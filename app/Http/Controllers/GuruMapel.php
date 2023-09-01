@@ -32,20 +32,23 @@ class GuruMapel extends Controller
                 if (count($guru_mapel) === 0) {
                     ModelsGuruMapel::create([
                         'guru_id' => $guru[0],
-                        'mapel_id' => $guru[1]
+                        'mapel_id' => $guru[1],
+                        'status' => 1
                     ]);
                 } else if (count($guru_mapel) === 1) {
                     ModelsGuruMapel::where('guru_id', $guru[0])->update(['guru_mapel' => 1]);
                     ModelsGuruMapel::create([
                         'guru_id' => $guru[0],
                         'mapel_id' => $guru[1],
-                        'guru_mapel' => count($guru_mapel) + 1
+                        'guru_mapel' => count($guru_mapel) + 1,
+                        'status' => 1
                     ]);
                 } else {
                     ModelsGuruMapel::create([
                         'guru_id' => $guru[0],
                         'mapel_id' => $guru[1],
-                        'guru_mapel' => count($guru_mapel) + 1
+                        'guru_mapel' => count($guru_mapel) + 1,
+                        'status' => 1
                     ]);
                 };
             };

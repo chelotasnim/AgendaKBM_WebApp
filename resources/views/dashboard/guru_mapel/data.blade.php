@@ -27,86 +27,95 @@
             }
         });
 
-        var table = $('#guru-mapel-table').DataTable({
-            language: {
-                errorAlert: null
-            },
-            ajax: {
-                url: `{{ url('dashboard/get_guru_mapel') }}`,
-                dataSrc: '',
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            },
-            columns: [
-                { 
-                    data: null,
-                    render: function(data) {
-                        return `<span class="badge bg-teal">${data.guru.kode}</span>`;
+        var table = null;
+        function do_dataTable() {
+            table = $('#guru-mapel-table').DataTable({
+                language: {
+                    errorAlert: null
+                },
+                ajax: {
+                    url: `{{ url('dashboard/get_guru_mapel') }}`,
+                    dataSrc: '',
+                    error: function(xhr, status, error) {
+                        console.error(error);
                     }
                 },
-                { 
-                    data: null,
-                    render: function(data) {
-                        return data.guru.name;
-                    }
-                },
-                {
-                    data: null,
-                    render: function(data) {
-                        if(data.guru_mapel != null) {
-                            return `<span class="badge bg-teal">${data.guru.kode},${data.guru_mapel}</span>`;
-                        } else {
+                columns: [
+                    { 
+                        data: null,
+                        render: function(data) {
                             return `<span class="badge bg-teal">${data.guru.kode}</span>`;
-                        };
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-                { 
-                    data: null,
-                    render: function(data) {
-                        return data.mapel.nama_mapel;
-                    },
-                    orderable: false,
-                    searchable: false
-                },
-                { data: 'id' }
-            ],
-            createdRow: function (row) {
-                $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(2).addClass('text-center');
-            },
-            initComplete: function(settings, json) {
-                var cellsToMerge = [];
-                var currentCellValue = null;
-
-                table.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                    var cellValue = this.data().guru.kode;
-
-                    if (cellValue === currentCellValue) {
-                        cellsToMerge.push(rowIdx);
-                    } else {
-                        if (cellsToMerge.length > 1) {
-                            mergeCells(cellsToMerge, 0);
-                            mergeCells(cellsToMerge, 1);
                         }
-
-                        currentCellValue = cellValue;
-                        cellsToMerge = [rowIdx];
+                    },
+                    { 
+                        data: null,
+                        render: function(data) {
+                            return data.guru.name;
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function(data) {
+                            if(data.guru_mapel != null) {
+                                return `<span class="badge bg-teal">${data.guru.kode},${data.guru_mapel}</span>`;
+                            } else {
+                                return `<span class="badge bg-teal">${data.guru.kode}</span>`;
+                            };
+                        },
+                        orderable: false,
+                        searchable: false
+                    },
+                    { 
+                        data: null,
+                        render: function(data) {
+                            return data.mapel.nama_mapel;
+                        },
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: null,
+                        render: function(data) {
+                            return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.id + `','` + data.guru_id + `','` + data.mapel_id + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>` ;
+                        }
                     }
-                });
+                ],
+                createdRow: function (row) {
+                    $('td', row).eq(0).addClass('text-center');
+                    $('td', row).eq(2).addClass('text-center');
+                },
+                initComplete: function(settings, json) {
+                    var cellsToMerge = [];
+                    var currentCellValue = null;
 
-                if (cellsToMerge.length > 1) {
-                    mergeCells(cellsToMerge, 0);
-                    mergeCells(cellsToMerge, 1);
-                };
-            },
-            language: {
-                loadingRecords: 'Sedang Mengolah Data...',
-                emptyTable: 'Belum Ada Data Mata Pelajaran'
-            }
-        });
+                    table.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                        var cellValue = this.data().guru.kode;
+
+                        if (cellValue === currentCellValue) {
+                            cellsToMerge.push(rowIdx);
+                        } else {
+                            if (cellsToMerge.length > 1) {
+                                mergeCells(cellsToMerge, 0);
+                                mergeCells(cellsToMerge, 1);
+                            }
+
+                            currentCellValue = cellValue;
+                            cellsToMerge = [rowIdx];
+                        }
+                    });
+
+                    if (cellsToMerge.length > 1) {
+                        mergeCells(cellsToMerge, 0);
+                        mergeCells(cellsToMerge, 1);
+                    };
+                },
+                language: {
+                    loadingRecords: 'Sedang Mengolah Data...',
+                    emptyTable: 'Belum Ada Data Mata Pelajaran'
+                }
+            });
+        };
+        do_dataTable();
         setInterval(check_r_c, 1000);
 
         function mergeCells(rowIndexes, columnIndex) {
@@ -131,6 +140,7 @@
 
             const new_row = $('#guru-mapel-' + rows).clone();
             new_row.attr('id', 'guru-mapel-' + (rows + 1));
+            new_row.attr('data-temporary', 'true');
             $('#guru-mapel-' + rows).addClass('mb-3');
             new_row.find('#input-guru-' + rows).attr('id', 'input-guru-' + (rows + 1));
             new_row.find('#input-mapel-' + rows).attr('id', 'input-mapel-' + (rows + 1));
@@ -224,6 +234,9 @@
                         $('#toast-container').html(dumpErr);
 
                         if(result.success === true) {
+                            rows = 1;
+                            $('#remove-btn').attr('style', 'display: none');
+                            $('div[data-temporary="true"]').remove();
                             $('select').val('');
                             $('select').select2({ theme: 'bootstrap4' });
                         };
@@ -232,6 +245,9 @@
                             $('.toast').remove();
                         }
                         setTimeout(removeEl, 4000);
+
+                        table.destroy();
+                        do_dataTable();
 
                         removeLoading();
                     }
