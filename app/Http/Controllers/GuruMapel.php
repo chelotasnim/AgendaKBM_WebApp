@@ -9,7 +9,14 @@ class GuruMapel extends Controller
 {
     public function get_guru_mapel()
     {
-        $data = ModelsGuruMapel::with('guru', 'mapel')->join('guru', 'guru_mapels.guru_id', '=', 'guru.id')->orderBy('guru.kode')->orderBy('guru_mapels.guru_mapel')->get();
+        $data = ModelsGuruMapel::with([
+            'guru' => function ($query) {
+                $query->select('id', 'kode', 'name');
+            },
+            'mapel' => function ($query) {
+                $query->select('id', 'nama_mapel');
+            }
+        ])->get();
         return response()->json($data);
     }
 
@@ -55,5 +62,23 @@ class GuruMapel extends Controller
         };
 
         return response()->json(['notification' => ['Data Added' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Guru Mapel Baru Berhasil Ditambahkan</div></div>']], 'success' => true]);
+    }
+
+    public function edit_guru_mapel()
+    {
+        $old_data = ModelsGuruMapel::where('id', request()->input('confirm'))->first();
+        if ($old_data->mapel_id == request()->input('mapel_id') && $old_data->status == request()->input('status')) {
+            return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Perubahan Dilakukan</div></div>']]);
+        };
+
+        $check = ModelsGuruMapel::where('guru_id', $old_data->guru_id)->where('mapel_id', request()->input('mapel_id'))->where('id', '!=', $old_data->id)->count();
+        if ($check > 0) {
+            return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Mapel Guru Sudah Ada</div></div>']]);
+        };
+
+        ModelsGuruMapel::where('id', request()->input('confirm'))->update([
+            'mapel_id' => request()->input('mapel_id'),
+            'status' => request()->input('status')
+        ]);
     }
 }

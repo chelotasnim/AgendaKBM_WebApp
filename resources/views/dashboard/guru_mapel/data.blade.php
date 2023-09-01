@@ -56,10 +56,15 @@
                     {
                         data: null,
                         render: function(data) {
+                            let status = 'teal';
+                            if(data.status === 0) {
+                                status = 'danger';
+                            };
+
                             if(data.guru_mapel != null) {
-                                return `<span class="badge bg-teal">${data.guru.kode},${data.guru_mapel}</span>`;
+                                return `<span class="badge bg-${status}">${data.guru.kode},${data.guru_mapel}</span>`;
                             } else {
-                                return `<span class="badge bg-teal">${data.guru.kode}</span>`;
+                                return `<span class="badge bg-${status}">${data.guru.kode}</span>`;
                             };
                         },
                         orderable: false,
@@ -80,6 +85,7 @@
                         }
                     }
                 ],
+                order: [[0, 'asc']],
                 createdRow: function (row) {
                     $('td', row).eq(0).addClass('text-center');
                     $('td', row).eq(2).addClass('text-center');
@@ -255,6 +261,38 @@
             } else {
                 removeLoading();
             };
+        });
+
+        $('#edit-form').on('submit', function(event) {
+            event.preventDefault();
+
+            setLoading();
+
+            $.ajax({
+                url: `{{ url('dashboard/edit_guru_mapel') }}`,
+                data: $('#edit-form').serialize(),
+                type: 'post',
+
+                success: function(result) {
+                        let dumpErr = '';
+                        for (let key in result.notification) {
+                            if (result.notification.hasOwnProperty(key)) {
+                                dumpErr += result.notification[key];
+                            };
+                        };
+                        $('#toast-container').html(dumpErr);
+                            
+                        function removeEl() {
+                            $('.toast').remove();
+                        }
+                        setTimeout(removeEl, 4000);
+
+                        table.destroy();
+                        do_dataTable();
+
+                        removeLoading();
+                }
+            });
         });
     });
 
