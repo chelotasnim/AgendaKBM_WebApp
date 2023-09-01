@@ -77,10 +77,9 @@
               <h3 class="card-title">Daftar Guru dan Mapel Yang Diajar</h3>
             </div>
             <div class="card-body">
-              <table id="guru-mapel-table" class="table table-bordered table-striped">
+              <table id="guru-mapel-table" class="table table-bordered">
                 <thead>
                   <tr>
-                    <th class="text-center">No</th>
                     <th class="text-center">Kode Guru</th>
                     <th>Nama Guru</th>
                     <th class="text-center">Kode</th>

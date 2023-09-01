@@ -1,6 +1,19 @@
 <script>
-    function refreshTable() {
-        $('#guru-mapel-table').DataTable().ajax.reload(null, false);
+    function check_r_c() {
+        const th = document.querySelectorAll('thead tr th');
+        const rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            const columns = row.querySelectorAll('td');
+            if(columns[0].classList.contains('merge-border') && columns[0].parentElement.previousElementSibling == undefined) {
+                const new_td = '<td class="placeholder"></td>';
+                row.insertAdjacentHTML('afterbegin', new_td);
+                row.insertAdjacentHTML('afterbegin', new_td);
+            } else if(columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined) {
+                columns[0].remove();
+                columns[1].remove();
+            };
+        });
     };
 
     $(document).ready(function() {
@@ -28,12 +41,6 @@
             columns: [
                 { 
                     data: null,
-                    render: function (data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                { 
-                    data: null,
                     render: function(data) {
                         return `<span class="badge bg-teal">${data.guru.kode}</span>`;
                     }
@@ -52,28 +59,65 @@
                         } else {
                             return `<span class="badge bg-teal">${data.guru.kode}</span>`;
                         };
-                    }
+                    },
+                    orderable: false
                 },
                 { 
                     data: null,
                     render: function(data) {
                         return data.mapel.nama_mapel;
-                    }
+                    },
+                    orderable: false
                 },
                 { data: 'id' }
             ],
-            order: [[1, 'asc']],
             createdRow: function (row) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('text-center');
-                $('td', row).eq(3).addClass('text-center');
+                $('td', row).eq(2).addClass('text-center');
+            },
+            initComplete: function(settings, json) {
+                var cellsToMerge = [];
+                var currentCellValue = null;
+
+                table.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                    var cellValue = this.data().guru.kode;
+
+                    if (cellValue === currentCellValue) {
+                        cellsToMerge.push(rowIdx);
+                    } else {
+                        if (cellsToMerge.length > 1) {
+                            mergeCells(cellsToMerge, 0);
+                            mergeCells(cellsToMerge, 1);
+                        }
+
+                        currentCellValue = cellValue;
+                        cellsToMerge = [rowIdx];
+                    }
+                });
+
+                if (cellsToMerge.length > 1) {
+                    mergeCells(cellsToMerge, 0);
+                    mergeCells(cellsToMerge, 1);
+                };
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',
                 emptyTable: 'Belum Ada Data Mata Pelajaran'
             }
         });
-        setInterval(refreshTable, 1000);
+        setInterval(check_r_c, 1000);
+
+        function mergeCells(rowIndexes, columnIndex) {
+            var firstRow = rowIndexes[0];
+            var rowspan = rowIndexes.length;
+
+            table.cell({ row: firstRow, column: columnIndex }).nodes().to$().attr('rowspan', rowspan);
+
+            for (var i = 1; i < rowIndexes.length; i++) {
+                table.cell({ row: rowIndexes[i], column: columnIndex }).nodes().to$().remove();
+                table.cell({ row: rowIndexes[i], column: columnIndex + 1 }).nodes().to$().addClass('merge-border');
+            }
+        };
 
         let rows = 1;
         $('#clone-btn').click(function() {
