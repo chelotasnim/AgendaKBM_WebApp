@@ -60,14 +60,16 @@
                             return `<span class="badge bg-teal">${data.guru.kode}</span>`;
                         };
                     },
-                    orderable: false
+                    orderable: false,
+                    searchable: false
                 },
                 { 
                     data: null,
                     render: function(data) {
                         return data.mapel.nama_mapel;
                     },
-                    orderable: false
+                    orderable: false,
+                    searchable: false
                 },
                 { data: 'id' }
             ],
