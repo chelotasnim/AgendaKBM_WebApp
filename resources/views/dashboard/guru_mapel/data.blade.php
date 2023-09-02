@@ -5,11 +5,13 @@
 
         rows.forEach(row => {
             const columns = row.querySelectorAll('td');
-            if(columns[0].classList.contains('merge-border') && columns[0].parentElement.previousElementSibling == undefined) {
+            if(columns[0].classList.contains('merge-border') && columns[0].parentElement.previousElementSibling == undefined ||
+            columns[0].classList.contains('merge-border') && columns[0].parentElement.previousElementSibling.querySelector('.placeholder') != undefined) {
                 const new_td = '<td class="placeholder"></td>';
                 row.insertAdjacentHTML('afterbegin', new_td);
                 row.insertAdjacentHTML('afterbegin', new_td);
-            } else if(columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined) {
+            } else if(columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined ||
+            columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling.querySelector('.placeholder') != undefined) {
                 columns[0].remove();
                 columns[1].remove();
             };
