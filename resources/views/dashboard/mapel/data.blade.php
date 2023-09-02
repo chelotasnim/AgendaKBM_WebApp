@@ -244,7 +244,7 @@
                 formData.append('mapel_excel', file);
 
                 $.ajax({
-                    url: 'import_mapel', // Replace with your controller route
+                    url: 'import_mapel',
                     method: 'POST',
                     data: formData,
                     processData: false,

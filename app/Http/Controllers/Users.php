@@ -23,17 +23,23 @@ class Users extends Controller
             'password' => request()->input('password')
         );
         if (Auth::guard('student')->attempt($credentials)) {
-            request()->session()->regenerate();
-            return redirect()->intended('student');
+            if (Auth::guard('student')->user()->status === 1) {
+                request()->session()->regenerate();
+                return redirect()->intended('student');
+            };
         } else if (Auth::guard('teacher')->attempt($credentials)) {
-            request()->session()->regenerate();
-            return redirect()->intended('teacher');
+            if (Auth::guard('teacher')->user()->status === 1) {
+                request()->session()->regenerate();
+                return redirect()->intended('teacher');
+            };
         } else if (Auth::guard('web')->attempt($credentials)) {
-            request()->session()->regenerate();
-            return redirect()->intended('dashboard/mapel');
-        } else {
-            return redirect('/')->with('credential_failed', 'Data Kredensial Salah');
+            if (Auth::guard('web')->user()->status === 1) {
+                request()->session()->regenerate();
+                return redirect()->intended('dashboard/mapel');
+            };
         };
+
+        return redirect('/')->with('credential_failed', 'Data Kredensial Salah');
     }
 
     public function logout()

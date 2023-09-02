@@ -70,7 +70,7 @@
             },
             language: {
                 loadingRecords: 'Sedang Mengolah Data...',
-                emptyTable: 'Belum Ada Data Mata Pelajaran'
+                emptyTable: 'Belum Ada Pengaturan Jam Pelajaran'
             }
         });
         setInterval(refreshTable, 1000);

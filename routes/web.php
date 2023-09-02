@@ -124,6 +124,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/get_guru_mapel', [GuruMapel::class, 'get_guru_mapel']);
     Route::post('dashboard/guru_mapel', [GuruMapel::class, 'add_guru_mapel']);
     Route::post('dashboard/edit_guru_mapel', [GuruMapel::class, 'edit_guru_mapel']);
+    Route::post('dashboard/import_guru_mapel', [GuruMapel::class, 'import']);
 
     //Jadwal
     // Route::get('dashboard/jadwal/{id}', function ($id) {

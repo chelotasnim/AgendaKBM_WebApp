@@ -117,7 +117,7 @@
                 },
                 language: {
                     loadingRecords: 'Sedang Mengolah Data...',
-                    emptyTable: 'Belum Ada Data Mata Pelajaran'
+                    emptyTable: 'Belum Ada Data Guru Mapel'
                 }
             });
         };
@@ -245,6 +245,8 @@
                             $('div[data-temporary="true"]').remove();
                             $('select').val('');
                             $('select').select2({ theme: 'bootstrap4' });
+                            table.destroy();
+                            do_dataTable();
                         };
                             
                         function removeEl() {
@@ -252,8 +254,6 @@
                         }
                         setTimeout(removeEl, 4000);
 
-                        table.destroy();
-                        do_dataTable();
 
                         removeLoading();
                     }
@@ -281,19 +281,70 @@
                             };
                         };
                         $('#toast-container').html(dumpErr);
+
+                        if(result.success === true) {
+                            $('#edit-form')[0].reset();
+                            $('#modal-edit').modal('toggle');
+                            table.destroy();
+                            do_dataTable();
+                        };
                             
                         function removeEl() {
                             $('.toast').remove();
                         }
                         setTimeout(removeEl, 4000);
 
-                        table.destroy();
-                        do_dataTable();
-
                         removeLoading();
                 }
             });
         });
+        
+        $('#import-guru-mapel-form').on('submit', function(event) {
+            event.preventDefault();
+
+            setLoading();
+
+            var fileInput = document.getElementById('gurumapelExcel');
+                var file = fileInput.files[0];
+                var formData = new FormData();
+                formData.append('guru_mapel_excel', file);
+
+                $.ajax({
+                    url: `{{ url('dashboard/import_guru_mapel') }}`,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(result) {
+                        let dumpErr = '';
+                        for (let key in result.notification) {
+                            if (result.notification.hasOwnProperty(key)) {
+                                dumpErr += result.notification[key];
+                            };
+                        };
+                        $('#toast-container').html(dumpErr);
+
+                        if(result.success === true) {
+                            $('#import-guru-mapel-form')[0].reset();
+                            $('#modal-default').modal('toggle');
+                            table.destroy();
+                            do_dataTable();
+                        };
+
+                        function removeEl() {
+                            $('.toast').remove();
+                        }
+                        setTimeout(removeEl, 4000);
+                        removeLoading();
+
+                        },
+                    error: function(xhr, status, error) {
+                        removeLoading();
+
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
     });
 
     function modalEdit(id, mapel_id, mapel, status) {

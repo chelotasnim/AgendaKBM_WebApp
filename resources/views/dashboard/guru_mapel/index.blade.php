@@ -65,9 +65,40 @@
             </div>
             <div class="row mt-4 justify-content-end" style="gap: 8px; padding-right: 14px;">
               <button type="submit" class="col-sm-3 btn bg-teal">Tambahkan</button>
+              <button type="button" class="col-sm-3 btn border-success border-2 text-teal" data-toggle="modal" data-target="#modal-default">Impor Data</button>
             </div>
           </div>
         </form>
+        <div class="modal fade" id="modal-default" style="display: none; padding-right: 17px;" aria-hidden="true" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form id="import-guru-mapel-form" enctype="multipart/form-data" method="post">
+                  @csrf
+                  <div class="modal-header">
+                      <h4 class="modal-title">Impor Data Guru Mapel</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input type="file" name="guru_mapel_excel" class="custom-file-input" accept=".xls, .xlsx" id="gurumapelExcel">
+                            <label class="custom-file-label" for="gurumapelExcel">Impor Template Excel</label>
+                          </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <div class="d-flex justify-content-start">
+                        <a href="{{ asset('templates/ImporGuruMapel.xlsx') }}" class="btn text-teal" download>Unduh Template Excel</a>
+                      </div>
+                      <div class="d-flex justify-content-end" style="gap: 5px">
+                        <button type="button" class="btn border-success border-2 text-teal" data-dismiss="modal">Tutup</button>
+                        <button id="impor-btn" type="submit" class="btn bg-teal">Impor</button>
+                      </div>
+                    </div>
+              </form>
+            </div>
+          </div>
+      </div>
     </div>
     </div>
     <div class="row">
