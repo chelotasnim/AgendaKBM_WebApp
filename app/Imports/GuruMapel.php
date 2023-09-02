@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Guru;
 use App\Models\GuruMapel as ModelsGuruMapel;
+use App\Models\Mapel;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
@@ -32,7 +33,8 @@ class GuruMapel implements ToModel, WithStartRow
         };
 
         $guru = Guru::where('kode', $row[0])->select('id', 'kode')->first();
-        if ($guru != null) {
+        $mapel = Mapel::where('id', $row[1]);
+        if ($guru != null && $mapel->exists()) {
             $guru_mapel = ModelsGuruMapel::where('guru_id', $guru->id)->get();
 
             $process = true;
