@@ -6,7 +6,6 @@
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Basis Data / Referensi /</span> Jadwal KBM</h4>
     <div id="toast-container" class="toast-top-right">
     </div>
-    @if ($senin > 0 || $selasa > 0 || $rabu > 0 || $kamis > 0 || $jumat > 0)
     <div class="row">
         <div class="col-xl">
             <div class="card collapsed-card">
@@ -20,26 +19,17 @@
                 </div>
                 <div class="card-body">
                     <form method="post" id="reset-jadwal">
+                        @csrf
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <select name="hari" id="inputHariReset" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
-                                        <option value="Pilih Hari" selected hidden disabled>Pilih Hari</option>
-                                            @if ($senin > 0)
-                                                <option value="Senin">Senin</option>
-                                            @endif
-                                            @if ($selasa > 0)
-                                                <option value="Selasa">Selasa</option>
-                                            @endif
-                                            @if ($rabu > 0)
-                                                <option value="Rabu">Rabu</option>
-                                            @endif
-                                            @if ($kamis > 0)
-                                                <option value="Kamis">Kamis</option>
-                                            @endif
-                                            @if ($jumat > 0)
-                                                <option value="Jumat">Jumat</option>
-                                            @endif
+                                        <option value="Semua" selected>Semua</option>
+                                        <option value="Senin">Senin</option>
+                                        <option value="Selasa">Selasa</option>
+                                        <option value="Rabu">Rabu</option>
+                                        <option value="Kamis">Kamis</option>
+                                        <option value="Jumat">Jumat</option>
                                     </select>
                                 </div>
                             </div>
@@ -52,7 +42,6 @@
             </div>
         </div>
     </div>
-    @endif
     <div class="row">
         <div class="col-xl">
             <div class="card collapsed-card">
@@ -66,26 +55,17 @@
                 </div>
                 <div class="card-body">
                         <form method="post" id="import-jadwal">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <select name="hari" id="inputHariJadwal" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
-                                            <option value="Pilih Hari" selected hidden disabled>Pilih Hari</option>
-                                            @if ($senin === 0)
-                                                <option value="Senin">Senin</option>
-                                            @endif
-                                            @if ($selasa === 0)
-                                                <option value="Selasa">Selasa</option>
-                                            @endif
-                                            @if ($rabu === 0)
-                                                <option value="Rabu">Rabu</option>
-                                            @endif
-                                            @if ($kamis === 0)
-                                                <option value="Kamis">Kamis</option>
-                                            @endif
-                                            @if ($jumat === 0)
-                                                <option value="Jumat">Jumat</option>
-                                            @endif
+                                            <option selected hidden disabled>Pilih Hari</option>
+                                            <option value="Senin">Senin</option>
+                                            <option value="Selasa">Selasa</option>
+                                            <option value="Rabu">Rabu</option>
+                                            <option value="Kamis">Kamis</option>
+                                            <option value="Jumat">Jumat</option>
                                         </select>
                                     </div>
                                 </div>

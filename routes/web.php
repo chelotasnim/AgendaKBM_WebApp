@@ -3,6 +3,7 @@
 use App\Http\Controllers\Guru_Feature;
 use App\Http\Controllers\GuruMapel;
 use App\Http\Controllers\Gurus;
+use App\Http\Controllers\Jadwal as ControllersJadwal;
 use App\Http\Controllers\Jams;
 use App\Http\Controllers\Kelases;
 use App\Http\Controllers\Mapels;
@@ -134,18 +135,14 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/jadwal', function () {
         $data = array(
             'page' => 'jadwal',
-            'senin' => Jadwal::where('hari', 'Senin')->count(),
-            'selasa' => Jadwal::where('hari', 'Selasa')->count(),
-            'rabu' => Jadwal::where('hari', 'Rabu')->count(),
-            'kamis' => Jadwal::where('hari', 'Kamis')->count(),
-            'jumat' => Jadwal::where('hari', 'Jumat')->count(),
             'kelas' => Kelas::get()
         );
 
         return view('dashboard.jadwal.index', $data);
     });
 
-    Route::post('dashboard/import_jadwal', [Jadwal::class, 'import']);
+    Route::post('dashboard/reset_jadwal', [ControllersJadwal::class, 'reset']);
+    Route::post('dashboard/import_jadwal', [ControllersJadwal::class, 'import']);
 
     //Jadwal
     // Route::get('dashboard/jadwal/{id}', function ($id) {
