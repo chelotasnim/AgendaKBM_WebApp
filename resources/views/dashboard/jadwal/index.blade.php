@@ -6,6 +6,47 @@
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Basis Data / Referensi /</span> Jadwal KBM</h4>
     <div id="toast-container" class="toast-top-right">
     </div>
+    <div class="row mb-1">
+        <div class="col-xl">
+            <div class="card collapsed-card">
+                <div class="card-header">
+                    <h3 class="card-title">Impor Jadwal Terbaru</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="import-jadwal">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="custom-file">
+                                    <input type="file" name="jam_excel" class="custom-file-input" accept=".xls, .xlsx" id="jamExcel">
+                                    <label class="custom-file-label" for="jamExcel">Impor Template Excel</label>
+                                  </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn bg-teal">Impor</button>
+                                <a href="{{ asset('templates/ImporJam.xlsx') }}" class="btn text-teal" download>Unduh Template Excel</a>
+                            </div>
+                        </div>
+                    </form>
+                    {{-- <form method="post" id="reset-jadwal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn bg-danger">Backup dan Reset Jadwal</button>
+                                <small class="d-block text-danger font-weight-normal mt-2">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Reset jadwal lama untuk mengimpor jadwal baru
+                                </small>
+                            </div>
+                        </div>
+                    </form> --}}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xl">
             <div class="card">
