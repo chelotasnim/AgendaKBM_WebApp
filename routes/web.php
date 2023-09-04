@@ -10,6 +10,7 @@ use App\Http\Controllers\Siswa_Feature;
 use App\Http\Controllers\Siswas;
 use App\Http\Controllers\Users;
 use App\Models\Guru;
+use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -133,11 +134,18 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/jadwal', function () {
         $data = array(
             'page' => 'jadwal',
+            'senin' => Jadwal::where('hari', 'Senin')->count(),
+            'selasa' => Jadwal::where('hari', 'Selasa')->count(),
+            'rabu' => Jadwal::where('hari', 'Rabu')->count(),
+            'kamis' => Jadwal::where('hari', 'Kamis')->count(),
+            'jumat' => Jadwal::where('hari', 'Jumat')->count(),
             'kelas' => Kelas::get()
         );
 
         return view('dashboard.jadwal.index', $data);
     });
+
+    Route::post('dashboard/import_jadwal', [Jadwal::class, 'import']);
 
     //Jadwal
     // Route::get('dashboard/jadwal/{id}', function ($id) {

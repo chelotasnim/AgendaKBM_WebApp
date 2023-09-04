@@ -6,7 +6,54 @@
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Basis Data / Referensi /</span> Jadwal KBM</h4>
     <div id="toast-container" class="toast-top-right">
     </div>
-    <div class="row mb-1">
+    @if ($senin > 0 || $selasa > 0 || $rabu > 0 || $kamis > 0 || $jumat > 0)
+    <div class="row">
+        <div class="col-xl">
+            <div class="card collapsed-card">
+                <div class="card-header">
+                    <div class="card-title">Reset dan Backup Jadwal Pada Hari</div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="reset-jadwal">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <select name="hari" id="inputHariReset" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
+                                        <option value="Pilih Hari" selected hidden disabled>Pilih Hari</option>
+                                            @if ($senin > 0)
+                                                <option value="Senin">Senin</option>
+                                            @endif
+                                            @if ($selasa > 0)
+                                                <option value="Selasa">Selasa</option>
+                                            @endif
+                                            @if ($rabu > 0)
+                                                <option value="Rabu">Rabu</option>
+                                            @endif
+                                            @if ($kamis > 0)
+                                                <option value="Kamis">Kamis</option>
+                                            @endif
+                                            @if ($jumat > 0)
+                                                <option value="Jumat">Jumat</option>
+                                            @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn bg-danger">Reset dan Backup Jadwal</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    <div class="row">
         <div class="col-xl">
             <div class="card collapsed-card">
                 <div class="card-header">
@@ -18,31 +65,42 @@
                       </div>
                 </div>
                 <div class="card-body">
-                    <form method="post" id="import-jadwal">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="custom-file">
-                                    <input type="file" name="jam_excel" class="custom-file-input" accept=".xls, .xlsx" id="jamExcel">
-                                    <label class="custom-file-label" for="jamExcel">Impor Template Excel</label>
-                                  </div>
+                        <form method="post" id="import-jadwal">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select name="hari" id="inputHariJadwal" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
+                                            <option value="Pilih Hari" selected hidden disabled>Pilih Hari</option>
+                                            @if ($senin === 0)
+                                                <option value="Senin">Senin</option>
+                                            @endif
+                                            @if ($selasa === 0)
+                                                <option value="Selasa">Selasa</option>
+                                            @endif
+                                            @if ($rabu === 0)
+                                                <option value="Rabu">Rabu</option>
+                                            @endif
+                                            @if ($kamis === 0)
+                                                <option value="Kamis">Kamis</option>
+                                            @endif
+                                            @if ($jumat === 0)
+                                                <option value="Jumat">Jumat</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="custom-file">
+                                        <input type="file" name="jadwal_excel" class="custom-file-input" accept=".xls, .xlsx" id="jadwalExcel">
+                                        <label class="custom-file-label" for="jadwalExcel">Impor Template Excel</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn bg-teal">Impor</button>
+                                    <a href="{{ asset('templates/ImporJam.xlsx') }}" class="btn text-teal" download>Unduh Template Excel</a>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <button type="submit" class="btn bg-teal">Impor</button>
-                                <a href="{{ asset('templates/ImporJam.xlsx') }}" class="btn text-teal" download>Unduh Template Excel</a>
-                            </div>
-                        </div>
-                    </form>
-                    {{-- <form method="post" id="reset-jadwal">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn bg-danger">Backup dan Reset Jadwal</button>
-                                <small class="d-block text-danger font-weight-normal mt-2">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    Reset jadwal lama untuk mengimpor jadwal baru
-                                </small>
-                            </div>
-                        </div>
-                    </form> --}}
+                        </form>
                 </div>
             </div>
         </div>
