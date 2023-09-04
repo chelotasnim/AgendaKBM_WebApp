@@ -3,14 +3,14 @@
 @section('dashboard')
 
 <div id="siswa-page" class="container-xxl flex-grow-1 container-p-y px-4">
-  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Basis Data / Transaksional /</span> Jurnal Mengajar</h4>
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Basis Data / Referensi /</span> Jadwal KBM</h4>
     <div id="toast-container" class="toast-top-right">
     </div>
     <div class="row">
         <div class="col-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Tampilkan Jurnal Berdasarkan</h3>
+                    <h3 class="card-title">Tampilkan Jadwal Berdasarkan</h3>
                 </div>
                 <div class="card-body">
                     <form method="post" id="search-form">
@@ -18,18 +18,20 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-secondary font-weight-normal">Rentang Tanggal <span style="font-size: 20px" class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                        </div>
-                                        <input type="text" class="form-control float-right" name="dari_sampai" id="reservation">
-                                      </div>
+                                    <label id="inputHari" class="text-secondary font-weight-normal">Jadwal Pada Hari <span style="font-size: 20px" class="text-danger"></span></label>
+                                    <select name="hari" id="inputHari" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
+                                        <option value="Semua" selected>Semua</option>
+                                        <option value="Senin">Senin</option>
+                                        <option value="Selasa">Selasa</option>
+                                        <option value="Rabu">Rabu</option>
+                                        <option value="Kamis">Kamis</option>
+                                        <option value="Jumat">Jumat</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="text-secondary font-weight-normal">Kelas <span style="font-size: 20px" class="text-danger">*</span></label>
+                                    <label class="text-secondary font-weight-normal">Jadwal Pada Kelas <span style="font-size: 20px" class="text-danger">*</span></label>
                                     @if (isset($kelas[0]))
                                         <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="kelas" id="inputKelas" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                         <option selected hidden disabled>Pilih Kelas</option>
@@ -60,6 +62,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-@include('dashboard.jurnal.data')
+@include('dashboard.jadwal.data')
 
 @endsection

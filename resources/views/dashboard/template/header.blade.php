@@ -105,8 +105,8 @@
             </ul>
           </li>
           <li class="nav-header">BASIS DATA</li>
-          <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel'){{ 'active' }} @endif">
+          <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel' || $page === 'jadwal'){{ 'menu-open' }} @endif">
+            <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel' || $page === 'jadwal'){{ 'active' }} @endif">
               <i class="nav-icon fal fa-layer-group"></i>
               <p>
                 Referensi

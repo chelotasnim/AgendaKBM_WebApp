@@ -121,10 +121,23 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.guru_mapel.index', $data);
     });
 
+    //Aksi
     Route::get('dashboard/get_guru_mapel', [GuruMapel::class, 'get_guru_mapel']);
     Route::post('dashboard/guru_mapel', [GuruMapel::class, 'add_guru_mapel']);
     Route::post('dashboard/edit_guru_mapel', [GuruMapel::class, 'edit_guru_mapel']);
     Route::post('dashboard/import_guru_mapel', [GuruMapel::class, 'import']);
+
+
+
+    //Jadwal
+    Route::get('dashboard/jadwal', function () {
+        $data = array(
+            'page' => 'jadwal',
+            'kelas' => Kelas::get()
+        );
+
+        return view('dashboard.jadwal.index', $data);
+    });
 
     //Jadwal
     // Route::get('dashboard/jadwal/{id}', function ($id) {
