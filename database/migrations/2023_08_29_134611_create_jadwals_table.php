@@ -28,6 +28,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('guru_mapels')
                 ->onDelete('cascade');
+            $table->boolean('jam_ke_nol');
             $table->timestamps();
         });
     }

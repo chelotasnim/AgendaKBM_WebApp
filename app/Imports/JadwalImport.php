@@ -66,13 +66,16 @@ class JadwalImport implements ToModel, WithStartRow
         if ($data_kelas != null) {
             for ($i = 1; $i <= count($row) - 1; $i++) {
                 if ($row[$i] != '') {
-                    $kode_guru = explode(',', $row[$i])[0];
+                    $kode_guru = null;
                     $kode_mapel = null;
-                    if (count(explode(',', $row[$i])) > 1) {
+                    if (str_contains($row[$i], ',')) {
+                        $kode_guru = explode(',', $row[$i])[0];
                         $kode_mapel = explode(',', $row[$i])[1];
+                    } else {
+                        $kode_guru = $row[$i];
                     };
 
-                    $guru_mapel = array();
+                    $guru_mapel = null;
                     if ($kode_mapel != null) {
                         $guru_mapel = GuruMapel::whereHas('guru', function ($query) use ($kode_guru) {
                             $query->where('kode', $kode_guru);
@@ -80,7 +83,12 @@ class JadwalImport implements ToModel, WithStartRow
                     } else {
                         $guru_mapel = GuruMapel::whereHas('guru', function ($query) use ($kode_guru) {
                             $query->where('kode', $kode_guru);
-                        })->first();
+                        })->where('guru_mapel', null)->first();
+                    };
+
+                    $jam_ke_nol = 0;
+                    if ($i == 1) {
+                        $jam_ke_nol = 1;
                     };
 
                     if ($guru_mapel != null) {
@@ -88,7 +96,8 @@ class JadwalImport implements ToModel, WithStartRow
                             'kelas_id' => $data_kelas->id,
                             'hari' => $this->hari,
                             'jam_id' => $id_jam,
-                            'guru_mapel_id' => $guru_mapel->id
+                            'guru_mapel_id' => $guru_mapel->id,
+                            'jam_ke_nol' => $jam_ke_nol
                         ]);
                     };
                 };

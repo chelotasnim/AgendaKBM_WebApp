@@ -141,6 +141,7 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.jadwal.index', $data);
     });
 
+    Route::post('dashboard/get_jadwal', [ControllersJadwal::class, 'get_jadwal']);
     Route::post('dashboard/reset_jadwal', [ControllersJadwal::class, 'reset']);
     Route::post('dashboard/import_jadwal', [ControllersJadwal::class, 'import']);
 

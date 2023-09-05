@@ -115,7 +115,7 @@
                                         <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="kelas" id="inputKelas" style="width: 100%;" tabindex="-1" aria-hidden="true">
                                         <option selected hidden disabled>Pilih Kelas</option>
                                         @foreach ($kelas as $item)
-                                            <option value="{{ $item->jenjang->jenjang . ' ' . $item->name }}">{{ $item->jenjang->jenjang . ' ' . $item->name }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->jenjang->jenjang . ' ' . $item->name }}</option>
                                         @endforeach
                                         </select>
                                     @else

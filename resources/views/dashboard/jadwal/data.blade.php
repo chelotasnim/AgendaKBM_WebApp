@@ -41,6 +41,7 @@
     
                     if(result.success === true) {
                         $('#reset-jadwal')[0].reset();
+                        $('select').select2({ theme: 'bootstrap4' });
                     };
     
                     function removeEl() {
@@ -80,6 +81,7 @@
     
                     if(result.success === true) {
                         $('#import-jadwal')[0].reset();
+                        $('select').select2({ theme: 'bootstrap4' });
                     };
     
                     function removeEl() {
@@ -92,6 +94,93 @@
                 error: function(xhr, status, error) {
                     removeLoading();
                     console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $('#search-form').on('submit', function(event) {
+            event.preventDefault();
+
+            setLoading();
+
+            $.ajax({
+                url: `{{ url('dashboard/get_jadwal') }}`,
+                data: $('#search-form').serialize(),
+                type: 'post',
+
+                success: function(result) {
+                    if(result.notification != null) {
+                        let dumpErr = '';
+                        for (let key in result.notification) {
+                            if (result.notification.hasOwnProperty(key)) {
+                                dumpErr += result.notification[key];
+                            };
+                        };
+                        $('#toast-container').html(dumpErr);
+                    };
+
+                    if(result.success == true) {
+                        let table_data = '';
+                        let count = 1;
+
+                        $.each(result.main_data, function(index, jurnal) {
+                            table_data += `
+                                <tr>
+                                    <td class="text-center">${count++}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-teal">${count++}</span>
+                                    </td>
+                                    <td>${jurnal.guru_mapel.guru.name}</td>
+                                    <td>${jurnal.guru_mapel.mapel.nama_mapel}</td>
+                                    <td class="text-center">${jurnal.mulai} WIB</td>
+                                    <td class="text-center">${jurnal.selesai} WIB</td>
+                                    <td class="text-center">
+                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jurnal.id}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+
+                        if(table_data == '') {
+                            table_data += `
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        <small class="text-secondary">Tidak Ada Jadwal Kelas</small>
+                                    </td>
+                                </tr>
+                            `;
+                        };
+
+                        $('#data-col').html(`
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title mt-2">Jadwal Kelas</h3>
+                                </div>
+                                <div class="card-body">
+                                <table id="jadwal-table" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th class="text-center">Jam Ke</th>
+                                        <th>Guru</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th class="text-center">Jam Mulai</th>
+                                        <th class="text-center">Jam Selesai</th>
+                                        <th class="text-center">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="jadwal-tbody">
+                                        ${table_data}
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        `);
+                    };
+
+                    removeLoading();
                 }
             });
         });

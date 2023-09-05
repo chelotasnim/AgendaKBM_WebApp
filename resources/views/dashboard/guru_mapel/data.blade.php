@@ -10,8 +10,7 @@
                 const new_td = '<td class="placeholder"></td>';
                 row.insertAdjacentHTML('afterbegin', new_td);
                 row.insertAdjacentHTML('afterbegin', new_td);
-            } else if(columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined ||
-            columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined && columns[0].parentElement.previousElementSibling.querySelector('.placeholder') != undefined) {
+            } else if(columns[0].classList.contains('placeholder') && columns[0].parentElement.previousElementSibling != undefined && columns[0].parentElement.previousElementSibling.querySelector('.placeholder') == undefined) {
                 columns[0].remove();
                 columns[1].remove();
             };
