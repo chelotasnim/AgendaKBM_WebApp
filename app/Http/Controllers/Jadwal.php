@@ -101,7 +101,7 @@ class Jadwal extends Controller
             };
         };
 
-        foreach ($data as $schedule) {
+        foreach ($data as $key => $schedule) {
             if (isset($hour_data[$join_index])) {
                 $schedule['jam_ke'] = $join_index;
                 $schedule['mulai'] = $hour_data[$join_index]['mulai'];
@@ -113,7 +113,7 @@ class Jadwal extends Controller
 
                 $join_index++;
             } else {
-                unset($schedule);
+                unset($data[$key]);
             };
         };
 
