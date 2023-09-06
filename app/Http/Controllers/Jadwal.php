@@ -23,26 +23,14 @@ class Jadwal extends Controller
             return response()->json(['notification' => $validator->errors()]);
         };
 
-        $data = null;
-        if (request()->input('hari') == 'Semua') {
-            $data = ModelsJadwal::with(['guru_mapel' => function ($query) {
-                $query->with(['guru' => function ($subQuery) {
-                    $subQuery->select('id', 'name');
-                }]);
-                $query->with(['mapel' => function ($subQuery) {
-                    $subQuery->select('id', 'nama_mapel');
-                }]);
-            }, 'jam'])->where('kelas_id', request()->input('kelas'))->get();
-        } else {
-            $data = ModelsJadwal::with(['guru_mapel' => function ($query) {
-                $query->with(['guru' => function ($subQuery) {
-                    $subQuery->select('id', 'name');
-                }]);
-                $query->with(['mapel' => function ($subQuery) {
-                    $subQuery->select('id', 'nama_mapel');
-                }]);
-            }, 'jam'])->where('kelas_id', request()->input('kelas'))->where('hari', request()->input('hari'))->get();
-        };
+        $data = ModelsJadwal::with(['guru_mapel' => function ($query) {
+            $query->with(['guru' => function ($subQuery) {
+                $subQuery->select('id', 'name');
+            }]);
+            $query->with(['mapel' => function ($subQuery) {
+                $subQuery->select('id', 'nama_mapel');
+            }]);
+        }, 'jam'])->where('kelas_id', request()->input('kelas'))->where('hari', request()->input('hari'))->get();
 
         if (!isset($data[0])) {
             return response()->json(['success' => true, 'found' => false]);

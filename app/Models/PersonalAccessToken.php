@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class PersonalAccessToken extends Model
 {
     use HasFactory;
-    protected $table = 'personal_access_token';
+    protected $table = 'personal_access_tokens';
 }

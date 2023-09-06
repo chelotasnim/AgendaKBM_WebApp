@@ -14,7 +14,7 @@ function getTime() {
     document.querySelector('.hours').textContent = hour;
     document.querySelector('.minutes').textContent = minute;
 
-    setInterval(getTime, 60000);
+    setInterval(getTime, 10000);
 };
 getTime();
 

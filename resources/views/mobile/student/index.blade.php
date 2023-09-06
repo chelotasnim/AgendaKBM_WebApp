@@ -59,10 +59,10 @@
     <script src="{{ asset('mobile/js/script.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const user_id = "{{ 'Bearer ' . $token->token }}";
+            const user_id = "{{ Auth::guard('student')->user()->id }}";
             function setHome() {
                 $.ajax({
-                    url: `{{ url('api/student/${user_id}/today') }}`,
+                    url: `{{ url('student/${user_id}/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -76,7 +76,7 @@
                         
                         $('#user-name-here').text('Hi! ' + name);
                         let boxes = '';
-                        $.each(result.main_data.kelas.jadwal[0].details, function(index, schedule) {
+                        $.each(result.main_data.kelas.jadwal, function(index, schedule) {
                             let class_for_color = '';
                             if(schedule.keterangan == 'Telah Berakhir') {
                                 class_for_color = 'grey';
@@ -90,13 +90,13 @@
                                         <div class="schedule-status badge on ${class_for_color}">${schedule.keterangan}</div>
                                     </div>
                                     <div class="schedule-detail">
-                                        <h3>${schedule.mapel.nama_mapel}</h3>
-                                        <p>~ ${schedule.guru.name}</p>
+                                        <h3>${schedule.guru_mapel.mapel.nama_mapel}</h3>
+                                        <p>~ ${schedule.guru_mapel.guru.name}</p>
                                     </div>
                                     <div class="schedule-range">
-                                        <div class="schedule-time">${schedule.jam_mulai}</div>
+                                        <div class="schedule-time">${schedule.mulai}</div>
                                         <span>/</span>
-                                        <div class="schedule-time">${schedule.jam_selesai}</div>
+                                        <div class="schedule-time">${schedule.selesai}</div>
                                     </div>
                                 </div>
                             `; 
@@ -139,7 +139,7 @@
 
             function setSchedule(selected_day) {
                 $.ajax({
-                    url: `{{ url('api/student/${user_id}/${selected_day}') }}`,
+                    url: `{{ url('student/${user_id}/${selected_day}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -154,20 +154,20 @@
                         $('#user-name-here').text('Hi! ' + name);
 
                         let boxes = '';
-                        $.each(result.main_data.kelas.jadwal[0].details, function(index, schedule) {
+                        $.each(result.main_data.kelas.jadwal, function(index, schedule) {
                             boxes += `
                                 <div class="schedule-box">
                                     <div class="schedule-header">
                                         <div class="schedule-name">Jam Ke ${schedule.jam_ke}</div>
                                     </div>
                                     <div class="schedule-detail">
-                                        <h3>${schedule.mapel.nama_mapel}</h3>
-                                        <p>~ ${schedule.guru.name}</p>
+                                        <h3>${schedule.guru_mapel.mapel.nama_mapel}</h3>
+                                        <p>~ ${schedule.guru_mapel.guru.name}</p>
                                     </div>
                                     <div class="schedule-range">
-                                        <div class="schedule-time">${schedule.jam_mulai}</div>
+                                        <div class="schedule-time">${schedule.mulai}</div>
                                         <span>/</span>
-                                        <div class="schedule-time">${schedule.jam_selesai}</div>
+                                        <div class="schedule-time">${schedule.selesai}</div>
                                     </div>
                                 </div>
                             `; 
@@ -197,7 +197,7 @@
                                     <div class="list-heading">
                                         <p>${result.main_data.kelas.jenjang.jenjang + ' ' + result.main_data.kelas.name}</p>
                                         <p class="day-name">${result.now_date.day_name}</p>
-                                        <p>${result.main_data.kelas.jadwal[0].details.length} Jam</p>
+                                        <p>${result.main_data.kelas.jadwal.length} Jam</p>
                                     </div>
                                     <div class="box-container">
                                         ${boxes}
@@ -222,7 +222,7 @@
     
             function setProfile() {
                 $.ajax({
-                    url: `{{ url('api/student/${user_id}/today') }}`,
+                    url: `{{ url('student/${user_id}/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');

@@ -47,9 +47,9 @@
                 </div>
                 <button class="btn on">Masuk</button>
             </div>
-            <div class="form-footer">
+            {{-- <div class="form-footer">
                 <p>Belum Punya Akun? <a href="{{ url('regist') }}" class="regist-link">Daftar disini.</a></p>
-            </div>
+            </div> --}}
         </form>
     </div>
     <script src="{{ asset('auth/js/auth.js') }}"></script>

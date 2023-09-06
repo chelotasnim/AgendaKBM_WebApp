@@ -236,8 +236,7 @@ Route::middleware('auth:student')->group(function () {
 
     //Laman Utama
     Route::get('student', function () {
-        $token = PersonalAccessToken::where('tokenable_type', 'App\Models\Siswa')->where('tokenable_id', Auth::guard('student')->user()->id)->where('expires_at', '>', Carbon::now())->first();
-        return view('mobile.student.index', compact($token));
+        return view('mobile.student.index');
     });
 
     Route::get('student/{id}/{day}', [Siswa_Feature::class, 'get_main']);
