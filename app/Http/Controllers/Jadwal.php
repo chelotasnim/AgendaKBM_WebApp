@@ -44,9 +44,14 @@ class Jadwal extends Controller
             }, 'jam'])->where('kelas_id', request()->input('kelas'))->where('hari', request()->input('hari'))->get();
         };
 
+        if (!isset($data[0])) {
+            return response()->json(['success' => true, 'found' => false]);
+        };
+
         $join_index = 0;
         if ($data[0]->jam_ke_nol == 0) {
             $join_index++;
+            $data[0]['previous_null'] = true;
         };
 
         $hour_data = array();
@@ -97,9 +102,19 @@ class Jadwal extends Controller
         };
 
         foreach ($data as $schedule) {
-            $schedule['mulai'] = $hour_data[$join_index]['mulai'];
-            $schedule['selesai'] = $hour_data[$join_index]['selesai'];
-            $join_index++;
+            if (isset($hour_data[$join_index])) {
+                $schedule['jam_ke'] = $join_index;
+                $schedule['mulai'] = $hour_data[$join_index]['mulai'];
+                $schedule['selesai'] = $hour_data[$join_index]['selesai'];
+
+                if ($join_index == 4 || $join_index == 7) {
+                    $schedule['rest'] = true;
+                };
+
+                $join_index++;
+            } else {
+                unset($schedule);
+            };
         };
 
         return response()->json([

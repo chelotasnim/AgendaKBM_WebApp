@@ -124,11 +124,31 @@
                         let count = 1;
 
                         $.each(result.main_data, function(index, jurnal) {
+                            if(jurnal.previous_null == true) {
+                                table_data += `
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            <small class="text-secondary">Tidak Ada Jam Ke 0</small>
+                                        </td>
+                                    </tr>
+                                `;
+                            };
+
+                            if(jurnal.rest == true) {
+                                table_data += `
+                                    <tr>
+                                        <td colspan="7" class="text-center">
+                                            <small class="text-secondary">Istirahat</small>
+                                        </td>
+                                    </tr>
+                                `;
+                            };
+
                             table_data += `
                                 <tr>
                                     <td class="text-center">${count++}</td>
                                     <td class="text-center">
-                                        <span class="badge bg-teal">${count++}</span>
+                                        <span class="badge bg-teal">${jurnal.jam_ke}</span>
                                     </td>
                                     <td>${jurnal.guru_mapel.guru.name}</td>
                                     <td>${jurnal.guru_mapel.mapel.nama_mapel}</td>
@@ -141,7 +161,7 @@
                             `;
                         });
 
-                        if(table_data == '') {
+                        if(result.found == false) {
                             table_data += `
                                 <tr>
                                     <td colspan="7" class="text-center">

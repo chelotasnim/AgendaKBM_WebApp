@@ -99,7 +99,6 @@
                                 <div class="form-group">
                                     <label id="inputHari" class="text-secondary font-weight-normal">Jadwal Pada Hari <span style="font-size: 20px" class="text-danger"></span></label>
                                     <select name="hari" id="inputHari" class="form-control select2bs4 select2-hidden-accessible" tabindex="-1" aria-hidden="true" autocomplete="off" style="width: 100%;">
-                                        <option value="Semua" selected>Semua</option>
                                         <option value="Senin">Senin</option>
                                         <option value="Selasa">Selasa</option>
                                         <option value="Rabu">Rabu</option>
