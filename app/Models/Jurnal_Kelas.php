@@ -12,13 +12,8 @@ class Jurnal_Kelas extends Model
     protected $table = 'jurnal_kelas';
     protected $guarded = ['id'];
 
-    public function guru()
+    public function guru_mapel()
     {
-        return $this->belongsTo(Guru::class, 'guru_id');
-    }
-
-    public function mapel()
-    {
-        return $this->belongsTo(Mapel::class, 'mapel_id');
+        return $this->belongsTo(GuruMapel::class, 'guru_mapel_id');
     }
 }

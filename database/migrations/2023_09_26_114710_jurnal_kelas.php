@@ -16,13 +16,9 @@ return new class extends Migration
         Schema::create('jurnal_kelas', function (Blueprint $table) {
             $table->id();
             $table->string('kelas', 11);
-            $table->foreignId('guru_id')
+            $table->foreignId('guru_mapel_id')
                 ->references('id')
-                ->on('guru')
-                ->onDelete('cascade');
-            $table->foreignId('mapel_id')
-                ->references('id')
-                ->on('mapel')
+                ->on('guru_mapels')
                 ->onDelete('cascade');
             $table->string('tanggal', 50);
             $table->string('jam_mulai', 5);

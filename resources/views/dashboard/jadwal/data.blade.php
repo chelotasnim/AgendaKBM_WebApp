@@ -123,8 +123,8 @@
                         let table_data = '';
                         let count = 1;
 
-                        $.each(result.main_data, function(index, jurnal) {
-                            if(jurnal.previous_null == true) {
+                        $.each(result.main_data, function(index, jadwal) {
+                            if(jadwal.previous_null == true) {
                                 table_data += `
                                     <tr>
                                         <td colspan="7" class="text-center">
@@ -134,7 +134,7 @@
                                 `;
                             };
 
-                            if(jurnal.rest == true) {
+                            if(jadwal.rest == true) {
                                 table_data += `
                                     <tr>
                                         <td colspan="7" class="text-center">
@@ -148,14 +148,14 @@
                                 <tr>
                                     <td class="text-center">${count++}</td>
                                     <td class="text-center">
-                                        <span class="badge bg-teal">${jurnal.jam_ke}</span>
+                                        <span class="badge bg-teal">${jadwal.jam_ke}</span>
                                     </td>
-                                    <td>${jurnal.guru_mapel.guru.name}</td>
-                                    <td>${jurnal.guru_mapel.mapel.nama_mapel}</td>
-                                    <td class="text-center">${jurnal.mulai} WIB</td>
-                                    <td class="text-center">${jurnal.selesai} WIB</td>
+                                    <td>${jadwal.guru_mapel.guru.name}</td>
+                                    <td>${jadwal.guru_mapel.mapel.nama_mapel}</td>
+                                    <td class="text-center">${jadwal.mulai} WIB</td>
+                                    <td class="text-center">${jadwal.selesai} WIB</td>
                                     <td class="text-center">
-                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jurnal.id}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
+                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jadwal.id}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
                                     </td>
                                 </tr>
                             `;

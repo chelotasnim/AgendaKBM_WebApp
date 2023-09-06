@@ -192,7 +192,6 @@ class Gurus extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'guru_id' => 'required',
-            'mapel_id' => 'required',
             'kelas' => 'required',
             'tanggal' => 'required',
             'jam_mulai' => 'required',
@@ -202,7 +201,6 @@ class Gurus extends Controller
             'materi' => 'required',
         ], [
             'guru_id.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Guru Pengajar</div></div>',
-            'mapel_id.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Mata Pelajaran</div></div>',
             'kelas.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Memilih Kelas</div></div>',
             'tanggal.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Tanggal</div></div>',
             'jam_mulai.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Jam Mulai</div></div>',
@@ -219,8 +217,7 @@ class Gurus extends Controller
         if ($validator->passes()) {
             $data = array(
                 'kelas' => request()->input('kelas'),
-                'guru_id' => request()->input('guru_id'),
-                'mapel_id' => request()->input('mapel_id'),
+                'guru_mapel_id' => request()->input('guru_id'),
                 'tanggal' => request()->input('tanggal'),
                 'jam_mulai' => request()->input('jam_mulai'),
                 'jam_selesai' => request()->input('jam_selesai'),
@@ -254,9 +251,54 @@ class Gurus extends Controller
             $split_date = explode('-', request()->input('dari_sampai'));
             $from = $split_date[0];
             $to = $split_date[1];
-            $get_jurnal = Jurnal_Kelas::with('guru', 'mapel')->where('kelas', request()->input('kelas'))->whereDate('tanggal', '>=', Carbon::parse($from)->format('Y-m-d'))->whereDate('tanggal', '<=', Carbon::parse($to)->format('Y-m-d'))->get();
+            $get_jurnal = Jurnal_Kelas::with(['guru_mapel' => function ($query) {
+                $query->with(['guru' => function ($subQuery) {
+                    $subQuery->select('id', 'name');
+                }]);
+                $query->with(['mapel' => function ($subQuery) {
+                    $subQuery->select('id', 'nama_mapel');
+                }]);
+            }])->where('kelas', request()->input('kelas'))->whereDate('tanggal', '>=', Carbon::parse($from)->format('Y-m-d'))->whereDate('tanggal', '<=', Carbon::parse($to)->format('Y-m-d'))->get();
 
             return response()->json(['main_data' => $get_jurnal, 'success' => true]);
         }
+    }
+
+    public function edit_jurnal()
+    {
+        $validator = Validator::make(request()->all(), [
+            'total_siswa' => 'required',
+            'tidak_hadir' => 'required',
+            'materi' => 'required',
+        ], [
+            'total_siswa.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Total Siswa</div></div>',
+            'tidak_hadir.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Total Siswa Tidak Hadir</div></div>',
+            'materi.required' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Wajib Mengisi Materi KBM</div></div>',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
+
+        $old_data = Jurnal_Kelas::where('id', request()->input('confirm'))->first();
+        if (request()->input('guru_id') == $old_data->guru_mapel_id && request()->input('kelas') == $old_data->kelas && request()->input('tanggal') == $old_data->tanggal && request()->input('jam_mulai') == $old_data->jam_mulai && request()->input('jam_selesai') == $old_data->jam_selesai && request()->input('total_siswa') == $old_data->total_siswa && request()->input('tidak_hadir') == $old_data->tidak_hadir && request()->input('materi') == $old_data->materi) {
+            return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Perubahan Dilakukan</div></div>']]);
+        };
+
+        Jurnal_Kelas::where('id', request()->input('confirm'))->update([
+            'kelas' => request()->input('kelas'),
+            'guru_mapel_id' => request()->input('guru_id'),
+            'tanggal' => request()->input('tanggal'),
+            'jam_mulai' => request()->input('jam_mulai'),
+            'jam_selesai' => request()->input('jam_selesai'),
+            'total_siswa' => request()->input('total_siswa'),
+            'tidak_hadir' => request()->input('tidak_hadir'),
+            'materi' => request()->input('materi')
+        ]);
+
+        return response()->json([
+            'notification' => ['Data Updated' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Presensi Berhasil Dirubah</div></div>']],
+            'success' => true
+        ]);
     }
 }

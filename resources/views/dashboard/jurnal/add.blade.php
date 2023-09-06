@@ -15,40 +15,22 @@
           </div>
           <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="inputGuru" class="text-secondary font-weight-normal">Guru Pengajar <span style="font-size: 20px" class="text-danger">*</span></label>
-                      @if (isset($guru[0]))
-                        <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="guru_id" id="inputGuru" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                          <option selected hidden disabled>Pilih Guru Pengajar</option>
-                          @foreach ($guru as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                          @endforeach
-                        </select>
-                      @else
-                      <input type="text" class="form-control" placeholder="Belum Ada Data Guru" disabled>
-                        <small><a href="{{ url('dashboard/guru') }}" class="text-primary">Belum Ada Guru, Tambahkan Disini.</a></small>
-                      @endif
-                    </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputGuru" class="text-secondary font-weight-normal">Guru Pengajar <span style="font-size: 20px" class="text-danger">*</span></label>
+                  @if (isset($guru_mapel[0]))
+                    <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="guru_id" id="inputGuru" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                      <option selected hidden disabled>Pilih Guru Pengajar</option>
+                      @foreach ($guru_mapel as $item)
+                        <option value="{{ $item->id }}">{{ $item->mapel->nama_mapel }} | {{ $item->guru->name }}</option>
+                      @endforeach
+                    </select>
+                  @else
+                  <input type="text" class="form-control" placeholder="Belum Ada Data Guru" disabled>
+                    <small><a href="{{ url('dashboard/guru_mapel') }}" class="text-primary">Belum Ada Guru Pengajar, Tambahkan Disini.</a></small>
+                  @endif
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="inputMapel" class="text-secondary font-weight-normal">Mata Pelajaran <span style="font-size: 20px" class="text-danger">*</span></label>
-                      @if (isset($mapel[0]))
-                        <select class="form-control select2bs4 select2-hidden-accessible" autocomplete="off" name="mapel_id" id="inputMapel" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                          <option selected hidden disabled>Pilih Mata Pelajaran</option>
-                          @foreach ($mapel as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_mapel }}</option>
-                          @endforeach
-                        </select>
-                      @else
-                      <input type="text" class="form-control" placeholder="Belum Ada Data Mapel" disabled>
-                        <small><a href="{{ url('dashboard/mapel') }}" class="text-primary">Belum Ada Mapel, Tambahkan Disini.</a></small>
-                      @endif
-                    </div>
-                  </div>
-              </div>
-            <div class="row">
+            </div>
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="inputKelas" class="text-secondary font-weight-normal">Kelas <span style="font-size: 20px" class="text-danger">*</span></label>
@@ -65,21 +47,21 @@
                       @endif
                     </div>
                 </div>
-              <div class="col-md-6">
+            </div>
+            <div class="row">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="inputTanggal" class="text-secondary font-weight-normal">Tanggal KBM <span style="font-size: 20px" class="text-danger">*</span></label>
                   <input type="date" id="inputTanggal" name="tanggal" class="form-control" autocomplete="off">
                 </div>
               </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="text-secondary font-weight-normal">Jam Mulai <span style="font-size: 20px" class="text-danger">*</span></label>
                         <input type="text" name="jam_mulai" class="form-control as-time" placeholder="Pilih Jam">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                       <label class="text-secondary font-weight-normal">Jam Selesai <span style="font-size: 20px" class="text-danger">*</span></label>
                       <input type="text" name="jam_selesai" class="form-control as-time" placeholder="Pilih Jam">

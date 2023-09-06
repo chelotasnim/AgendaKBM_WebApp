@@ -11,6 +11,7 @@ use App\Http\Controllers\Siswa_Feature;
 use App\Http\Controllers\Siswas;
 use App\Http\Controllers\Users;
 use App\Models\Guru;
+use App\Models\GuruMapel as ModelsGuruMapel;
 use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
@@ -141,57 +142,10 @@ Route::middleware('auth:web')->group(function () {
         return view('dashboard.jadwal.index', $data);
     });
 
+    //Aksi
     Route::post('dashboard/get_jadwal', [ControllersJadwal::class, 'get_jadwal']);
     Route::post('dashboard/reset_jadwal', [ControllersJadwal::class, 'reset']);
     Route::post('dashboard/import_jadwal', [ControllersJadwal::class, 'import']);
-
-    //Jadwal
-    // Route::get('dashboard/jadwal/{id}', function ($id) {
-    //     $data = array(
-    //         'page' => 'kelas',
-    //         'kelas' => Kelas::with('jenjang')->where('id', $id)->first(),
-    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-    //     );
-    //     return view('dashboard.jadwal.index', $data);
-    // });
-
-    // Route::get('dashboard/jadwal/edit/{id}', function ($id) {
-    //     $data = array(
-    //         'page' => 'kelas',
-    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
-    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-    //     );
-    //     return view('dashboard.jadwal.edit', $data);
-    // });
-
-    // Route::get('dashboard/jadwal/column/{id}', function ($id) {
-    //     $data = array(
-    //         'page' => 'kelas',
-    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first(),
-    //         'guru' => Guru::where('hidden', 0)->where('status', 1)->select('id', 'name')->get(),
-    //         'mapel' => Mapel::where('hidden', 0)->where('status', 1)->select('id', 'nama_mapel')->get()
-    //     );
-    //     return view('dashboard.jadwal.column',  $data);
-    // });
-
-    // Route::get('dashboard/jadwal/column_remove/{id}', function ($id) {
-    //     $data = array(
-    //         'page' => 'kelas',
-    //         'jadwal' => Jadwal::with('kelas', 'kelas.jenjang', 'details', 'details.mapel', 'details.guru')->where('id', $id)->first()
-    //     );
-    //     return view('dashboard.jadwal.delete',  $data);
-    // });
-
-    //Aksi
-    // Route::get('dashboard/jadwal/get_jadwal/{id}', [Jadwals::class, 'get_jadwal']);
-    // Route::post('dashboard/jadwal/store/main', [Jadwals::class, 'store']);
-    // Route::post('dashboard/jadwal/store/schedule', [Jadwals::class, 'store_schedule']);
-    // Route::post('dashboard/jadwal/edit/main', [Jadwals::class, 'update']);
-    // Route::post('dashboard/jadwal/edit/schedule', [Jadwals::class, 'update_schedule']);
-    // Route::post('dashboard/jadwal/delete/schedule', [Jadwals::class, 'remove_schedule']);
-    // Route::post('dashboard/import_jam', [Jadwals::class, 'import']);
 
 
 
@@ -210,6 +164,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);
     Route::post('dashboard/import_guru', [Gurus::class, 'import']);
     Route::post('dashboard/add_jurnal', [Gurus::class, 'jurnal']);
+    Route::post('dashboard/edit_jurnal', [Gurus::class, 'edit_jurnal']);
     Route::post('dashboard/get_jurnal', [Gurus::class, 'get_jurnal']);
 
 
@@ -255,6 +210,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/jurnal', function () {
         $data = array(
             'page' => 'laporan',
+            'guru_mapel' => ModelsGuruMapel::where('status', 1)->get(),
             'kelas' => Kelas::with('jenjang')->get()
         );
         return view('dashboard.jurnal.index', $data);
@@ -264,9 +220,8 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/add_jurnal', function () {
         $data = array(
             'page' => 'add_jurnal',
-            'guru' => Guru::where('status', 1)->where('hidden', 0)->get(),
             'kelas' => Kelas::where('status', 1)->where('hidden', 0)->get(),
-            'mapel' => Mapel::where('status', 1)->where('hidden', 0)->get()
+            'guru_mapel' => ModelsGuruMapel::where('status', 1)->get()
         );
         return view('dashboard.jurnal.add', $data);
     });
