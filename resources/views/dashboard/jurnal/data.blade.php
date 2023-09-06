@@ -109,7 +109,7 @@
                                     <td class="text-center">${jurnal.tidak_hadir} Orang</td>
                                     <td>${jurnal.materi}</td>
                                     <td class="text-center">
-                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jurnal.id}','${jurnal.guru_mapel_id}','${jurnal.guru_mapel.guru.name} | ${jurnal.guru_mapel.mapel.nama_mapel}','${jurnal.kelas}','${jurnal.tanggal}','${jurnal.jam_mulai}','${jurnal.jam_selesai}','${jurnal.total_siswa}','${jurnal.tidak_hadir}','${jurnal.materi}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
+                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jurnal.id}','${jurnal.guru_mapel_id}','${jurnal.guru_mapel.mapel.nama_mapel} | ${jurnal.guru_mapel.guru.name}','${jurnal.kelas}','${jurnal.tanggal}','${jurnal.jam_mulai}','${jurnal.jam_selesai}','${jurnal.total_siswa}','${jurnal.tidak_hadir}','${jurnal.materi}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
                                     </td>
                                 </tr>
                             `;
@@ -207,7 +207,6 @@
     function modalEdit(id, guru_mapel_id, guru, kelas, tanggal, jam_mulai, jam_selesai, total_siswa, tidak_hadir, materi) {
         $('#main-edit-param', $('#modal-edit')).val(id);
         $('#must-be-param-1', $('#modal-edit')).val(guru_mapel_id);
-        $('#select2-must-be-param-1-container', $('#modal-edit')).text(guru);
         $('#must-be-param-2', $('#modal-edit')).val(kelas);
         $('#select2-must-be-param-2-container', $('#modal-edit')).text(kelas);
         $('#must-be-param-3', $('#modal-edit')).val(tanggal);

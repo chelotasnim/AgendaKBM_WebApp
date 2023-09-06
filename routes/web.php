@@ -136,6 +136,7 @@ Route::middleware('auth:web')->group(function () {
     Route::get('dashboard/jadwal', function () {
         $data = array(
             'page' => 'jadwal',
+            'guru_mapel' => ModelsGuruMapel::where('status', 1)->get(),
             'kelas' => Kelas::get()
         );
 
@@ -144,6 +145,7 @@ Route::middleware('auth:web')->group(function () {
 
     //Aksi
     Route::post('dashboard/get_jadwal', [ControllersJadwal::class, 'get_jadwal']);
+    Route::post('dashboard/edit_jadwal', [ControllersJadwal::class, 'edit_jadwal']);
     Route::post('dashboard/reset_jadwal', [ControllersJadwal::class, 'reset']);
     Route::post('dashboard/import_jadwal', [ControllersJadwal::class, 'import']);
 

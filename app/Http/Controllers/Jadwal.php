@@ -123,6 +123,20 @@ class Jadwal extends Controller
         ]);
     }
 
+    public function edit_jadwal()
+    {
+        $old_data = ModelsJadwal::where('id', request()->input('confirm'))->first();
+        if (request()->input('guru_id') == $old_data) {
+            return response()->json(['notification' => ['Update Failed' => '<div class="toast toast-error" aria-live="assertive"><div class="toast-message">Tidak Ada Perubahan Dilakukan</div></div>']]);
+        };
+
+        ModelsJadwal::where('id', request()->input('confirm'))->update([
+            'guru_mapel_id' => request()->input('guru_id')
+        ]);
+
+        return response()->json(['notification' => ['Data Added' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Perubahan Diterapkan</div></div>']], 'success' => true]);
+    }
+
     public function import()
     {
         $validator = Validator::make(request()->all(), [

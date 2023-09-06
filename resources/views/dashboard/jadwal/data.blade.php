@@ -155,7 +155,7 @@
                                     <td class="text-center">${jadwal.mulai} WIB</td>
                                     <td class="text-center">${jadwal.selesai} WIB</td>
                                     <td class="text-center">
-                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jadwal.id}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
+                                        <span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('${jadwal.id}','${jadwal.guru_mapel_id}','${jadwal.guru_mapel.mapel.nama_mapel} | ${jadwal.guru_mapel.guru.name}')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>
                                     </td>
                                 </tr>
                             `;
@@ -200,10 +200,54 @@
                         `);
                     };
 
+                    function removeEl() {
+                        $('.toast').remove();
+                    }
+                    setTimeout(removeEl, 4000);
+    
+                    removeLoading();
+                }
+            });
+        });
+
+        $('#edit-form').on('submit', function(event) {
+            event.preventDefault();
+
+            setLoading();
+
+            $.ajax({
+                url: `{{ url('dashboard/edit_jadwal') }}`,
+                data: $('#edit-form').serialize(),
+                type: 'post',
+
+                success: function(result) {
+                    if(result.success == true) {
+                        window.location.reload();
+                    };
+                    
+                    let dumpErr = '';
+                    for (let key in result.notification) {
+                        if (result.notification.hasOwnProperty(key)) {
+                            dumpErr += result.notification[key];
+                        };
+                    };
+                    $('#toast-container').html(dumpErr);
+    
+                    function removeEl() {
+                        $('.toast').remove();
+                    }
+                    setTimeout(removeEl, 4000);
+    
                     removeLoading();
                 }
             });
         });
     });
+
+    function modalEdit(id, guru_mapel_id, guru_mapel) {
+        $('#main-edit-param').val(id);
+        $('#must-be-param-1').val(guru_mapel_id);
+        $('#select2-must-be-param-1-container', $('#modal-edit')).text(guru_mapel);
+    };
 
 </script>
