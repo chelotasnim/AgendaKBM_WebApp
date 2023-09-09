@@ -13,11 +13,6 @@ class Guru extends Model
     protected $table = 'guru';
     protected $guarded = ['id'];
 
-    public function jam_mengajar()
-    {
-        return $this->hasMany(Detail_Jadwal::class, 'guru_id');
-    }
-
     public function jurnal()
     {
         return $this->hasMany(Jurnal_Kelas::class, 'guru_id');

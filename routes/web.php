@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Guru_Feature;
 use App\Http\Controllers\GuruMapel;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwal as ControllersJadwal;

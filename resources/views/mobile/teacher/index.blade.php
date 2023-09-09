@@ -20,10 +20,10 @@
             </div>
             <nav>
                 <div id="home" class="nav-icon active">
-                    <i class="fal fa-calendar-alt"></i>
+                    <i class="fal fa-th-list"></i>
                 </div>
                 <div id="schedule" class="nav-icon">
-                    <i class="fal fa-history"></i>
+                    <i class="fal fa-calendar-alt"></i>
                 </div>
                 <div id="profile" class="nav-icon">
                     <i class="fal fa-address-card"></i>
@@ -76,7 +76,7 @@
 
                         let boxes = '';
 
-                        $.each(result.main_data.jam_mengajar, function(index, schedule) {
+                        $.each(result.schedules, function(index, schedule) {
                             let class_for_color = '';
                             let btn = '';
                             if(schedule.keterangan == 'Telah Berakhir') {
@@ -85,7 +85,7 @@
                                 class_for_color = 'red';
                             };
 
-                            if(schedule.next_access != undefined) {
+                            if(schedule.next_access === true) {
                                 btn = `<a href="${schedule.next_access}" class="small-btn btn on">Isi Jurnal</a>`;
                             } else {
                                 btn = '<a class="small-btn btn badge on grey" style="pointer-events: none">Isi Jurnal</a>';
@@ -98,15 +98,15 @@
                                         <div class="schedule-status badge on ${class_for_color}">${schedule.keterangan}</div>
                                     </div>
                                     <div class="schedule-detail">
-                                        <h3>${schedule.mapel.nama_mapel}</h3>
-                                        <p>~ ${schedule.jadwal.kelas.jenjang.jenjang + ' ' + schedule.jadwal.kelas.name}</p>
+                                        <h3>${schedule.guru_mapel.mapel.nama_mapel}</h3>
+                                        <p>~ ${schedule.kelas.jenjang.jenjang + ' ' + schedule.kelas.name}</p>
                                         <br>
                                         ${btn}
                                     </div>
                                     <div class="schedule-range">
-                                        <div class="schedule-time">${schedule.jam_mulai}</div>
+                                        <div class="schedule-time">${schedule.mulai}</div>
                                         <span>/</span>
-                                        <div class="schedule-time">${schedule.jam_selesai}</div>
+                                        <div class="schedule-time">${schedule.selesai}</div>
                                     </div>
                                 </div>
                             `;
@@ -148,7 +148,7 @@
             setHome();
             $('#home').on('click', setHome);
 
-            function setHistory(selected_day) {
+            function setSchedule(selected_day) {
                 $.ajax({
                     url: `{{ url('teacher/${user_id}/${selected_day}') }}`,
                     type: 'get',
@@ -162,41 +162,76 @@
                             name = split_name[0];
                         };
 
-                        let history_row = '';
-                        $.each(result.main_data.jurnal, function(index, jurnal) {
-                            history_row += `
-                                <div class="profile-box">
-                                    <div class="icon" style="font-size: 12px">
-                                        ${jurnal.kelas}
+                        let boxes = '';
+
+                        $.each(result.schedules, function(index, schedule) {
+                            boxes += `
+                                <div class="schedule-box">
+                                    <div class="schedule-header">
+                                        <div class="schedule-name">Jam Ke ${schedule.jam_ke}</div>
                                     </div>
-                                    <div class="content">${jurnal.mapel.nama_mapel}</div>
+                                    <div class="schedule-detail">
+                                        <h3>${schedule.guru_mapel.mapel.nama_mapel}</h3>
+                                        <p>~ ${schedule.kelas.jenjang.jenjang + ' ' + schedule.kelas.name}</p>
+                                        <br>
+                                    </div>
+                                    <div class="schedule-range">
+                                        <div class="schedule-time">${schedule.mulai}</div>
+                                        <span>/</span>
+                                        <div class="schedule-time">${schedule.selesai}</div>
+                                    </div>
                                 </div>
                             `;
                         });
+
+                        count_jam = 0;
+                        if(result.found == false) {
+                            boxes += `
+                                <div class="schedule-box free-day">
+                                    <i class="fal fa-mug-hot"></i>
+                                    <p>Tidak Ada Jadwal Mengajar</p>
+                                </div>
+                            `;
+                        } else {
+                            count_jam = result.schedules.length;
+                        };
                         
                         $('#user-name-here').text('Hi! ' + name);
                         $('#section-wrapper').html(`
-                            <div id="profile-wrapper" class="section">
-                                <div class="floating-header">
-                                    <div class="icon" style="padding-left: 24px">
-                                        <i class="fal fa-history"></i>
+                            <div id="home-wrapper" class="section">
+                                <div class="floating-select as-select">
+                                    <div class="arrow previous">
+                                        <i class="fas fa-chevron-left"></i>
                                     </div>
-                                    <div class="title">Riwayat Mengajar Bulan Ini</div>
+                                    <div class="select-val day-name">${result.now_date.day_name}</div>
+                                    <div class="arrow next">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
                                 </div>
-                                <div class="list-heading">
-                                    <p>Riwayat Mengajar</p>
-                                    <p>${result.month}</p>
-                                </div>
-                                <div class="profile-container">
-                                    ${history_row}
+                                <div class="schedule-list">
+                                    <div class="list-heading">
+                                        <p>Jadwal</p>
+                                        <p>${count_jam} Jam</p>
+                                    </div>
+                                    <div class="box-container">
+                                        ${boxes}
+                                    </div>
                                 </div>
                             </div>
                         `);
+
+                        $('.arrow.previous').on('click', function() {
+                            setSchedule(`${result.yesterday}`);
+                        });
+
+                        $('.arrow.next').on('click', function() {
+                            setSchedule(`${result.tomorrow}`);
+                        });
                     }
                 });
             };
             $('#schedule').on('click', function() {
-                setHistory('today');
+                setSchedule('today');
             });
             
             function setProfile() {
