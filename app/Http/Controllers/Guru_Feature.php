@@ -7,10 +7,11 @@ use App\Models\Jadwal;
 use App\Models\Jurnal_Kelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Guru_Feature extends Controller
 {
-    public function get_main($id_guru, $day_selected = 'today')
+    public function get_main($day_selected = 'today')
     {
         $selected_day = $day_selected;
         if ($day_selected == 'today') {
@@ -28,7 +29,7 @@ class Guru_Feature extends Controller
                             ->select('id', 'kelas_id', 'guru_mapel_id');
                     });
             }
-        ])->where('id', $id_guru)->first();
+        ])->where('id', Auth::guard('teacher')->user()->id)->first();
 
         $final_response = array(
             'main_data' => $main,

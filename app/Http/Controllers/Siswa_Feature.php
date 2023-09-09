@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Siswa_Feature extends Controller
 {
-    public function get_main($id_siswa, $day_selected = 'today')
+    public function get_main($day_selected = 'today')
     {
         $selected_day = $day_selected;
         if ($day_selected == 'today') {
@@ -37,7 +38,7 @@ class Siswa_Feature extends Controller
                         $subQuery->select('id', 'jenjang');
                     }]);
             },
-        ])->where('id', $id_siswa)->first();
+        ])->where('id', Auth::guard('student')->user()->id)->first();
 
         $schedule_data = $main->kelas->jadwal;
 

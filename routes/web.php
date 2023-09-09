@@ -235,7 +235,7 @@ Route::middleware('auth:student')->group(function () {
         return view('mobile.student.index');
     });
 
-    Route::get('student/{id}/{day}', [Siswa_Feature::class, 'get_main']);
+    Route::get('student/{day}', [Siswa_Feature::class, 'get_main']);
 });
 
 //Autentikasi Guru
@@ -247,7 +247,7 @@ Route::middleware('auth:teacher')->group(function () {
     Route::get('teacher', function () {
         return view('mobile.teacher.index');
     });
-    Route::get('teacher/{id}/{day}', [Guru_Feature::class, 'get_main']);
+    Route::get('teacher/{day}', [Guru_Feature::class, 'get_main']);
 
     //Laman Jurnal
     Route::get('teacher/jurnal/{id}', function () {
