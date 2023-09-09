@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Guru_Feature;
 use App\Http\Controllers\GuruMapel;
 use App\Http\Controllers\Gurus;
 use App\Http\Controllers\Jadwal as ControllersJadwal;
@@ -12,13 +11,9 @@ use App\Http\Controllers\Siswas;
 use App\Http\Controllers\Users;
 use App\Models\Guru;
 use App\Models\GuruMapel as ModelsGuruMapel;
-use App\Models\Jadwal;
 use App\Models\Jenjang_Kelas;
 use App\Models\Kelas;
 use App\Models\Mapel;
-use App\Models\PersonalAccessToken;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -251,18 +246,11 @@ Route::middleware('auth:teacher')->group(function () {
     Route::get('teacher', function () {
         return view('mobile.teacher.index');
     });
+    Route::get('teacher/{id}/{day}', [Guru_Feature::class, 'get_main']);
 
     //Laman Jurnal
     Route::get('teacher/jurnal/{id}', function () {
         return view('mobile.teacher.jurnal');
     });
-
-    //Fitur Website Guru
-    Route::get('teacher/{id}', [Guru_Feature::class, 'get_main']);
-
-    Route::get('get_jurnal/{id}', [Guru_Feature::class, 'get_jurnal']);
-
-    Route::get('get_all_jurnal/{id}', [Guru_Feature::class, 'get_all_jurnal']);
-
     Route::post('send_jurnal', [Guru_Feature::class, 'send_jurnal']);
 });

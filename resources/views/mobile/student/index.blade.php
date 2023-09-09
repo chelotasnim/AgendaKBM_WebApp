@@ -102,7 +102,7 @@
                             `; 
                         });
 
-                        if(boxes == '') {
+                        if(result.found == false) {
                             boxes += `
                                 <div class="schedule-box free-day">
                                     <i class="fal fa-books"></i>

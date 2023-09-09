@@ -62,7 +62,7 @@
             const user_id = "{{ Auth::guard('teacher')->user()->id }}";
             function setHome() {
                 $.ajax({
-                    url: `{{ url('api/teacher/${user_id}') }}`,
+                    url: `{{ url('teacher/${user_id}/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -112,7 +112,7 @@
                             `;
                         });
 
-                        if(boxes == '') {
+                        if(result.found == false) {
                             boxes += `
                                 <div class="schedule-box free-day">
                                     <i class="fal fa-mug-hot"></i>
@@ -148,9 +148,9 @@
             setHome();
             $('#home').on('click', setHome);
 
-            function setHistory() {
+            function setHistory(selected_day) {
                 $.ajax({
-                    url: `{{ url('api/get_all_jurnal/${user_id}') }}`,
+                    url: `{{ url('teacher/${user_id}/${selected_day}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -195,11 +195,13 @@
                     }
                 });
             };
-            $('#schedule').on('click', setHistory);
+            $('#schedule').on('click', function() {
+                setHistory('today');
+            });
             
             function setProfile() {
                 $.ajax({
-                    url: `{{ url('api/teacher/${user_id}') }}`,
+                    url: `{{ url('teacher/${user_id}/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');

@@ -2,175 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Detail_Jadwal;
 use App\Models\Guru;
-use App\Models\Jurnal_Kelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class Guru_Feature extends Controller
 {
-    public function get_main($id_guru)
+    public function get_main($id_guru, $day_selected = 'today')
     {
+        $selected_day = $day_selected;
+        if ($day_selected == 'today') {
+            $selected_day = Carbon::now()->isoFormat('dddd');
+        };
+        $dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+        $dayIndex = array_search($selected_day, $dayNames);
+
         $main = Guru::with([
-            'jam_mengajar' => function ($query) {
-                $query->where('hari', strtolower(Carbon::now()->isoFormat('dddd')))
-                    ->with(['mapel' => function ($subQuery) {
-                        $subQuery->select('id', 'nama_mapel');
-                    }])
-                    ->with(['jadwal' => function ($subQuery) {
-                        $subQuery->select('id', 'kelas_id')
-                            ->where('status', 1)
-                            ->where('hidden', 0)
-                            ->with(['kelas' => function ($subSubQuery) {
-                                $subSubQuery->select('id', 'jenjang_kelas_id', 'name')
-                                    ->with(['jenjang' => function ($subSubSubQuery) {
-                                        $subSubSubQuery->select('id', 'jenjang');
-                                    }]);
-                            }]);
-                    }]);
+            'guru_mapel' => function ($query) use ($selected_day) {
+                $query->where('status', 1)
+                    ->with([
+                        'jadwal' => function ($subQuery) use ($selected_day) {
+                            $subQuery->where('hari', $selected_day)
+                                ->with('jam');
+                        }
+                    ])
+                    ->with('mapel');
             }
         ])->where('id', $id_guru)->first();
 
-        $data = array(
-            'main_data' => $main,
-            'now_date' => array(
-                'day_name' => Carbon::now()->isoFormat('dddd'),
-                'date' => Carbon::now()->isoFormat('D MMM YYYY')
-            )
-        );
-
-        $jurnal_today = Jurnal_Kelas::where('guru_id', $id_guru)->whereDate('tanggal', Carbon::now()->format('Y-m-d'))->get();
-
-        foreach ($main->jam_mengajar as $jadwal) {
-            if (Carbon::now()->format('H:i') < Carbon::parse($jadwal->jam_mulai)->format('H:i')) {
-                $jadwal->keterangan = 'Akan Dimulai';
-            } else if (Carbon::now()->format('H:i') >= Carbon::parse($jadwal->jam_mulai)->format('H:i') && Carbon::now()->format('H:i') <= Carbon::parse($jadwal->jam_selesai)->format('H:i')) {
-                $jadwal->keterangan = 'Berlangsung';
-            } else if (Carbon::now()->format('H:i') > Carbon::parse($jadwal->jam_selesai)->format('H:i')) {
-                $jadwal->keterangan = 'Telah Berakhir';
-            };
-
-            foreach ($jurnal_today as $jurnal) {
-                if ($jurnal->jam_mulai == $jadwal->jam_mulai && $jurnal->jam_selesai == $jadwal->jam_selesai) {
-                    $jadwal->keterangan = 'Sudah Mengisi';
-                };
-            };
-
-            if ($jadwal->keterangan == 'Berlangsung' || $jadwal->keterangan == 'Telah Berakhir') {
-                $jadwal->next_access = url('teacher/jurnal/' . $jadwal->id);
-            };
+        if (!isset($main->guru_mapel)) {
+            return response()->json([
+                'main_data' => $main,
+                'now_date' => array(
+                    'day_name' => $selected_day,
+                    'date' => Carbon::now()->isoFormat('D MMM YYYY')
+                ),
+                'yesterday' => $dayNames[($dayIndex - 1 + 5) % 5],
+                'tomorrow' => $dayNames[($dayIndex + 1) % 5],
+                'found' => false
+            ]);
         };
-
-        return response()->json($data);
-    }
-
-    public function get_jurnal($id_jadwal)
-    {
-        $main = Detail_Jadwal::with([
-            'guru' => function ($query) {
-                $query->select('id', 'name');
-            },
-            'mapel' => function ($query) {
-                $query->select('id', 'nama_mapel');
-            },
-            'jadwal' => function ($query) {
-                $query->select('id', 'kelas_id')
-                    ->with([
-                        'kelas' =>  function ($subQuery) {
-                            $subQuery->select('id', 'jenjang_kelas_id', 'name')
-                                ->with([
-                                    'jenjang' => function ($subSubQuery) {
-                                        $subSubQuery->select('id', 'jenjang');
-                                    }
-                                ]);
-                        }
-                    ]);
-            }
-        ])->where('id', $id_jadwal)->first();
-
-        $data = array(
-            'main_data' => $main,
-            'now_date' => array(
-                'day_name' => Carbon::now()->isoFormat('dddd'),
-                'date' => Carbon::now()->isoFormat('D MMM YYYY')
-            )
-        );
-
-        return response()->json($data);
-    }
-
-    public function send_jurnal()
-    {
-        $validator = Validator::make(request()->all(), [
-            'total_siswa' => 'required',
-            'tidak_hadir' => 'required',
-            'materi' => 'required|max:255'
-        ], [
-            'total_siswa.required' => 'Jumlah Total Siswa Wajib Diisi',
-            'tidak_hadir.required' => 'Jumlah Siswa Tidak Hadir Wajib Diisi',
-            'materi.required' => 'Materi Pembelajaran Wajib Diisi',
-            'materi.max' => 'Materi Pembelajaran Maksimal 255 Karakter'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['notification' => $validator->errors()]);
-        } else {
-            $jadwal = Detail_Jadwal::with([
-                'jadwal' => function ($main_query) {
-                    $main_query->select('id', 'kelas_id')
-                        ->with([
-                            'kelas' => function ($query) {
-                                $query->select('id', 'jenjang_kelas_id', 'name')
-                                    ->with([
-                                        'jenjang' => function ($subQuery) {
-                                            $subQuery->select('id', 'jenjang');
-                                        }
-                                    ]);
-                            }
-                        ]);
-                }
-            ])->where('id', request()->input('jadwal_id'))->first();
-            $data = array(
-                'kelas' => $jadwal->jadwal->kelas->jenjang->jenjang . ' ' . $jadwal->jadwal->kelas->name,
-                'guru_id' => $jadwal->guru_id,
-                'mapel_id' => $jadwal->mapel_id,
-                'tanggal' => Carbon::now()->format('Y-m-d'),
-                'jam_mulai' => $jadwal->jam_mulai,
-                'jam_selesai' => $jadwal->jam_selesai,
-                'total_siswa' => request()->input('total_siswa'),
-                'tidak_hadir' => request()->input('tidak_hadir'),
-                'materi' => request()->input('materi'),
-                'action_by' => $jadwal->guru_id
-            );
-
-            Jurnal_Kelas::create($data);
-
-            return response()->json(['success' => true]);
-        };
-    }
-
-    public function get_all_jurnal($id)
-    {
-        $main = Guru::with([
-            'jurnal' => function ($query) {
-                $query->select('id', 'guru_id', 'mapel_id', 'kelas')
-                    ->whereYear('tanggal', Carbon::now()->format('Y'))
-                    ->whereMonth('tanggal', Carbon::now()->format('m'))
-                    ->with([
-                        'mapel' => function ($subQuery) {
-                            $subQuery->select('id', 'nama_mapel');
-                        }
-                    ]);
-            }
-        ])->where('id', $id)->first();
-
-        $data = array(
-            'main_data' => $main,
-            'month' => Carbon::now()->isoFormat('MMMM YYYY')
-        );
-
-        return response()->json($data);
     }
 }

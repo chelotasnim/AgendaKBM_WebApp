@@ -30,7 +30,8 @@ class Siswa_Feature extends Controller
                                 $subSubQuery->with(['mapel' => function ($subSubSubQuery) {
                                     $subSubSubQuery->select('id', 'nama_mapel');
                                 }]);
-                            }]);
+                            }])
+                            ->with('jam');
                     }])
                     ->with(['jenjang' => function ($subQuery) {
                         $subQuery->select('id', 'jenjang');
@@ -41,7 +42,16 @@ class Siswa_Feature extends Controller
         $schedule_data = $main->kelas->jadwal;
 
         if (!isset($schedule_data[0])) {
-            return response()->json(['success' => true, 'found' => false]);
+            return response()->json([
+                'main_data' => $main,
+                'now_date' => array(
+                    'day_name' => $selected_day,
+                    'date' => Carbon::now()->isoFormat('D MMM YYYY')
+                ),
+                'yesterday' => $dayNames[($dayIndex - 1 + 5) % 5],
+                'tomorrow' => $dayNames[($dayIndex + 1) % 5],
+                'found' => false
+            ]);
         };
 
         $join_index = 0;
@@ -52,13 +62,13 @@ class Siswa_Feature extends Controller
 
         $hour_data = array();
         for ($i = 0; $i < $schedule_data[0]->jam->jumlah; $i++) {
-            if ($i == 1 && request()->input('hari') == 'Senin') {
+            if ($i == 1 && $selected_day == 'Senin') {
                 $this_time = array(
                     'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(5)->format('H:i'),
                     'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((5 + $schedule_data[0]->jam->durasi))->format('H:i')
                 );
                 array_push($hour_data, $this_time);
-            } else if ($i == 0 && request()->input('hari') == 'Senin') {
+            } else if ($i == 0 && $selected_day == 'Senin') {
                 $this_time = array(
                     'mulai' => $schedule_data[0]->jam->mulai,
                     'selesai' => Carbon::parse($schedule_data[0]->jam->mulai)->addMinutes(($schedule_data[0]->jam->durasi + $schedule_data[0]->jam->durasi))->format('H:i')
@@ -70,7 +80,7 @@ class Siswa_Feature extends Controller
                     'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((30 + $schedule_data[0]->jam->durasi))->format('H:i')
                 );
                 array_push($hour_data, $this_time);
-            } else if ($i == 7 && request()->input('hari') == 'Senin') {
+            } else if ($i == 7 && $selected_day == 'Senin') {
                 $this_time = array(
                     'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(60)->format('H:i'),
                     'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((65 + $schedule_data[0]->jam->durasi))->format('H:i')

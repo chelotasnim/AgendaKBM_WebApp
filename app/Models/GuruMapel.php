@@ -19,4 +19,9 @@ class GuruMapel extends Model
     {
         return $this->belongsTo(Mapel::class, 'mapel_id');
     }
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'guru_mapel_id');
+    }
 }
