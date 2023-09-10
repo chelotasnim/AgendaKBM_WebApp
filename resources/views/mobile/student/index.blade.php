@@ -330,7 +330,7 @@
                                         <div class="icon">
                                             <i class="fal fa-at"></i>
                                         </div>
-                                        <input type="email" name="email" autocomplete="off" value="${result.main_data.email}" placeholder="Email Akun Anda">
+                                        <input type="email" name="email" autocomplete="off" value="${result.main_data.email}" placeholder="Akun Email Anda">
                                     </div>
                                     <div class="profile-box">
                                         <div class="icon">

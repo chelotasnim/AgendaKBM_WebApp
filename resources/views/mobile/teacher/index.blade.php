@@ -30,6 +30,8 @@
                 </div>
             </nav>
             <div class="page">
+                <div id="alert-container">
+                </div>
                 <header>
                     <div class="main-header">
                         <img src="{{ asset('mobile/assets/wave.png') }}" draggable="false"/>
@@ -233,8 +235,9 @@
             $('#schedule').on('click', function() {
                 setSchedule('today');
             });
-            
-            function setProfile() {
+        });
+
+        function setProfile() {
                 $.ajax({
                     url: `{{ url('teacher/today') }}`,
                     type: 'get',
@@ -280,17 +283,145 @@
                                         </div>
                                         <div class="content">${result.main_data.email}</div>
                                     </div>
-                                </div>
-                                <div class="button-group">
-                                    <a href="{{ url('teacher_logout') }}" class="btn on">Keluar</a>
+                                    <div class="button-group">
+                                        <a href="{{ url('teacher_logout') }}" class="btn on">Keluar</a>
+                                        <button id="edit-profile" class="btn">Ubah Data</button>
+                                    </div>
                                 </div>
                             </div>
                         `);
+
+                        $('#edit-profile').on('click', function() {
+                            editProfile();
+                        });
                     }
                 });
             };
             $('#profile').on('click', setProfile);
-        });
+
+            function editProfile() {
+                $.ajax({
+                    url: `{{ url('teacher/today') }}`,
+                    type: 'get',
+                    success: function(result) {
+                        let split_name = result.main_data.name.split(' ');
+                        let name = '';
+
+                        if(split_name.length > 1) {
+                            name = split_name[0] + ' ' + split_name[1];
+                        } else {
+                            name = split_name[0];
+                        };
+                        
+                        $('#user-name-here').text('Hi! ' + name);
+                        $('#section-wrapper').html(`
+                        <div id="profile-wrapper" class="section">
+                                <div class="floating-header">
+                                    <div class="icon">
+                                        <i class="fal fa-address-card"></i>
+                                    </div>
+                                    <div class="title">Ubah Profil Akun Anda</div>
+                                </div>
+                                <div class="list-heading">
+                                    <p>Status Akun :</p>
+                                    <p>Akun Guru</p>
+                                </div>
+                                <form id="profile-edit" method="post" class="profile-container">
+                                    @csrf
+                                    <div class="profile-box">
+                                        <div class="icon">
+                                            <i class="fal fa-user-tag"></i>
+                                        </div>
+                                        <input type="text" name="name" autocomplete="off" value="${result.main_data.name}" placeholder="Nama Anda">
+                                    </div>
+                                    <div class="profile-box">
+                                        <div class="icon">
+                                            <i class="fal fa-tag"></i>
+                                        </div>
+                                        <input type="text" name="username" autocomplete="off" value="${result.main_data.username}" placeholder="Nama Akun Anda">
+                                    </div>
+                                    <div class="profile-box">
+                                        <div class="icon">
+                                            <i class="fal fa-at"></i>
+                                        </div>
+                                        <input type="email" name="email" autocomplete="off" value="${result.main_data.email}" placeholder="Akun Email Anda">
+                                    </div>
+                                    <div class="profile-box">
+                                        <div class="icon">
+                                            <i class="fal fa-user-lock"></i>
+                                        </div>
+                                        <input type="password" name="password" autocomplete="off" placeholder="Ubah Password Anda">
+                                    </div>
+                                    <div class="button-group">
+                                        <button type="button" onclick="send_update()" class="btn on">Simpan</button>
+                                        <button type="button" id="show-profile" class="btn">Batalkan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        `);
+
+                        $('#show-profile').on('click', function() {
+                            setProfile();
+                        });
+                    }
+                });
+            };
+
+            function setLoading() {
+                $('body').append(`
+                    <div class="loading-animation">
+                        <i class="fas fa-spinner-third"></i>
+                    </div>
+                `);
+            };
+
+            function removeLoading() {
+                $('.loading-animation').remove();
+            };
+
+            function send_update() {
+                $('#profile-edit').on('submit', function(event) {
+                    event.preventDefault();
+
+                    setLoading();
+
+                    $.ajax({
+                        url: `{{ url('teacher/update') }}`,
+                        data: $('#profile-edit').serialize(),
+                        type: 'post',
+
+                        success: function(result) {
+                            let dumpErr = '';
+                            for (let key in result.notification) {
+                                if (result.notification.hasOwnProperty(key)) {
+                                    let color = '';
+                                    if(result.success === true) {
+                                        color = ' success';
+                                    };
+
+                                    dumpErr += `
+                                        <div class="alert-box${color}">
+                                            <div class="alert-icon">
+                                                <i class="fal fa-exclamation-triangle"></i>
+                                            </div>
+                                            <div class="alert-content">${result.notification[key]}</div>
+                                        </div>
+                                    `;
+                                };
+                            };
+                            $('#alert-container').html(dumpErr);
+
+                            if(result.success === true) {
+                                setProfile();
+                            };
+
+                            removeLoading();
+                        }
+                    });
+                });
+
+                $('#profile-edit').trigger('submit');
+            };
     </script>
 </body>
 </html>

@@ -256,4 +256,6 @@ Route::middleware('auth:teacher')->group(function () {
         return view('mobile.teacher.jurnal');
     });
     Route::post('send_jurnal', [Guru_Feature::class, 'send_jurnal']);
+
+    Route::post('teacher/update', [Guru_Feature::class, 'edit']);
 });

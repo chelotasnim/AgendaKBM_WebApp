@@ -8,6 +8,7 @@ use App\Models\Jurnal_Kelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class Guru_Feature extends Controller
 {
@@ -172,5 +173,70 @@ class Guru_Feature extends Controller
 
         $final_response['schedules'] = $jurnal;
         return response()->json($final_response);
+    }
+
+    public function edit()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|max:100',
+            'username' => 'required|min:3|max:25|unique:siswa,username',
+            'email' => 'required|max:255|email:dns|unique:siswa,email|unique:users,email'
+        ], [
+            'name.required' => 'Wajib Memasukkan Nama Asli',
+            'name.max' => 'Nama Maksimal 100 Karakter',
+            'username.required' => 'Wajib Memasukkan Username',
+            'username.min' => 'Username Minimal 5 Karakter',
+            'username.max' => 'Username Maksimal 255 Karakter',
+            'email.required' => 'Wajib Memasukkan Email',
+            'email.email' => 'Format Email Harus Valid',
+            'email.max' => 'Email Maksimal 255 Karakter'
+        ]);
+
+        if ($validator->passes()) {
+            $old_data = Guru::where('id', Auth::guard('teacher')->user()->id)->first();
+
+            if (request()->input('name') == $old_data->name && request()->input('username') == $old_data->username && request()->input('email') == $old_data->email) {
+                if (request()->input('password') != '') {
+                    Guru::where('id', Auth::guard('teacher')->user()->id)->update(['password' => bcrypt(request()->input('password'))]);
+
+                    return response()->json([
+                        'notification' => ['Data Updated' => ['Data Guru Berhasil Dirubah']],
+                        'success' => true
+                    ]);
+                } else {
+                    return response()->json(['notification' => ['Update Failed' => 'Tidak Ada Perubahan Dilakukan']]);
+                };
+            } else {
+                $new_data_check = Guru::where('kode', request()->input('kode'))->where('id', '!=', $old_data->id)->orWhere('username', request()->input('username'))->where('id', '!=', $old_data->id)->orWhere('email', request()->input('email'))->where('id', '!=', $old_data->id)->first();
+                if ($new_data_check != null) {
+                    if ($new_data_check->hidden == 1) {
+                        return response()->json(['notification' => ['Update Failed' => 'Akun Guru ' . $new_data_check->username . ' Pernah Dihapus. Tambah kembali guru' . $new_data_check->username . ' jika ingin menggunakannya kembali']]);
+                    } else {
+                        return response()->json(['notification' => ['Update Failed' => 'Akun Guru Tidak Boleh Sama']]);
+                    };
+                } else {
+                    $new_data = array(
+                        'name' => request()->input('name'),
+                        'username' => request()->input('username'),
+                        'email' => request()->input('email'),
+                        'action_by' => Auth::guard('teacher')->user()->id
+                    );
+                    if (request()->input('password') != null) {
+                        $new_data['password'] = bcrypt(request()->input('password'));
+                    };
+
+                    Guru::where('id', Auth::guard('teacher')->user()->id)->update($new_data);
+
+                    return response()->json([
+                        'notification' => ['Data Updated' => ['Akun Guru Berhasil Dirubah']],
+                        'success' => true
+                    ]);
+                };
+            };
+        };
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
     }
 }
