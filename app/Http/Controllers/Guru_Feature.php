@@ -49,12 +49,19 @@ class Guru_Feature extends Controller
         $class_list = array();
         $schedule_id = array();
         foreach ($main->guru_mapel as $guru_mapel) {
-            foreach ($guru_mapel->jadwal as $jadwal) {
-                array_push($schedule_id, $jadwal->id);
-                if (!in_array($jadwal->kelas_id, $class_list)) {
-                    array_push($class_list, $jadwal->kelas_id);
+            if ($guru_mapel->jadwal != null) {
+                foreach ($guru_mapel->jadwal as $jadwal) {
+                    array_push($schedule_id, $jadwal->id);
+                    if (!in_array($jadwal->kelas_id, $class_list)) {
+                        array_push($class_list, $jadwal->kelas_id);
+                    };
                 };
             };
+        };
+
+        if ($schedule_id == null) {
+            $final_response['found'] = false;
+            return response()->json($final_response);
         };
 
         $schedule_data = array();

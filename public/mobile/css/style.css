@@ -13,6 +13,32 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.loading-animation {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, .8);
+    font-size: 48px;
+    color: rgb(29, 175, 131);
+    z-index: 10000 !important;
+    cursor: wait;
+}
+
+.loading-animation i {
+    animation: rotate .5s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .welcome-cover {
     position: fixed;
     display: flex;
@@ -130,7 +156,8 @@ nav {
 }
 
 .floating-header div,
-.profile-box div {
+.profile-box div,
+.profile-box input {
     display: flex;
     padding: 18px;
     flex: 1;
@@ -145,10 +172,16 @@ nav {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .07), 5px 5px 15px rgba(0, 0, 0, .07);
 }
 
-.profile-box div {
+.profile-box div,
+.profile-box input {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, .05), 5px 5px 15px rgba(0, 0, 0, .03) !important;
     font-size: 14px;
     color: rgb(100, 100, 100);
+}
+
+.profile-box input {
+    outline: none;
+    border: 1px solid rgb(200, 200, 200);
 }
 
 .floating-header .icon,
@@ -278,7 +311,8 @@ nav {
     color: rgb(150, 150, 150);
 }
 
-.schedule-list .box-container {
+.schedule-list .box-container,
+.profile-container {
     padding: 0 24px;
     padding-bottom: 72px;
     /* min-height: 55vh; */
@@ -288,7 +322,8 @@ nav {
     overflow-y: scroll;
 }
 
-.schedule-list .box-container::-webkit-scrollbar {
+.schedule-list .box-container::-webkit-scrollbar,
+.profile-container::-webkit-scrollbar {
     width: 0;
 }
 
@@ -342,13 +377,6 @@ nav {
     font-size: 16px;
 }
 
-.profile-container {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 48px);
-}
-
 .profile-box {
     display: flex;
     margin-bottom: 8px;
@@ -361,19 +389,24 @@ nav {
     left: 50%;
     margin-top: 24px;
     transform: translateX(-50%);
-    width: calc(100% - 48px);
 }
 
-.btn.on {
+.btn {
     display: block;
     padding: 16px;
     text-align: center;
     width: 100%;
-    background: rgb(32, 201, 151);
     border-radius: 5px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(32, 201, 151);
+    color: rgb(32, 201, 151);
     outline: none;
-    border: none;
     font-size: 16px;
+}
+
+.btn.on {
+    margin-bottom: 8px;
+    background: rgb(32, 201, 151);
     color: rgb(255, 255, 255);
 }
 
@@ -514,7 +547,6 @@ nav {
 }
 
 .alert-box.success {
-    background: rgba(50, 200, 100, .15);
     color: rgb(0, 200, 50);
 }
 

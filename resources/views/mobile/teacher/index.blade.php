@@ -62,7 +62,7 @@
             const user_id = "{{ Auth::guard('teacher')->user()->id }}";
             function setHome() {
                 $.ajax({
-                    url: `{{ url('teacher/${user_id}/today') }}`,
+                    url: `{{ url('teacher/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -150,7 +150,7 @@
 
             function setSchedule(selected_day) {
                 $.ajax({
-                    url: `{{ url('teacher/${user_id}/${selected_day}') }}`,
+                    url: `{{ url('teacher/${selected_day}') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');
@@ -236,7 +236,7 @@
             
             function setProfile() {
                 $.ajax({
-                    url: `{{ url('teacher/${user_id}/today') }}`,
+                    url: `{{ url('teacher/today') }}`,
                     type: 'get',
                     success: function(result) {
                         let split_name = result.main_data.name.split(' ');

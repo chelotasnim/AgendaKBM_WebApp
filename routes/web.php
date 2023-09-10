@@ -236,6 +236,8 @@ Route::middleware('auth:student')->group(function () {
     });
 
     Route::get('student/{day}', [Siswa_Feature::class, 'get_main']);
+
+    Route::post('student/update', [Siswa_Feature::class, 'edit']);
 });
 
 //Autentikasi Guru
