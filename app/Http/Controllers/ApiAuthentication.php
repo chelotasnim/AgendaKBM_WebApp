@@ -13,7 +13,7 @@ class ApiAuthentication extends Controller
 {
     public function login()
     {
-        $credentials = Validator::make(json_decode(request()->getContent(), true), [
+        $credentials = Validator::make(request()->all(), [
             'email' => 'required|max:255|email:dns',
             'password' => 'required'
         ], [
@@ -24,27 +24,25 @@ class ApiAuthentication extends Controller
         ]);
 
         if ($credentials->fails()) {
-            return response()->json(['notification' => $credentials->errors()]);
+            return response()->json(['notifications' => $credentials->errors()]);
         };
 
-        $teacher = Guru::where('email', $credentials['email'])->first();
-        $student = Siswa::where('email', $credentials['email'])->first();
+        $teacher = Guru::where('email', request()->input('email'))->first();
+        $student = Siswa::where('email', request()->input('email'))->first();
 
         if ($student != null) {
-            if (Hash::check($credentials['password'], $student->password)) {
+            if (Hash::check(request()->input('password'), $student->password)) {
                 $token = array('token' => $student->createToken('Student')->plainTextToken);
                 return response()->json($token);
             };
         } else if ($teacher != null) {
-            if (Hash::check($credentials['password'], $teacher->password)) {
+            if (Hash::check(request()->input('password'), $teacher->password)) {
                 $token = array('token' => $teacher->createToken('Teacher')->plainTextToken);
                 return response()->json($token);
             };
         };
 
-        throw ValidationException::withMessages([
-            'cred_fail' => 'Data Kredensial Salah'
-        ]);
+        return response()->json(['notifications' => ['fail' => ['Data Kredensial Salah']]]);
     }
 
     public function logout()
