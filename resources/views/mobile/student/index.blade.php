@@ -85,6 +85,13 @@
                             } else if(schedule.keterangan == 'Akan Dimulai') {
                                 class_for_color = 'red';
                             };
+
+                            if(schedule.rest == true) {
+                                boxes += `
+                                    <small class="separator">Istirahat</small>
+                                `;
+                            };
+
                             boxes += `
                                 <div class="schedule-box">
                                     <div class="schedule-header">
@@ -157,6 +164,12 @@
 
                         let boxes = '';
                         $.each(result.main_data.kelas.jadwal, function(index, schedule) {
+                            if(schedule.rest == true) {
+                                boxes += `
+                                    <small class="separator">Istirahat</small>
+                                `;
+                            };
+
                             boxes += `
                                 <div class="schedule-box">
                                     <div class="schedule-header">
@@ -175,7 +188,7 @@
                             `; 
                         });
 
-                        if(boxes == '') {
+                        if(result.found == false) {
                             boxes += `
                                 <div class="schedule-box free-day">
                                     <i class="fal fa-books"></i>
@@ -381,14 +394,16 @@
                             for (let key in result.notification) {
                                 if (result.notification.hasOwnProperty(key)) {
                                     let color = '';
+                                    let icon = 'fa-exclamation-triangle';
                                     if(result.success === true) {
                                         color = ' success';
+                                        icon = 'fa-check-square';
                                     };
 
                                     dumpErr += `
                                         <div class="alert-box${color}">
                                             <div class="alert-icon">
-                                                <i class="fal fa-exclamation-triangle"></i>
+                                                <i class="fal ${icon}"></i>
                                             </div>
                                             <div class="alert-content">${result.notification[key]}</div>
                                         </div>

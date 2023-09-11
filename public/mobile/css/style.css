@@ -573,6 +573,35 @@ nav {
     text-transform: capitalize;
 }
 
+.separator {
+    position: relative;
+    display: block;
+    margin: 24px 0;
+    text-align: center;
+    font-size: 14px;
+    color: rgb(150, 150, 150);
+}
+
+.separator::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+    width: 30%;
+    height: 1px;
+    background: rgb(200, 200, 200);
+}
+
+.separator::before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translateY(-50%) translateX(-102px);
+    width: 30%;
+    height: 1px;
+    background: rgb(200, 200, 200);
+}
+
 @media(max-width: 1000px) {
     .frame {
         max-width: 650px;

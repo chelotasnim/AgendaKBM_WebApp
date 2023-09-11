@@ -13,10 +13,19 @@ class ApiAuthentication extends Controller
 {
     public function login()
     {
-        $credentials = Validator::make(request()->all(), [
+        $credentials = Validator::make(json_decode(request()->getContent(), true), [
             'email' => 'required|max:255|email:dns',
             'password' => 'required'
+        ], [
+            'email.required' => 'Email Wajib Diisi',
+            'email.max' => 'Email Maksimal 255 Karakter',
+            'email.email' => 'Email Harus Valid',
+            'password.required' => 'Password Wajib Diisi'
         ]);
+
+        if ($credentials->fails()) {
+            return response()->json(['notification' => $credentials->errors()]);
+        };
 
         $teacher = Guru::where('email', $credentials['email'])->first();
         $student = Siswa::where('email', $credentials['email'])->first();
@@ -24,17 +33,17 @@ class ApiAuthentication extends Controller
         if ($student != null) {
             if (Hash::check($credentials['password'], $student->password)) {
                 $token = array('token' => $student->createToken('Student')->plainTextToken);
-                return $token;
+                return response()->json($token);
             };
         } else if ($teacher != null) {
             if (Hash::check($credentials['password'], $teacher->password)) {
                 $token = array('token' => $teacher->createToken('Teacher')->plainTextToken);
-                return $token;
+                return response()->json($token);
             };
         };
 
         throw ValidationException::withMessages([
-            'email' => 'Data Kredensial Salah'
+            'cred_fail' => 'Data Kredensial Salah'
         ]);
     }
 
