@@ -596,7 +596,7 @@ nav {
     position: absolute;
     content: '';
     top: 50%;
-    transform: translateY(-50%) translateX(-102px);
+    transform: translateY(-50%) translateX(-104%);
     width: 30%;
     height: 1px;
     background: rgb(200, 200, 200);

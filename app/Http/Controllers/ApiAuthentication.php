@@ -48,5 +48,6 @@ class ApiAuthentication extends Controller
     public function logout()
     {
         request()->user()->currentAccessToken()->delete();
+        return response()->json(['logout' => true]);
     }
 }
