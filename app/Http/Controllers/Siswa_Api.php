@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class Siswa_Api extends Controller
 {
@@ -143,5 +144,71 @@ class Siswa_Api extends Controller
         );
 
         return response()->json($data);
+    }
+
+    public function edit()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|max:100',
+            'username' => 'required|min:9|max:10|unique:guru,username',
+            'email' => 'required|max:255|email:dns|unique:guru,email|unique:users,email'
+        ], [
+            'name.required' => 'Wajib Memasukkan Nama Asli',
+            'name.max' => 'Nama Maksimal 100 Karakter',
+            'username.required' => 'Wajib Memasukkan Username',
+            'username.min' => 'Username Minimal 5 Karakter',
+            'username.max' => 'Username Maksimal 255 Karakter',
+            'email.required' => 'Wajib Memasukkan Email',
+            'email.email' => 'Format Email Harus Valid',
+            'email.max' => 'Email Maksimal 255 Karakter',
+            'password.required' => 'Wajib Memasukkan Password'
+        ]);
+
+        if ($validator->passes()) {
+            $old_data = Siswa::where('id', Auth::user()->id)->first();
+
+            if (request()->input('name') == $old_data->name && request()->input('username') == $old_data->username && request()->input('email') == $old_data->email) {
+                if (request()->input('password') != null) {
+                    Siswa::where('id', Auth::user()->id)->update(['password' => bcrypt(request()->input('password'))]);
+
+                    return response()->json([
+                        'notification' => ['Data Updated' => ['Data Siswa Berhasil Dirubah']],
+                        'success' => true
+                    ]);
+                } else {
+                    return response()->json(['notification' => ['Update Failed' => 'Tidak Ada Perubahan Dilakukan']]);
+                };
+            } else {
+                $new_data_check = Siswa::where('username', request()->input('username'))->where('id', '!=', $old_data->id)->orWhere('email', request()->input('email'))->where('id', '!=', $old_data->id)->first();
+                if ($new_data_check != null) {
+                    if ($new_data_check->hidden == 1) {
+                        return response()->json(['notification' => ['Update Failed' => 'Akun Siswa ' . $new_data_check->username . ' Pernah Dihapus. Tambah kembali siswa' . $new_data_check->username . ' jika ingin menggunakannya kembali']]);
+                    } else {
+                        return response()->json(['notification' => ['Update Failed' => 'Akun Siswa Tidak Boleh Sama']]);
+                    };
+                } else {
+                    $new_data = array(
+                        'name' => request()->input('name'),
+                        'username' => request()->input('username'),
+                        'email' => request()->input('email'),
+                        'action_by' => Auth::user()->id
+                    );
+                    if (request()->input('password') != null) {
+                        $new_data['password'] = request()->input('password');
+                    };
+
+                    Siswa::where('id', Auth::user()->id)->update($new_data);
+
+                    return response()->json([
+                        'notification' => ['Data Updated' => ['Akun Siswa Berhasil Dirubah']],
+                        'success' => true
+                    ]);
+                };
+            };
+        };
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
     }
 }
