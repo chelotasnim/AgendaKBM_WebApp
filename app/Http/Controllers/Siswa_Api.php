@@ -121,10 +121,16 @@ class Siswa_Api extends Controller
 
                 if (Carbon::now()->format('H:i') < Carbon::parse($hour_data[$join_index]['mulai'])->format('H:i')) {
                     $schedule['keterangan'] = 'Akan Dimulai';
+                    $schedule['bg'] = 'rgb(255, 50, 50)';
+                    $schedule['color'] = 'rgb(255, 255, 255)';
                 } else if (Carbon::now()->format('H:i') >= Carbon::parse($hour_data[$join_index]['mulai'])->format('H:i') && Carbon::now()->format('H:i') <= Carbon::parse($hour_data[$join_index]['selesai'])->format('H:i')) {
                     $schedule['keterangan'] = 'Berlangsung';
+                    $schedule['bg'] = 'rgb(32, 201, 151)';
+                    $schedule['color'] = 'rgb(255, 255, 255)';
                 } else if (Carbon::now()->format('H:i') > Carbon::parse($hour_data[$join_index]['selesai'])->format('H:i')) {
                     $schedule['keterangan'] = 'Telah Berakhir';
+                    $schedule['bg'] = 'rgb(225, 225, 225)';
+                    $schedule['color'] = 'rgb(100, 100, 100)';
                 };
 
                 $join_index++;
