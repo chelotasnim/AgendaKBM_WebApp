@@ -143,6 +143,10 @@ class Siswa_Feature extends Controller
             'tomorrow' => $dayNames[($dayIndex + 1) % 5]
         );
 
+        if (count($main->kelas->jadwal) < 1) {
+            $data['found'] = false;
+        };
+
         return response()->json($data);
     }
 
