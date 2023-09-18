@@ -247,15 +247,15 @@ Route::middleware('auth:teacher')->group(function () {
 
     //Laman Utama
     Route::get('teacher', function () {
+        session()->forget('kelas_jam');
         return view('mobile.teacher.index');
     });
     Route::get('teacher/{day}', [Guru_Feature::class, 'get_main']);
 
-    //Laman Jurnal
-    Route::get('teacher/jurnal/{id}', function () {
+    Route::post('teacher/jurnal', function () {
+        session(['kelas_jam' => request()->input('kelas') . '|' . request()->input('jam')]);
         return view('mobile.teacher.jurnal');
     });
-    Route::post('send_jurnal', [Guru_Feature::class, 'send_jurnal']);
 
-    Route::post('teacher/update', [Guru_Feature::class, 'edit']);
+    Route::get('teacher/get_jurnal/{kelas_id}/{jam}', [Guru_Feature::class, 'get_jurnal']);
 });

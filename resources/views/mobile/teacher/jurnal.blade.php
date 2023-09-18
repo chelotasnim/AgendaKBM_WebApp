@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('/assets/app-images/favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('mobile/css/style.css') }}">
     <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
-    <title>Aplikasi Agenda KBM | Masuk</title>
+    <title>Aplikasi Agenda KBM | Guru</title>
 </head>
 <body>
     <div class="entire">
@@ -60,7 +60,10 @@
                                 <h1 id="subject-name"></h1>
                                 <p id="teacher-name"></p>
                                 <form id="jurnal-form" method="post" class="jurnal-form">
-                                    <input type="text" name="jadwal_id" style="display: none" readonly>
+                                    <input type="text" name="guru_mapel_id" style="display: none" readonly>
+                                    <input type="text" name="kelas" style="display: none" readonly>
+                                    <input type="text" name="jam_mulai" style="display: none" readonly>
+                                    <input type="text" name="jam_selesai" style="display: none" readonly>
                                     <div class="row">
                                         <div class="input-group">
                                             <label>Total Siswa</label>
@@ -78,7 +81,7 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn on">Isi Jurnal</button>
-                                    <a href="{{ url('teacher') }}" class="btn badge on grey">Kembali</a>
+                                    <a href="{{ url('teacher') }}" class="btn">Kembali</a>
                                 </form>
                             </div>
                         </div>
@@ -90,14 +93,16 @@
     <script src="{{ asset('mobile/js/script.js') }}"></script>
     <script>
         $(document).ready(function() {
-            const user_id = "{{ Auth::guard('teacher')->user()->id }}";
-            let this_schedule = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+            const kelas_jam = `{{ session('kelas_jam') }}`;
+            const kelas = kelas_jam.split('|')[0];
+            const jam = kelas_jam.split('|')[1];
 
             $.ajax({
-                url: `{{ url('api/get_jurnal/${this_schedule}') }}`,
+                url: `{{ url('teacher/get_jurnal/${kelas}/${jam}') }}`,
                 type: 'get',
                 success: function(result) {
-                    let split_name = result.main_data.guru.name.split(' ');
+                    console.log(result);
+                    let split_name = result.user_data.name.split(' ');
                     let name = '';
 
                     if(split_name.length > 1) {
@@ -107,21 +112,23 @@
                     };
 
                     $('#user-name-here').text('Hi! ' + name);
-                    $('[name="jadwal_id"]').val(this_schedule);
-                    $('#start-time').html(result.main_data.jam_mulai);
-                    $('#kelas-name-tag').html(result.main_data.jadwal.kelas.jenjang.jenjang + ' ' + result.main_data.jadwal.kelas.name);
-                    $('#end-time').html(result.main_data.jam_selesai);
-                    $('#teacher-name').html(result.main_data.guru.name);
-                    $('#subject-name').html(result.main_data.mapel.nama_mapel);
+                    $('[name="guru_mapel_id"]').val(result.schedule.guru_mapel_id);
+                    $('[name="kelas"]').val(result.schedule.kelas.jenjang.jenjang + ' ' + result.schedule.kelas.name);
+                    $('[name="jam_mulai"]').val(result.schedule.mulai);
+                    $('[name="jam_selesai"]').val(result.schedule.selesai);
+                    $('#start-time').html(result.schedule.mulai);
+                    $('#kelas-name-tag').html(result.schedule.kelas.jenjang.jenjang + ' ' + result.schedule.kelas.name);
+                    $('#end-time').html(result.schedule.selesai);
+                    $('#teacher-name').html(result.user_data.name);
+                    $('#subject-name').html(result.schedule.guru_mapel.mapel.nama_mapel);
                 }
             });
 
-            $('[name="jadwal_id"]').val(this_schedule);
             $('#jurnal-form').on('submit', function(event) {
                 event.preventDefault();
 
                 $.ajax({
-                    url: `{{ url('api/send_jurnal') }}`,
+                    url: `{{ url('teacher/send_jurnal') }}`,
                     type: 'post',
                     data: $('#jurnal-form').serialize(),
                     success: function(result) {

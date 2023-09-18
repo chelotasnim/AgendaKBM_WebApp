@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('/assets/app-images/favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('mobile/css/style.css') }}">
     <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
-    <title>Aplikasi Agenda KBM | Masuk</title>
+    <title>Aplikasi Agenda KBM | Siswa</title>
 </head>
 <body>
     <div class="entire">

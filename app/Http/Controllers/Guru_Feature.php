@@ -175,6 +175,95 @@ class Guru_Feature extends Controller
         return response()->json($final_response);
     }
 
+    public function get_jurnal($kelas_id, $jam)
+    {
+        $main = Guru::where('id', Auth::guard('teacher')->user()->id)->first();
+        $schedules = Jadwal::with(
+            [
+                'guru_mapel' => function ($query) {
+                    $query->with('mapel');
+                },
+                'kelas' => function ($query) {
+                    $query->with('jenjang');
+                },
+                'jam'
+            ]
+        )->where('kelas_id', $kelas_id)->where('hari', Carbon::now()->isoFormat('dddd'))->get();
+        $used_schedule = null;
+
+        $join_index = 0;
+        if ($schedules[0]->jam_ke_nol == 0) {
+            $join_index++;
+        };
+
+        $hour_data = array();
+        for ($i = 0; $i < $schedules[0]->jam->jumlah; $i++) {
+            if ($i == 1 && Carbon::now()->isoFormat('dddd') == 'Senin') {
+                $this_time = array(
+                    'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(5)->format('H:i'),
+                    'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((5 + $schedules[0]->jam->durasi))->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else if ($i == 0 && Carbon::now()->isoFormat('dddd') == 'Senin') {
+                $this_time = array(
+                    'mulai' => $schedules[0]->jam->mulai,
+                    'selesai' => Carbon::parse($schedules[0]->jam->mulai)->addMinutes(($schedules[0]->jam->durasi + $schedules[0]->jam->durasi))->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else if ($i == 4) {
+                $this_time = array(
+                    'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(30)->format('H:i'),
+                    'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((30 + $schedules[0]->jam->durasi))->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else if ($i == 7 && Carbon::now()->isoFormat('dddd') == 'Senin') {
+                $this_time = array(
+                    'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(60)->format('H:i'),
+                    'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((65 + $schedules[0]->jam->durasi))->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else if ($i == 7) {
+                $this_time = array(
+                    'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes(60)->format('H:i'),
+                    'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes((60 + $schedules[0]->jam->durasi))->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else if ($i == 0) {
+                $this_time = array(
+                    'mulai' => $schedules[0]->jam->mulai,
+                    'selesai' => Carbon::parse($schedules[0]->jam->mulai)->addMinutes($schedules[0]->jam->durasi)->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            } else {
+                $this_time = array(
+                    'mulai' => Carbon::parse($hour_data[$i - 1]['selesai'])->format('H:i'),
+                    'selesai' => Carbon::parse($hour_data[$i - 1]['selesai'])->addMinutes($schedules[0]->jam->durasi)->format('H:i')
+                );
+                array_push($hour_data, $this_time);
+            };
+        };
+
+        foreach ($schedules as $key => $schedule) {
+            if ($join_index == $jam) {
+                $used_schedule = $schedule;
+            };
+
+            if (isset($hour_data[$join_index])) {
+                $schedule['jam_ke'] = $join_index;
+                $schedule['mulai'] = $hour_data[$join_index]['mulai'];
+                $schedule['selesai'] = $hour_data[$join_index]['selesai'];
+                $join_index++;
+            } else {
+                unset($schedules[$key]);
+            };
+        };
+
+        return response()->json([
+            'user_data' => $main,
+            'schedule' => $used_schedule
+        ]);
+    }
+
     public function edit()
     {
         $validator = Validator::make(request()->all(), [

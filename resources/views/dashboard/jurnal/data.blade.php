@@ -207,6 +207,7 @@
     function modalEdit(id, guru_mapel_id, guru, kelas, tanggal, jam_mulai, jam_selesai, total_siswa, tidak_hadir, materi) {
         $('#main-edit-param', $('#modal-edit')).val(id);
         $('#must-be-param-1', $('#modal-edit')).val(guru_mapel_id);
+        $('#select2-must-be-param-1-container', $('#modal-edit')).text(guru);
         $('#must-be-param-2', $('#modal-edit')).val(kelas);
         $('#select2-must-be-param-2-container', $('#modal-edit')).text(kelas);
         $('#must-be-param-3', $('#modal-edit')).val(tanggal);
