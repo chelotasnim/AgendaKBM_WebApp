@@ -258,4 +258,6 @@ Route::middleware('auth:teacher')->group(function () {
     });
 
     Route::get('teacher/get_jurnal/{kelas_id}/{jam}', [Guru_Feature::class, 'get_jurnal']);
+
+    Route::post('teacher/send_jurnal', [Guru_Feature::class, 'send_jurnal']);
 });

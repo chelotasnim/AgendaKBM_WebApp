@@ -10,6 +10,9 @@
     <title>Aplikasi Agenda KBM | Guru</title>
 </head>
 <body>
+    <div class="loading-animation" style="display: none">
+        <i class="fas fa-spinner-third"></i>
+    </div>
     <div class="entire">
         <div class="frame">
             <div class="welcome-cover">
@@ -20,6 +23,7 @@
             </div>
             <div class="page">
                 <div id="alert-container">
+                    
                 </div>
                 <header>
                     <div class="main-header">
@@ -60,6 +64,7 @@
                                 <h1 id="subject-name"></h1>
                                 <p id="teacher-name"></p>
                                 <form id="jurnal-form" method="post" class="jurnal-form">
+                                    @csrf
                                     <input type="text" name="guru_mapel_id" style="display: none" readonly>
                                     <input type="text" name="kelas" style="display: none" readonly>
                                     <input type="text" name="jam_mulai" style="display: none" readonly>
@@ -101,7 +106,6 @@
                 url: `{{ url('teacher/get_jurnal/${kelas}/${jam}') }}`,
                 type: 'get',
                 success: function(result) {
-                    console.log(result);
                     let split_name = result.user_data.name.split(' ');
                     let name = '';
 
@@ -124,14 +128,25 @@
                 }
             });
 
+            function setLoading() {
+                $('.loading-animation').attr('style', 'display: flex');
+            };
+
+            function removeLoading() {
+                $('.loading-animation').attr('style', 'display: none');
+            };
+
             $('#jurnal-form').on('submit', function(event) {
                 event.preventDefault();
+
+                setLoading();
 
                 $.ajax({
                     url: `{{ url('teacher/send_jurnal') }}`,
                     type: 'post',
                     data: $('#jurnal-form').serialize(),
                     success: function(result) {
+                        console.log(result);
                         if(result.success == true) {
                             window.location.href = `{{ url('teacher') }}`;
                         };
@@ -140,7 +155,7 @@
                         for (let key in result.notification) {
                             if (result.notification.hasOwnProperty(key)) {
                                 dumpErr += `
-                                    <div class="alert-box">
+                                    <div class="alert-box success">
                                         <div class="alert-icon">
                                             <i class="fal fa-exclamation-triangle"></i>
                                         </div>
@@ -150,6 +165,8 @@
                             };
                         };
                         $('#alert-container').html(dumpErr);
+
+                        removeLoading();
                     }
                 });
             });

@@ -264,6 +264,41 @@ class Guru_Feature extends Controller
         ]);
     }
 
+    public function send_jurnal()
+    {
+        $validator = Validator::make(request()->all(), [
+            'total_siswa' => 'required',
+            'tidak_hadir' => 'required',
+            'materi' => 'required',
+        ], [
+            'total_siswa.required' => 'Wajib Mengisi Total Siswa',
+            'tidak_hadir.required' => 'Wajib Mengisi Total Siswa Tidak Hadir',
+            'materi.required' => 'Wajib Mengisi Materi KBM',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['notification' => $validator->errors()]);
+        };
+
+        if ($validator->passes()) {
+            $data = array(
+                'kelas' => request()->input('kelas'),
+                'guru_mapel_id' => request()->input('guru_mapel_id'),
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'jam_mulai' => request()->input('jam_mulai'),
+                'jam_selesai' => request()->input('jam_selesai'),
+                'total_siswa' => request()->input('total_siswa'),
+                'tidak_hadir' => request()->input('tidak_hadir'),
+                'materi' => request()->input('materi'),
+                'action_by' => Auth::guard('teacher')->user()->id
+            );
+
+            Jurnal_Kelas::create($data);
+
+            return response()->json(['notification' => ['Data Added' => ['Jurnal Kelas Ditambahkan']], 'success' => true]);
+        };
+    }
+
     public function edit()
     {
         $validator = Validator::make(request()->all(), [
