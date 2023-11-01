@@ -73,37 +73,6 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item @if($page === 'dashboard' || $page === 'daily-recapt'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'dashboard' || $page === 'daily-recapt'){{ 'active' }} @endif">
-              <i class="nav-icon fal fa-analytics"></i>
-              <p>
-                Beranda
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link @if($page === 'dashboard'){{ 'active' }} @endif">
-                  @if($page === 'dashboard')
-                  <i class="text-teal fal fa-grip-lines nav-icon"></i>
-                @else
-                  <i class="fal fa-grip-lines nav-icon"></i>
-                @endif
-                  <p>Statistik Jurnal</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link @if($page === 'daily-recapt'){{ 'active' }} @endif">
-                  @if($page === 'daily-recapt')
-                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
-                  @else
-                    <i class="fal fa-grip-lines nav-icon"></i>
-                  @endif
-                  <p>Rekap Jurnal Harian</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-header">BASIS DATA</li>
           <li class="nav-item @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel' || $page === 'jadwal'){{ 'menu-open' }} @endif">
             <a href="#" class="nav-link @if($page === 'jenjang_kelas' || $page === 'mapel' || $page === 'kelas' || $page === 'jam' || $page === 'guru_mapel' || $page === 'jadwal'){{ 'active' }} @endif">
