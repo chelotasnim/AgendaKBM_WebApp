@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\GuruImport;
 use App\Models\Guru;
+use App\Models\Jadwal;
 use App\Models\Jurnal_Kelas;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -300,5 +301,16 @@ class Gurus extends Controller
             'notification' => ['Data Updated' => ['<div class="toast toast-success" aria-live="assertive"><div class="toast-message">Presensi Berhasil Dirubah</div></div>']],
             'success' => true
         ]);
+    }
+
+    public function today()
+    {
+        $data = Guru::whereHas('guru_mapel', function ($query) {
+            $query->whereHas('jadwal', function ($subQuery) {
+                $subQuery->where('hari', Carbon::now()->isoFormat('dddd'));
+            });
+        })->get();
+
+        return response()->json($data);
     }
 }

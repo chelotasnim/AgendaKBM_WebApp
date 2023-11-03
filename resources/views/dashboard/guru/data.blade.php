@@ -14,7 +14,6 @@
             }
         });
 
-        $('#add-form')[0].reset();
         function removeEl() {
             $('.toast').remove();
         }
@@ -277,6 +276,32 @@
                     }
                 });
             });
+
+        var table = $('#guru-today-table').DataTable({
+            ajax: {
+                url: 'data_guru_today',
+                dataSrc: '',
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            },
+            columns: [
+                { 
+                    data: null,
+                    render: function (data, type, row, meta) {
+                        return meta.row + 1;
+                    }
+                },
+                { data: 'name' }
+            ],
+            createdRow: function (row) {
+                $('td', row).eq(0).addClass('text-center');
+            },
+            language: {
+                loadingRecords: 'Sedang Mengolah Data...',
+                emptyTable: 'Tidak Ada Guru Yang Mengajar'
+            }
+        });
     });
 
     function modalDelete(username) {

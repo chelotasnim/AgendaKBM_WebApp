@@ -7,6 +7,7 @@
     <div id="toast-container" class="toast-top-right">
     </div>
     <div class="row">
+      <input type="number" class="d-none" id="this-user" value="{{ Auth::user()->id }}">
         <div class="col-xl-4">
             <form method="post" class="card card-teal" id="add-form">
               @csrf

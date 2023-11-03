@@ -157,6 +157,13 @@ Route::middleware('auth:web')->group(function () {
 
     //Aksi
     Route::get('dashboard/get_guru', [Gurus::class, 'get_data']);
+    Route::get('dashboard/guru_today', function () {
+        $data = array(
+            'page' => 'guru_today',
+        );
+        return view('dashboard.guru.today', $data);
+    });
+    Route::get('dashboard/data_guru_today', [Gurus::class, 'today']);
     Route::post('dashboard/guru', [Gurus::class, 'store']);
     Route::post('dashboard/edit_guru', [Gurus::class, 'edit']);
     Route::post('dashboard/delete_guru', [Gurus::class, 'delete']);

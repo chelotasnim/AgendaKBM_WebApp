@@ -4,6 +4,8 @@
     };
 
     $(document).ready(function () {
+        const this_user = $('#this-user').val();
+
         $('.select2bs4').select2({
             theme: 'bootstrap4'
         });
@@ -53,10 +55,18 @@
                 {
                     data: null,
                     render: function(data) {
-                        if(data.id === 1) {
-                            return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.email + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></span>`;
+                        if(this_user == 1) {
+                            if(data.id == this_user) {
+                                return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.email + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" class="disabled modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                            } else {
+                                return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.email + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.email + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                            };
                         } else {
-                            return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.email + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" data-toggle="modal" data-target="#modal-delete" onclick="modalDelete('` + data.email + `')" class="modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                            if(data.id == this_user) {
+                                return `<span class="action-group"><button type="button" data-toggle="modal" data-target="#modal-edit" onclick="modalEdit('` + data.name + `', '` + data.email + `','` + data.status + `')" class="modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" class="disabled modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                            } else {
+                                return `<span class="action-group"><button type="button" class="disabled modal-edit-btn btn btn-sm btn-warning"><i class="fas fa-edit"></i></button><button type="button" class="disabled modal-delete-btn btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></span>` ;
+                            }
                         };
                     }
                 }

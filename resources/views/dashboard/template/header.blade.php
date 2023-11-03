@@ -172,8 +172,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item @if($page === 'rekap' || $page === 'laporan'){{ 'menu-open' }} @endif">
-            <a href="#" class="nav-link @if($page === 'rekap' || $page === 'laporan'){{ 'active' }} @endif">
+          <li class="nav-item @if($page === 'rekap' || $page === 'laporan' || $page === 'guru_today'){{ 'menu-open' }} @endif">
+            <a href="#" class="nav-link @if($page === 'rekap' || $page === 'laporan' || $page === 'guru_today'){{ 'active' }} @endif">
               <i class="nav-icon fal fa-server"></i>
               <p>
                 Transaksional
@@ -189,6 +189,16 @@
                     <i class="fal fa-grip-lines nav-icon"></i>
                   @endif
                   <p>Jurnal Mengajar</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url('dashboard/guru_today') }}" class="nav-link @if($page === 'guru_today'){{ 'active' }} @endif">
+                  @if($page === 'guru_today')
+                    <i class="text-teal fal fa-grip-lines nav-icon"></i>
+                  @else
+                    <i class="fal fa-grip-lines nav-icon"></i>
+                  @endif
+                  <p>Guru Hari Ini</p>
                 </a>
               </li>
             </ul>
