@@ -23,17 +23,17 @@ class Users extends Controller
             'password' => request()->input('password')
         );
         if (Auth::guard('student')->attempt($credentials)) {
-            if (Auth::guard('student')->user()->status === 1) {
+            if (Auth::guard('student')->user()->status === 1 && Auth::guard('student')->user()->hidden === 0) {
                 request()->session()->regenerate();
                 return redirect()->intended('student');
             };
         } else if (Auth::guard('teacher')->attempt($credentials)) {
-            if (Auth::guard('teacher')->user()->status === 1) {
+            if (Auth::guard('teacher')->user()->status === 1 && Auth::guard('teacher')->user()->hidden === 0) {
                 request()->session()->regenerate();
                 return redirect()->intended('teacher');
             };
         } else if (Auth::guard('web')->attempt($credentials)) {
-            if (Auth::guard('web')->user()->status === 1) {
+            if (Auth::guard('web')->user()->status === 1 && Auth::guard('web')->user()->hidden === 0) {
                 request()->session()->regenerate();
                 return redirect()->intended('dashboard/mapel');
             };
